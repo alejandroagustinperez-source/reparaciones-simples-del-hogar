@@ -1,13 +1,36 @@
+.locationBar {
+  background: var(--orange-light);
+  padding: 0.625rem 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.8125rem;
+  color: #c2410c;
+  font-weight: 500;
+  margin-top: 64px;
+}
+
+.locationLink {
+  color: var(--orange);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
 .hero {
   background: var(--navy);
   color: var(--white);
-  padding: 5rem 1rem 3rem;
-  margin-top: 64px;
+  padding: 5rem 1rem;
 }
 
 .heroInner {
   max-width: 720px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
 
 .badge {
@@ -24,10 +47,11 @@
 }
 
 .title {
-  font-size: 1.75rem;
+  font-size: 2.25rem;
   font-weight: 800;
-  line-height: 1.2;
+  line-height: 1.15;
   margin-bottom: 0.75rem;
+  max-width: 640px;
 }
 
 .highlight {
@@ -35,10 +59,11 @@
 }
 
 .subtitle {
-  font-size: 1rem;
+  font-size: 1.0625rem;
   color: rgba(255, 255, 255, 0.8);
   margin-bottom: 1.5rem;
   line-height: 1.5;
+  max-width: 520px;
 }
 
 .howItWorks {
@@ -47,9 +72,10 @@
   justify-content: center;
   gap: 0.5rem;
   flex-wrap: wrap;
-  background: rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius-md);
-  padding: 0.75rem 1rem;
+  padding: 0.625rem 1rem;
   margin-bottom: 2rem;
   font-size: 0.8125rem;
 }
@@ -63,36 +89,14 @@
   font-weight: 600;
 }
 
-.locationBar {
-  background: var(--orange-light);
-  padding: 0.625rem 1rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 0.5rem;
-  font-size: 0.8125rem;
-  color: #c2410c;
-  font-weight: 500;
-}
-
-.locationLink {
-  color: var(--orange);
-  text-decoration: underline;
-  font-weight: 600;
-}
-
-.searchSection {
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 2rem 1rem;
-}
-
 .searchBox {
   background: var(--white);
-  border-radius: var(--border-radius-md);
+  border-radius: var(--border-radius-lg);
   padding: 1.5rem;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 620px;
+  text-align: left;
 }
 
 .searchLabel {
@@ -115,6 +119,8 @@
   margin-bottom: 1rem;
   outline: none;
   transition: border-color 0.2s;
+  color: var(--text-primary);
+  background: var(--white);
 }
 
 .textarea:focus {
@@ -129,20 +135,20 @@
 }
 
 .chip {
-  background: var(--bg-light);
-  border: 1px solid #dee2e6;
+  background: rgba(26, 58, 107, 0.06);
+  border: 1px solid rgba(26, 58, 107, 0.15);
   border-radius: 100px;
   padding: 0.375rem 0.75rem;
   font-size: 0.8125rem;
-  color: var(--text-primary);
+  color: var(--navy);
   cursor: pointer;
   transition: all 0.2s;
+  font-weight: 500;
 }
 
 .chip:hover {
-  border-color: var(--orange);
-  color: var(--orange);
-  background: var(--orange-light);
+  background: rgba(26, 58, 107, 0.12);
+  border-color: var(--navy);
 }
 
 .submitButton {
@@ -178,9 +184,7 @@
   flex-wrap: wrap;
   justify-content: center;
   gap: 1.5rem;
-  max-width: 720px;
-  margin: 0 auto;
-  padding: 0 1rem 3rem;
+  margin-top: 2rem;
 }
 
 .proofBadge {
@@ -189,13 +193,13 @@
   gap: 0.375rem;
   font-size: 0.875rem;
   font-weight: 500;
-  color: var(--text-primary);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .answerSection {
   max-width: 720px;
   margin: 0 auto;
-  padding: 0 1rem 2rem;
+  padding: 2rem 1rem;
 }
 
 .answerCard {
@@ -258,14 +262,6 @@
   }
 }
 
-.emptyState {
-  text-align: center;
-  padding: 2rem;
-  color: var(--text-secondary);
-  font-size: 0.9375rem;
-}
-
-/* Ebook Banner */
 .ebookSection {
   max-width: 720px;
   margin: 0 auto;
@@ -360,10 +356,6 @@
 }
 
 @media (min-width: 640px) {
-  .title {
-    font-size: 2.25rem;
-  }
-
   .ebookBanner {
     flex-direction: row;
     align-items: center;
@@ -376,10 +368,10 @@
 
 @media (min-width: 768px) {
   .hero {
-    padding: 6rem 2rem 4rem;
+    padding: 6rem 2rem;
   }
 
   .title {
-    font-size: 2.75rem;
+    font-size: 3.25rem;
   }
 }

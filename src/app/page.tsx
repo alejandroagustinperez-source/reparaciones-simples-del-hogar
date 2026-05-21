@@ -13,6 +13,35 @@ const chips = [
   'Humedad en la pared',
 ];
 
+function FacebookIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="20" height="20" rx="4" fill="#1877F2"/>
+      <path d="M12.5 5.5H11.25C10.0074 5.5 9 6.50736 9 7.75V9H7V11H9V16H11.5V11H13L13.5 9H11.5V7.75C11.5 7.33579 11.8358 7 12.25 7H13V5.5H12.5Z" fill="white"/>
+    </svg>
+  );
+}
+
+function InstagramIcon() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <rect width="20" height="20" rx="4" fill="url(#ig"/>
+      <rect x="4.5" y="4.5" width="11" height="11" rx="3" stroke="white" strokeWidth="1.2"/>
+      <circle cx="10" cy="10" r="3" stroke="white" strokeWidth="1.2"/>
+      <circle cx="14.5" cy="5.5" r="1.2" fill="white"/>
+      <defs>
+        <linearGradient id="ig" x1="0" y1="0" x2="20" y2="20" gradientUnits="userSpaceOnUse">
+          <stop stopColor="#FFD600"/>
+          <stop offset="0.25" stopColor="#FF7A00"/>
+          <stop offset="0.5" stopColor="#FF0069"/>
+          <stop offset="0.75" stopColor="#D300C5"/>
+          <stop offset="1" stopColor="#7638FA"/>
+        </linearGradient>
+      </defs>
+    </svg>
+  );
+}
+
 export default function HomePage() {
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
@@ -86,6 +115,13 @@ export default function HomePage() {
 
   return (
     <>
+      <div className={styles.locationBar}>
+        <span>📍 Detectamos que estás en San Luis</span>
+        <a href="#" className={styles.locationLink}>
+          Cambiar ubicación
+        </a>
+      </div>
+
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.badge}>✨ Asistente con IA · gratis</div>
@@ -103,61 +139,52 @@ export default function HomePage() {
             <span className={styles.arrow}>→</span>
             <span className={styles.step}>✅ Recibís la solución</span>
           </div>
-        </div>
-      </section>
 
-      <div className={styles.locationBar}>
-        <span>📍 Detectamos que estás en San Luis</span>
-        <a href="#" className={styles.locationLink}>
-          Cambiar ubicación
-        </a>
-      </div>
-
-      <section className={styles.searchSection}>
-        <div className={styles.searchBox}>
-          <span className={styles.searchLabel}>ASISTENTE IA · GRATIS</span>
-          <textarea
-            className={styles.textarea}
-            placeholder="Describí tu problema (ej: el lavarropas no desagota)"
-            value={prompt}
-            onChange={(e) => setPrompt(e.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-          <div className={styles.chips}>
-            {chips.map((chip) => (
-              <button
-                key={chip}
-                className={styles.chip}
-                onClick={() => handleChipClick(chip)}
-                type="button"
-              >
-                {chip}
-              </button>
-            ))}
+          <div className={styles.searchBox}>
+            <span className={styles.searchLabel}>ASISTENTE IA · GRATIS</span>
+            <textarea
+              className={styles.textarea}
+              placeholder="Describí tu problema (ej: el lavarropas no desagota)"
+              value={prompt}
+              onChange={(e) => setPrompt(e.target.value)}
+              onKeyDown={handleKeyDown}
+            />
+            <div className={styles.chips}>
+              {chips.map((chip) => (
+                <button
+                  key={chip}
+                  className={styles.chip}
+                  onClick={() => handleChipClick(chip)}
+                  type="button"
+                >
+                  {chip}
+                </button>
+              ))}
+            </div>
+            <button
+              className={styles.submitButton}
+              onClick={handleSubmit}
+              disabled={loading || !prompt.trim()}
+              type="button"
+            >
+              {loading ? 'Analizando...' : 'Obtener solución →'}
+            </button>
+            <p className={styles.footnote}>
+              ⚠️ Orientación general. Ante riesgo de gas o eléctrico, llamá a un
+              matriculado.
+            </p>
           </div>
-          <button
-            className={styles.submitButton}
-            onClick={handleSubmit}
-            disabled={loading || !prompt.trim()}
-            type="button"
-          >
-            {loading ? 'Analizando...' : 'Obtener solución →'}
-          </button>
-          <p className={styles.footnote}>
-            ⚠️ Orientación general. Ante riesgo de gas o eléctrico, llamá a un
-            matriculado.
-          </p>
+
+          <div className={styles.socialProof}>
+            <span className={styles.proofBadge}>
+              👥 +1.989 problemas resueltos esta semana
+            </span>
+            <span className={styles.proofBadge}>
+              ★★★★★ 4.8 · 342 reseñas
+            </span>
+          </div>
         </div>
       </section>
-
-      <div className={styles.socialProof}>
-        <span className={styles.proofBadge}>
-          👥 +1.989 problemas resueltos esta semana
-        </span>
-        <span className={styles.proofBadge}>
-          ★★★★★ 4.8 · 342 reseñas
-        </span>
-      </div>
 
       {loading && (
         <section className={styles.answerSection} ref={answerRef}>
