@@ -64,15 +64,17 @@
   justify-content: center;
   width: 32px;
   height: 32px;
-  border-radius: 50%;
-  background: var(--bg-light);
-  font-size: 0.875rem;
-  transition: background 0.2s;
+  background: transparent;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  color: var(--text-primary);
+  transition: color 0.2s;
 }
 
 .socialIcon:hover {
-  background: var(--orange);
-  color: var(--white);
+  color: var(--orange);
+  background: transparent;
 }
 
 .ctaButton {
