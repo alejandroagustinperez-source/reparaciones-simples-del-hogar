@@ -1,0 +1,181 @@
+.topBar {
+  background: var(--orange);
+  color: var(--white);
+  text-align: center;
+  padding: 0.625rem 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  margin-top: 64px;
+}
+
+.hero {
+  padding: 2rem 1rem 3rem;
+}
+
+.heroInner {
+  max-width: 1024px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--navy);
+  line-height: 1.2;
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.25rem;
+}
+
+.rating {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin-bottom: 1.5rem;
+}
+
+.stars {
+  color: #f59e0b;
+}
+
+.price {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.priceOriginal {
+  font-size: 1.25rem;
+  color: var(--text-secondary);
+  text-decoration: line-through;
+}
+
+.priceCurrent {
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--navy);
+}
+
+.discountBadge {
+  background: #dc2626;
+  color: var(--white);
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.625rem;
+  border-radius: 4px;
+}
+
+.badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.badge {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.375rem 0.75rem;
+  border-radius: 100px;
+}
+
+.badgeRed {
+  background: #fef2f2;
+  color: #dc2626;
+  border: 1px solid #fecaca;
+}
+
+.badgeGreen {
+  background: #f0fdf4;
+  color: #16a34a;
+  border: 1px solid #bbf7d0;
+}
+
+.badgeYellow {
+  background: #fffbeb;
+  color: #d97706;
+  border: 1px solid #fde68a;
+}
+
+.ctaButton {
+  display: block;
+  width: 100%;
+  max-width: 400px;
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  padding: 1rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 1.125rem;
+  font-weight: 800;
+  text-align: center;
+  transition: opacity 0.2s;
+}
+
+.ctaButton:hover {
+  opacity: 0.9;
+}
+
+.trustFooter {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  max-width: 600px;
+  margin: 1rem auto 0;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+}
+
+.imagePlaceholder {
+  width: 200px;
+  height: 280px;
+  background: #e9ecef;
+  border-radius: var(--border-radius-md);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  flex-shrink: 0;
+}
+
+@media (min-width: 768px) {
+  .heroInner {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .title {
+    font-size: 2rem;
+  }
+
+  .imagePlaceholder {
+    width: 260px;
+    height: 360px;
+    font-size: 5rem;
+    order: 2;
+  }
+}
+
+@media (min-width: 1024px) {
+  .title {
+    font-size: 2.5rem;
+  }
+}

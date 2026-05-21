@@ -1,0 +1,18 @@
+.banner {
+  width: 100%;
+  min-height: 90px;
+  background: #e9ecef;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--border-radius-sm);
+  margin: 2rem 0;
+  overflow: hidden;
+}
+
+.text {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}

@@ -1,0 +1,175 @@
+.page {
+  padding: 6rem 1rem 4rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: var(--orange-light);
+  color: var(--orange);
+  border: 1px solid #fde68a;
+  border-radius: 100px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.title {
+  font-size: 1.75rem;
+  font-weight: 800;
+  color: var(--navy);
+  margin-bottom: 0.75rem;
+}
+
+.subtitle {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+.card {
+  border-radius: var(--border-radius-md);
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  border: 2px solid #e9ecef;
+  background: var(--white);
+  position: relative;
+}
+
+.cardFeatured {
+  border-color: var(--orange);
+}
+
+.cardPro {
+  background: var(--navy);
+  color: var(--white);
+}
+
+.cardPro .featureItem {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.planBadge {
+  display: inline-block;
+  font-size: 0.625rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  text-transform: uppercase;
+  margin-bottom: 0.25rem;
+}
+
+.planBadgeOrange {
+  background: var(--orange);
+  color: var(--white);
+}
+
+.planBadgeNavy {
+  background: #0f2a4a;
+  color: var(--white);
+}
+
+.planName {
+  font-size: 1.25rem;
+  font-weight: 700;
+}
+
+.planPrice {
+  font-size: 0.875rem;
+}
+
+.priceAmount {
+  font-size: 2rem;
+  font-weight: 800;
+}
+
+.features {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.featureItem {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.check {
+  color: #16a34a;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.cardPro .check {
+  color: #4ade80;
+}
+
+.button {
+  padding: 0.75rem;
+  border-radius: var(--border-radius-sm);
+  font-size: 0.9375rem;
+  font-weight: 700;
+  border: none;
+  text-align: center;
+  transition: opacity 0.2s;
+  display: block;
+}
+
+.button:hover {
+  opacity: 0.9;
+}
+
+.buttonOrange {
+  background: var(--orange);
+  color: var(--white);
+}
+
+.buttonWhite {
+  background: var(--white);
+  color: var(--navy);
+}
+
+.footerNote {
+  text-align: center;
+  margin-top: 2rem;
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+}
+
+.footerLink {
+  color: var(--orange);
+  font-weight: 600;
+}
+
+@media (min-width: 768px) {
+  .grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .title {
+    font-size: 2.25rem;
+  }
+}
