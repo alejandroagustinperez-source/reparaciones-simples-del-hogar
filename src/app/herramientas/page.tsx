@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import AdBanner from '@/components/AdBanner';
 import styles from './page.module.css';
 
@@ -17,6 +18,7 @@ const tools = [
   {
     name: 'Destornillador Phillips y plano',
     emoji: '🪛',
+    image: '/herramientas/destornillador.png',
     desc: 'Juego básico de destornilladores de punta plana y cruz (Phillips). Indispensables para electrodomésticos, enchufes y muebles.',
     use: 'Ajustar manijas, reparar electrodomésticos, cambiar enchufes, armar muebles.',
     prices: { sl: '$1.500–$3.000', cm: '$2.000–$4.000', ba: '$2.500–$5.000' },
@@ -24,6 +26,7 @@ const tools = [
   {
     name: 'Pinza universal',
     emoji: '🔧',
+    image: '/herramientas/pinza.png',
     desc: 'Pinza multiuso con mordaza ajustable y cortador lateral. Sirve para sujetar, doblar y cortar cables.',
     use: 'Cortar cables, sujetar tuercas, doblar alambres, sacar clavos.',
     prices: { sl: '$2.000–$3.500', cm: '$2.500–$4.500', ba: '$3.000–$6.000' },
@@ -31,6 +34,7 @@ const tools = [
   {
     name: 'Martillo',
     emoji: '🔨',
+    image: '/herramientas/martillo.png',
     desc: 'Martillo de uña de 450g aprox. Para clavar y extraer clavos en carpintería liviana y reparaciones generales.',
     use: 'Clavar cuadros, reparar cercas, carpintería básica, demoliciones menores.',
     prices: { sl: '$1.800–$3.000', cm: '$2.200–$4.000', ba: '$2.500–$5.000' },
@@ -38,6 +42,7 @@ const tools = [
   {
     name: 'Cinta métrica',
     emoji: '📏',
+    image: '/herramientas/cinta.png',
     desc: 'Flexómetro de 5 metros con freno. Para medir espacios, muebles y materiales con precisión.',
     use: 'Medir ambientes, calcular materiales, verificar dimensiones de muebles.',
     prices: { sl: '$800–$1.500', cm: '$1.000–$2.000', ba: '$1.200–$2.500' },
@@ -45,9 +50,42 @@ const tools = [
   {
     name: 'Llave inglesa ajustable',
     emoji: '🔧',
+    image: '/herramientas/llave.png',
     desc: 'Llave de boca ajustable de 10 pulgadas. Aprieta y afloja tuercas de diferentes tamaños.',
     use: 'Reparar canillas, ajustar conexiones de plomería, trabajar con muebles metálicos.',
     prices: { sl: '$2.500–$4.000', cm: '$3.000–$5.000', ba: '$3.500–$6.500' },
+  },
+  {
+    name: 'Multímetro digital',
+    emoji: '⚡',
+    image: '/herramientas/tester.png',
+    desc: 'Multímetro digital básico para medir voltaje, corriente y continuidad. Esencial para diagnóstico eléctrico.',
+    use: 'Verificar tensión en enchufes, probar continuidad de cables, diagnosticar electrodomésticos.',
+    prices: { sl: '$4.000–$7.000', cm: '$5.000–$9.000', ba: '$6.000–$12.000' },
+  },
+  {
+    name: 'Llave Stillson / para caño',
+    emoji: '🔧',
+    image: '/herramientas/stillson.png',
+    desc: 'Llave Stillson ajustable para tubos y caños. Ideal para plomería y conexiones de gas.',
+    use: 'Aflojar caños, desmontar conexiones de plomería, trabajar con tuberías.',
+    prices: { sl: '$3.000–$5.000', cm: '$3.500–$6.000', ba: '$4.500–$8.000' },
+  },
+  {
+    name: 'Cinta de teflón',
+    emoji: '🧻',
+    image: '/herramientas/teflon.png',
+    desc: 'Cinta selladora de roscas para plomería y gas. Evita pérdidas en conexiones roscadas.',
+    use: 'Sellar uniones de caños, conexiones de canillas, roscas de gas.',
+    prices: { sl: '$300–$600', cm: '$400–$800', ba: '$500–$1.000' },
+  },
+  {
+    name: 'Pelacables',
+    emoji: '⚡',
+    image: '/herramientas/pelacables.png',
+    desc: 'Pinza pelacables automática con corte y crimpado. Para trabajos eléctricos seguros.',
+    use: 'Pelar cables eléctricos, crimpar terminales, cortar cables finos.',
+    prices: { sl: '$1.500–$3.000', cm: '$2.000–$4.000', ba: '$2.500–$5.000' },
   },
   {
     name: 'Nivel de burbuja',
@@ -65,21 +103,14 @@ const tools = [
   },
   {
     name: 'Sellador/silicona',
-    emoji: '🧴',
+    emoji: '🔫',
     desc: 'Pistola aplicadora de silicona y tubos selladores. Para sellar juntas y fisuras.',
     use: 'Sellar grietas en paredes, juntas de baño y cocina, filtrar ventanas.',
     prices: { sl: '$2.000–$4.000', cm: '$2.500–$5.000', ba: '$3.000–$6.000' },
   },
   {
-    name: 'Multímetro digital',
-    emoji: '⚡',
-    desc: 'Multímetro digital básico para medir voltaje, corriente y continuidad. Esencial para diagnóstico eléctrico.',
-    use: 'Verificar tensión en enchufes, probar continuidad de cables, diagnosticar electrodomésticos.',
-    prices: { sl: '$4.000–$7.000', cm: '$5.000–$9.000', ba: '$6.000–$12.000' },
-  },
-  {
     name: 'Sopapa/destapador',
-    emoji: '🚽',
+    emoji: '🪠',
     desc: 'Sopapa de goma clásica para destapar inodoros y bachas.',
     use: 'Destapar inodoros, bachas de cocina, lavatorios y desagües de ducha.',
     prices: { sl: '$800–$1.500', cm: '$1.000–$2.000', ba: '$1.200–$2.500' },
@@ -103,28 +134,42 @@ export default function HerramientasPage() {
       <div className={styles.grid}>
         {tools.map((tool) => (
           <div className={styles.card} key={tool.name}>
-            <div className={styles.imagePlaceholder}>{tool.emoji}</div>
-            <h2 className={styles.toolName}>{tool.name}</h2>
-            <p className={styles.toolDesc}>{tool.desc}</p>
-            <div className={styles.sectionTitle}>Cuándo usarla</div>
-            <p className={styles.useCase}>{tool.use}</p>
-            <div className={styles.sectionTitle}>Precios estimados</div>
-            <table className={styles.priceTable}>
-              <thead>
-                <tr>
-                  <th>San Luis / Interior</th>
-                  <th>Córdoba / Mendoza</th>
-                  <th>Buenos Aires</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>{tool.prices.sl}</td>
-                  <td>{tool.prices.cm}</td>
-                  <td>{tool.prices.ba}</td>
-                </tr>
-              </tbody>
-            </table>
+            {tool.image ? (
+              <div className={styles.imageBox}>
+                <Image
+                  src={tool.image}
+                  alt={tool.name}
+                  width={400}
+                  height={300}
+                  className={styles.toolImage}
+                />
+              </div>
+            ) : (
+              <div className={styles.imagePlaceholder}>{tool.emoji}</div>
+            )}
+            <div className={styles.cardBody}>
+              <h2 className={styles.toolName}>{tool.name}</h2>
+              <p className={styles.toolDesc}>{tool.desc}</p>
+              <div className={styles.sectionTitle}>Cuándo usarla</div>
+              <p className={styles.useCase}>{tool.use}</p>
+              <div className={styles.sectionTitle}>Precios estimados</div>
+              <table className={styles.priceTable}>
+                <thead>
+                  <tr>
+                    <th>San Luis / Interior</th>
+                    <th>Córdoba / Mendoza</th>
+                    <th>Buenos Aires</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>{tool.prices.sl}</td>
+                    <td>{tool.prices.cm}</td>
+                    <td>{tool.prices.ba}</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         ))}
       </div>
