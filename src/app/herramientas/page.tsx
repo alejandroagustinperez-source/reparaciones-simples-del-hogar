@@ -1,18 +1,9 @@
-import type { Metadata } from 'next';
+'use client';
+
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import AdBanner from '@/components/AdBanner';
 import styles from './page.module.css';
-
-export const metadata: Metadata = {
-  title: 'Herramientas básicas para el hogar',
-  description:
-    'Guía de herramientas esenciales para reparaciones del hogar con precios estimados en Argentina. Destornilladores, pinza, martillo y más.',
-  openGraph: {
-    title: 'Herramientas básicas para el hogar | Reparaciones Simples del Hogar',
-    description:
-      'Guía de herramientas esenciales para reparaciones del hogar con precios estimados en Argentina.',
-  },
-};
 
 const tools = [
   {
@@ -90,6 +81,7 @@ const tools = [
   {
     name: 'Nivel de burbuja',
     emoji: '📐',
+    image: '/herramientas/nivel.png',
     desc: 'Nivel de burbuja de 60cm con imán. Para asegurar instalaciones perfectamente niveladas.',
     use: 'Colgar estantes, instalar muebles de cocina, nivelar electrodomésticos.',
     prices: { sl: '$1.500–$2.500', cm: '$1.800–$3.500', ba: '$2.000–$4.000' },
@@ -97,6 +89,7 @@ const tools = [
   {
     name: 'Taladro eléctrico',
     emoji: '🛠️',
+    image: '/herramientas/taladro.png',
     desc: 'Taladro eléctrico o inalámbrico de 12V con juego de mechas. Para perforar paredes y materiales.',
     use: 'Colgar estantes, instalar cortinas, perforar paredes para bachas o muebles.',
     prices: { sl: '$8.000–$15.000', cm: '$10.000–$20.000', ba: '$12.000–$25.000' },
@@ -104,6 +97,7 @@ const tools = [
   {
     name: 'Sellador/silicona',
     emoji: '🔫',
+    image: '/herramientas/sellador.png',
     desc: 'Pistola aplicadora de silicona y tubos selladores. Para sellar juntas y fisuras.',
     use: 'Sellar grietas en paredes, juntas de baño y cocina, filtrar ventanas.',
     prices: { sl: '$2.000–$4.000', cm: '$2.500–$5.000', ba: '$3.000–$6.000' },
@@ -111,6 +105,7 @@ const tools = [
   {
     name: 'Sopapa/destapador',
     emoji: '🪠',
+    image: '/herramientas/sopapa.png',
     desc: 'Sopapa de goma clásica para destapar inodoros y bachas.',
     use: 'Destapar inodoros, bachas de cocina, lavatorios y desagües de ducha.',
     prices: { sl: '$800–$1.500', cm: '$1.000–$2.000', ba: '$1.200–$2.500' },
@@ -118,6 +113,18 @@ const tools = [
 ];
 
 export default function HerramientasPage() {
+  const [location, setLocation] = useState<string | null>(null);
+
+  useEffect(() => {
+    fetch('https://ipapi.co/json/')
+      .then((res) => res.json())
+      .then((data) => {
+        const loc = [data.city, data.region].filter(Boolean).join(' · ');
+        setLocation(loc || 'Argentina');
+      })
+      .catch(() => setLocation('Argentina'));
+  }, []);
+
   return (
     <section className={styles.page}>
       <div className={styles.header}>
@@ -127,15 +134,15 @@ export default function HerramientasPage() {
           profesional.
         </p>
         <span className={styles.locationBadge}>
-          📍 Precios estimados en tu zona (San Luis)
+          📍 Precios estimados en tu zona ({location || 'San Luis'})
         </span>
       </div>
 
       <div className={styles.grid}>
         {tools.map((tool) => (
           <div className={styles.card} key={tool.name}>
-            {tool.image ? (
-              <div className={styles.imageBox}>
+            <div className={styles.imageBox}>
+              {tool.image ? (
                 <Image
                   src={tool.image}
                   alt={tool.name}
@@ -143,32 +150,34 @@ export default function HerramientasPage() {
                   height={300}
                   className={styles.toolImage}
                 />
-              </div>
-            ) : (
-              <div className={styles.imagePlaceholder}>{tool.emoji}</div>
-            )}
+              ) : (
+                <span className={styles.toolEmoji}>{tool.emoji}</span>
+              )}
+            </div>
             <div className={styles.cardBody}>
               <h2 className={styles.toolName}>{tool.name}</h2>
               <p className={styles.toolDesc}>{tool.desc}</p>
-              <div className={styles.sectionTitle}>Cuándo usarla</div>
+              <span className={styles.useBadge}>CUÁNDO USARLA</span>
               <p className={styles.useCase}>{tool.use}</p>
-              <div className={styles.sectionTitle}>Precios estimados</div>
-              <table className={styles.priceTable}>
-                <thead>
-                  <tr>
-                    <th>San Luis / Interior</th>
-                    <th>Córdoba / Mendoza</th>
-                    <th>Buenos Aires</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td>{tool.prices.sl}</td>
-                    <td>{tool.prices.cm}</td>
-                    <td>{tool.prices.ba}</td>
-                  </tr>
-                </tbody>
-              </table>
+
+              <div className={styles.divider} />
+
+              <span className={styles.priceLabel}>PRECIO EN TU ZONA</span>
+              <div className={styles.priceHighlight}>
+                <span>📍 {location || 'Tu zona'}</span>
+                <span className={styles.priceValue}>{tool.prices.sl}</span>
+              </div>
+              <div className={styles.priceRow}>
+                <span>Córdoba / Mendoza</span>
+                <span>{tool.prices.cm}</span>
+              </div>
+              <div className={styles.priceRow}>
+                <span>Buenos Aires</span>
+                <span>{tool.prices.ba}</span>
+              </div>
+              <p className={styles.priceFootnote}>
+                Los precios pueden variar según la tienda
+              </p>
             </div>
           </div>
         ))}
