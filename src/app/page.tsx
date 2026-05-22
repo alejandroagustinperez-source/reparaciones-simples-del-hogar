@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-import AdBanner from '@/components/AdBanner';
+
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
@@ -278,21 +278,76 @@ export default function HomePage() {
         </section>
       )}
 
-      <AdBanner />
+      <section className={styles.categoriasSection}>
+        <div className={styles.sectionInner}>
+          <h2 className={styles.sectionTitle}>Categorías</h2>
+          <p className={styles.sectionSubtitle}>Explorá por tipo de reparación</p>
+          <div className={styles.categoriasGrid}>
+            {[
+              { id: 'electricidad', label: 'Electricidad', icon: '⚡' },
+              { id: 'plomeria', label: 'Plomería', icon: '🔧' },
+              { id: 'gas', label: 'Gas', icon: '🔥' },
+              { id: 'humedad', label: 'Humedad', icon: '💧' },
+              { id: 'pintura', label: 'Pintura', icon: '🎨' },
+              { id: 'carpinteria', label: 'Carpintería', icon: '🪚' },
+            ].map((cat) => (
+              <Link
+                key={cat.id}
+                href={`/?problema=${cat.id}`}
+                className={styles.categoriaCard}
+              >
+                <span className={styles.categoriaIcon}>{cat.icon}</span>
+                <span className={styles.categoriaLabel}>{cat.label}</span>
+              </Link>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <section className={styles.trustSection}>
+        <div className={styles.sectionInner}>
+          <h2 className={styles.sectionTitle}>¿Por qué confiar en nosotros?</h2>
+          <p className={styles.sectionSubtitle}>Todo lo que necesitás para resolverlo vos mismo</p>
+          <div className={styles.trustGrid}>
+            <div className={styles.trustCard}>
+              <span className={styles.trustIcon}>🛡️</span>
+              <h3 className={styles.trustTitle}>Información verificada</h3>
+              <p className={styles.trustDesc}>Todas las guías son revisadas por profesionales matriculados</p>
+            </div>
+            <div className={styles.trustCard}>
+              <span className={styles.trustIcon}>⚡</span>
+              <h3 className={styles.trustTitle}>Solución en minutos</h3>
+              <p className={styles.trustDesc}>Sin esperar turnos ni pagar visitas innecesarias</p>
+            </div>
+            <div className={styles.trustCard}>
+              <span className={styles.trustIcon}>📍</span>
+              <h3 className={styles.trustTitle}>Profesionales cerca tuyo</h3>
+              <p className={styles.trustDesc}>Conectamos con matriculados de tu zona cuando lo necesitás</p>
+            </div>
+          </div>
+        </div>
+      </section>
 
       <section className={styles.ebookSection}>
         <div className={styles.ebookBanner}>
           <div className={styles.ebookContent}>
+            <span className={styles.ebookBadge}>🔥 OFERTA POR TIEMPO LIMITADO</span>
             <h2 className={styles.ebookTitle}>
-              📘 Dejá de gastar miles en técnicos — Arreglalo vos en minutos
+              Dejá de gastar miles en técnicos
             </h2>
-            <p className={styles.ebookSubtext}>
-              Electricidad, plomería, gas y humedad. Sin experiencia previa.
+            <p className={styles.ebookSubtitle}>Arreglalo vos en minutos</p>
+            <p className={styles.ebookDesc}>
+              La guía completa de electricidad, plomería, gas y humedad. Sin experiencia previa. +1.200 personas ya la tienen.
             </p>
+            <ul className={styles.ebookBenefits}>
+              <li className={styles.ebookBenefit}><strong>✓</strong> Pasos simples explicados con fotos</li>
+              <li className={styles.ebookBenefit}><strong>✓</strong> Ahorrás miles de pesos por reparación</li>
+              <li className={styles.ebookBenefit}><strong>✓</strong> Acceso inmediato en PDF y mobile</li>
+            </ul>
             <div className={styles.ebookPrice}>
               <span className={styles.priceOriginal}>$5.999</span>
               <span className={styles.priceCurrent}>$2.999</span>
-              <span className={styles.discountBadge}>-50% HOY</span>
+              <span className={styles.discountBadge}>-50%</span>
             </div>
             <a
               href={process.env.NEXT_PUBLIC_HOTMART_URL || '#'}
@@ -300,10 +355,16 @@ export default function HomePage() {
               rel="noopener noreferrer"
               className={styles.ebookButton}
             >
-              Quiero el Ebook →
+              📥 Quiero el Ebook ahora →
             </a>
+            <p className={styles.ebookButtonFoot}>
+              🔒 Pago seguro · ⚡ Acceso inmediato · 🔄 Garantía 7 días
+            </p>
           </div>
-          <div className={styles.ebookImage}>📘</div>
+          <div className={styles.ebookImageWrap}>
+            <span className={styles.ebookImageEmoji}>📘</span>
+            <span className={styles.ebookImageBadge}>PDF + Mobile</span>
+          </div>
         </div>
       </section>
 
