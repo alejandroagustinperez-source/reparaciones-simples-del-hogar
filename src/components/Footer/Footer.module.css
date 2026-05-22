@@ -65,14 +65,12 @@
   justify-content: center;
   width: 36px;
   height: 36px;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, 0.15);
-  font-size: 0.8125rem;
-  transition: background 0.2s;
+  color: rgba(255, 255, 255, 0.6);
+  transition: color 0.2s;
 }
 
 .socialIcon:hover {
-  background: var(--orange);
+  color: var(--white);
 }
 
 .bottom {
