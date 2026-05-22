@@ -28,8 +28,8 @@ export default function Footer() {
             del hogar. Electricidad, plomería, gas y humedad, explicado paso a paso.
           </p>
           <div className={styles.social}>
-            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Facebook"><FacebookIcon /></a>
-            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialIcon} aria-label="Instagram"><InstagramIcon /></a>
+            <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Facebook"><FacebookIcon /> Facebook</a>
+            <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" className={styles.socialLink} aria-label="Instagram"><InstagramIcon /> Instagram</a>
           </div>
         </div>
 
