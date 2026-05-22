@@ -368,7 +368,7 @@ export default function HomePage() {
               width={500}
               height={620}
               className={styles.ebookImage}
-              style={{ objectFit: 'contain', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.4))', transform: 'rotate(3deg)', maxWidth: '100%' }}
+              style={{ objectFit: 'contain', mixBlendMode: 'multiply', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.5))', transform: 'rotate(2deg)', maxWidth: '100%' }}
             />
           </div>
         </div>

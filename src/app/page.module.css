@@ -724,6 +724,7 @@
   justify-content: center;
   overflow: visible;
   min-height: 220px;
+  background: transparent;
 }
 
 .ebookImage {
