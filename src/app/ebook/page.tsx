@@ -69,9 +69,9 @@ export default function EbookPage() {
             <Image
               src="/ebook.png"
               alt="Ebook Reparaciones Simples del Hogar"
-              width={400}
-              height={500}
-              style={{ objectFit: 'contain' }}
+              width={480}
+              height={580}
+              style={{ objectFit: 'contain', mixBlendMode: 'normal', filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.6))', transform: 'rotate(2deg)' }}
             />
           </div>
         </div>
