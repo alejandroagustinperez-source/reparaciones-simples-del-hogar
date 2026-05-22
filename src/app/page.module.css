@@ -10,12 +10,57 @@
   color: #c2410c;
   font-weight: 500;
   margin-top: 64px;
+  position: relative;
 }
 
 .locationLink {
   color: var(--orange);
-  text-decoration: underline;
   font-weight: 600;
+  text-decoration: underline;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  font-size: inherit;
+}
+
+.locationDropdown {
+  position: absolute;
+  top: 100%;
+  right: 1rem;
+  background: var(--white);
+  border: 1px solid var(--orange);
+  border-radius: var(--border-radius-sm);
+  padding: 1rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.1);
+  z-index: 50;
+  max-width: 340px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.locationDropdown p {
+  color: var(--navy);
+  font-size: 0.875rem;
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.locationDropdownClose {
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: var(--border-radius-sm);
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  font-size: 0.8125rem;
+  cursor: pointer;
+  align-self: flex-end;
+}
+
+.locationDropdownClose:hover {
+  opacity: 0.9;
 }
 
 .hero {

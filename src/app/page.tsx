@@ -47,6 +47,8 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(null);
+  const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const locationRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -58,6 +60,17 @@ export default function HomePage() {
       })
       .catch(() => setLocation('Argentina'));
   }, []);
+
+  useEffect(() => {
+    if (!showLocationDropdown) return;
+    const handler = (e: MouseEvent) => {
+      if (locationRef.current && !locationRef.current.contains(e.target as Node)) {
+        setShowLocationDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    return () => document.removeEventListener('mousedown', handler);
+  }, [showLocationDropdown]);
 
   const handleSubmit = async () => {
     if (!prompt.trim()) return;
@@ -126,11 +139,27 @@ export default function HomePage() {
 
   return (
     <>
-      <div className={styles.locationBar}>
+      <div className={styles.locationBar} ref={locationRef}>
         <span>📍 Detectamos que estás en {location || 'Detectando tu ubicación...'}</span>
-        <a href="#" className={styles.locationLink}>
+        <button
+          className={styles.locationLink}
+          onClick={() => setShowLocationDropdown(!showLocationDropdown)}
+          type="button"
+        >
           Cambiar ubicación
-        </a>
+        </button>
+        {showLocationDropdown && (
+          <div className={styles.locationDropdown}>
+            <p>El directorio de profesionales por zona estará disponible próximamente.</p>
+            <button
+              className={styles.locationDropdownClose}
+              onClick={() => setShowLocationDropdown(false)}
+              type="button"
+            >
+              Cerrar
+            </button>
+          </div>
+        )}
       </div>
 
       <section className={styles.hero}>
