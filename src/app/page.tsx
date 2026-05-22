@@ -80,19 +80,23 @@ export default function HomePage() {
 
   useEffect(() => {
     if (displayCount >= targetCount) return;
-    const step = Math.max(1, Math.floor(targetCount / 60));
-    const timer = setInterval(() => {
-      setDisplayCount((prev) => {
-        const next = prev + step;
-        if (next >= targetCount) {
-          clearInterval(timer);
-          return targetCount;
-        }
-        return next;
-      });
-    }, 25);
-    return () => clearInterval(timer);
-  }, [targetCount, displayCount]);
+    const duration = 2000;
+    const start = performance.now();
+    const from = 0;
+    const diff = targetCount - from;
+    let frame: number;
+    const animate = (now: number) => {
+      const elapsed = now - start;
+      const t = Math.min(elapsed / duration, 1);
+      const easeOut = 1 - Math.pow(1 - t, 3);
+      setDisplayCount(Math.round(from + diff * easeOut));
+      if (t < 1) {
+        frame = requestAnimationFrame(animate);
+      }
+    };
+    frame = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frame);
+  }, [targetCount]);
 
   useEffect(() => {
     if (!showLocationDropdown) return;
@@ -249,14 +253,16 @@ export default function HomePage() {
           </div>
 
           <div className={styles.socialProof}>
-            <div className={styles.proofCard}>
+            <div className={`${styles.proofMetric} ${styles.proofMetricLeft}`}>
+              <span className={styles.liveDot} />
               <span className={styles.proofNumber}>{displayCount.toLocaleString()}</span>
-              <span className={styles.proofLabel}>problemas resueltos</span>
+              <span className={styles.proofLabel}>problemas resueltos esta semana</span>
             </div>
-            <div className={styles.proofCard}>
+            <div className={styles.separator} />
+            <div className={styles.proofMetric}>
               <span className={styles.proofStars}>★★★★★</span>
               <span className={styles.proofNumber}>4.8</span>
-              <span className={styles.proofLabel}>342 reseñas</span>
+              <span className={styles.proofLabel}>de 342 reseñas verificadas</span>
             </div>
           </div>
         </div>
