@@ -146,8 +146,8 @@ export default function HerramientasPage() {
                 <Image
                   src={tool.image}
                   alt={tool.name}
-                  width={400}
-                  height={300}
+                  width={300}
+                  height={200}
                   className={styles.toolImage}
                 />
               ) : (
