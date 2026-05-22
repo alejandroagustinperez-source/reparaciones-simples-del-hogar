@@ -365,9 +365,10 @@ export default function HomePage() {
             <Image
               src="/ebook.png"
               alt="Ebook Reparaciones Simples del Hogar"
-              width={400}
-              height={500}
-              style={{ objectFit: 'contain', borderRadius: '12px' }}
+              width={500}
+              height={620}
+              className={styles.ebookImage}
+              style={{ objectFit: 'contain', filter: 'drop-shadow(0 20px 40px rgba(0,0,0,0.4))', transform: 'rotate(3deg)', maxWidth: '100%' }}
             />
           </div>
         </div>
