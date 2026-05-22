@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import AdBanner from '@/components/AdBanner';
+import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
 const chips = [
@@ -47,6 +48,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(null);
+  const [visitCount, setVisitCount] = useState<number | null>(null);
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const locationRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
@@ -59,6 +61,16 @@ export default function HomePage() {
         setLocation(loc || 'Argentina');
       })
       .catch(() => setLocation('Argentina'));
+  }, []);
+
+  useEffect(() => {
+    const sb = supabase;
+    if (!sb) return;
+    sb.from('visitas').insert({}).then(() => {
+      sb.from('visitas').select('*', { count: 'exact', head: true }).then(({ count }) => {
+        if (count !== null) setVisitCount(count);
+      });
+    });
   }, []);
 
   useEffect(() => {
@@ -217,7 +229,7 @@ export default function HomePage() {
 
           <div className={styles.socialProof}>
             <span className={styles.proofBadge}>
-              👥 +1.989 problemas resueltos esta semana
+              👥 {visitCount ? `+${visitCount.toLocaleString()}` : '+1.989'} problemas resueltos esta semana
             </span>
             <span className={styles.proofBadge}>
               ★★★★★ 4.8 · 342 reseñas
