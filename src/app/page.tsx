@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Link from 'next/link';
-
+import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
@@ -362,8 +362,13 @@ export default function HomePage() {
             </p>
           </div>
           <div className={styles.ebookImageWrap}>
-            <span className={styles.ebookImageEmoji}>📘</span>
-            <span className={styles.ebookImageBadge}>PDF + Mobile</span>
+            <Image
+              src="/ebook.png"
+              alt="Ebook Reparaciones Simples del Hogar"
+              width={400}
+              height={500}
+              style={{ objectFit: 'contain', borderRadius: '12px' }}
+            />
           </div>
         </div>
       </section>

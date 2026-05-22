@@ -1,4 +1,5 @@
 import type { Metadata } from 'next';
+import Image from 'next/image';
 import styles from './page.module.css';
 
 export const metadata: Metadata = {
@@ -64,7 +65,15 @@ export default function EbookPage() {
               <span>🔄 Garantía 7 días</span>
             </div>
           </div>
-          <div className={styles.imagePlaceholder}>📘</div>
+          <div className={styles.imagePlaceholder}>
+            <Image
+              src="/ebook.png"
+              alt="Ebook Reparaciones Simples del Hogar"
+              width={400}
+              height={500}
+              style={{ objectFit: 'contain' }}
+            />
+          </div>
         </div>
       </section>
     </>
