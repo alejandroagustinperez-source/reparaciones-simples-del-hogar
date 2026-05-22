@@ -5,6 +5,8 @@ import AdBanner from '@/components/AdBanner';
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
 
+const UMBRAL = 1989;
+
 const chips = [
   'El lavarropas no desagota',
   'Goteo en la canilla del baño',
@@ -49,6 +51,7 @@ export default function HomePage() {
   const [answer, setAnswer] = useState<string | null>(null);
   const [location, setLocation] = useState<string | null>(null);
   const [visitCount, setVisitCount] = useState<number | null>(null);
+  const [displayCount, setDisplayCount] = useState(0);
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const locationRef = useRef<HTMLDivElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
@@ -72,6 +75,24 @@ export default function HomePage() {
       });
     });
   }, []);
+
+  const targetCount = visitCount !== null ? Math.max(UMBRAL, visitCount) : UMBRAL;
+
+  useEffect(() => {
+    if (displayCount >= targetCount) return;
+    const step = Math.max(1, Math.floor(targetCount / 60));
+    const timer = setInterval(() => {
+      setDisplayCount((prev) => {
+        const next = prev + step;
+        if (next >= targetCount) {
+          clearInterval(timer);
+          return targetCount;
+        }
+        return next;
+      });
+    }, 25);
+    return () => clearInterval(timer);
+  }, [targetCount, displayCount]);
 
   useEffect(() => {
     if (!showLocationDropdown) return;
@@ -228,12 +249,15 @@ export default function HomePage() {
           </div>
 
           <div className={styles.socialProof}>
-            <span className={styles.proofBadge}>
-              👥 {visitCount ? `+${visitCount.toLocaleString()}` : '+1.989'} problemas resueltos esta semana
-            </span>
-            <span className={styles.proofBadge}>
-              ★★★★★ 4.8 · 342 reseñas
-            </span>
+            <div className={styles.proofCard}>
+              <span className={styles.proofNumber}>{displayCount.toLocaleString()}</span>
+              <span className={styles.proofLabel}>problemas resueltos</span>
+            </div>
+            <div className={styles.proofCard}>
+              <span className={styles.proofStars}>★★★★★</span>
+              <span className={styles.proofNumber}>4.8</span>
+              <span className={styles.proofLabel}>342 reseñas</span>
+            </div>
           </div>
         </div>
       </section>
