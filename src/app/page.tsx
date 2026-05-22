@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import AdBanner from '@/components/AdBanner';
 import styles from './page.module.css';
 
@@ -46,7 +46,18 @@ export default function HomePage() {
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState<string | null>(null);
+  const [location, setLocation] = useState<string | null>(null);
   const answerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    fetch('https://ipapi.co/json/')
+      .then((res) => res.json())
+      .then((data) => {
+        const loc = [data.city, data.region].filter(Boolean).join(' · ');
+        setLocation(loc || 'Argentina');
+      })
+      .catch(() => setLocation('Argentina'));
+  }, []);
 
   const handleSubmit = async () => {
     if (!prompt.trim()) return;
@@ -116,7 +127,7 @@ export default function HomePage() {
   return (
     <>
       <div className={styles.locationBar}>
-        <span>📍 Detectamos que estás en San Luis</span>
+        <span>📍 Detectamos que estás en {location || 'Detectando tu ubicación...'}</span>
         <a href="#" className={styles.locationLink}>
           Cambiar ubicación
         </a>
