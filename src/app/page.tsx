@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import Link from 'next/link';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import styles from './page.module.css';
@@ -111,6 +110,12 @@ export default function HomePage() {
         answerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
       }, 100);
     }
+  };
+
+  const handleProblemaClick = (label: string) => {
+    setPrompt(label);
+    textareaRef.current?.focus();
+    textareaRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
@@ -243,17 +248,18 @@ export default function HomePage() {
           </p>
           <div className={styles.problemasGrid}>
             {problemas.map((p, i) => (
-              <Link
+              <button
                 key={p.id}
-                href={`/?problema=${p.id}`}
                 className={styles.problemaCard}
+                onClick={() => handleProblemaClick(p.label)}
+                type="button"
               >
                 <span className={styles.problemaNumber}>{i + 1}</span>
                 <span className={styles.problemaIcon}>{p.icon}</span>
                 <h3 className={styles.problemaLabel}>{p.label}</h3>
                 <p className={styles.problemaDesc}>{p.desc}</p>
                 <span className={styles.problemaLink}>Ver solución →</span>
-              </Link>
+              </button>
             ))}
           </div>
         </div>
@@ -283,23 +289,25 @@ export default function HomePage() {
           <h2 className={styles.sectionTitle}>Categorías</h2>
           <p className={styles.sectionSubtitle}>Explorá por tipo de reparación</p>
           <div className={styles.categoriasGrid}>
-            {[
-              { id: 'electricidad', label: 'Electricidad', icon: '⚡' },
-              { id: 'plomeria', label: 'Plomería', icon: '🔧' },
-              { id: 'gas', label: 'Gas', icon: '🔥' },
-              { id: 'humedad', label: 'Humedad', icon: '💧' },
-              { id: 'pintura', label: 'Pintura', icon: '🎨' },
-              { id: 'carpinteria', label: 'Carpintería', icon: '🪚' },
-            ].map((cat) => (
-              <Link
-                key={cat.id}
-                href={`/?problema=${cat.id}`}
-                className={styles.categoriaCard}
-              >
-                <span className={styles.categoriaIcon}>{cat.icon}</span>
-                <span className={styles.categoriaLabel}>{cat.label}</span>
-              </Link>
-            ))}
+              {[
+                { id: 'electricidad', label: 'Electricidad', icon: '⚡', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electricidad' },
+                { id: 'plomeria', label: 'Plomería', icon: '🔧', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=plomeria' },
+                { id: 'gas', label: 'Gas', icon: '🔥', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=gas' },
+                { id: 'humedad', label: 'Humedad', icon: '💧', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=humedad' },
+                { id: 'pintura', label: 'Pintura', icon: '🎨', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=pintura' },
+                { id: 'carpinteria', label: 'Carpintería', icon: '🪚', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=carpinteria' },
+              ].map((cat) => (
+                <a
+                  key={cat.id}
+                  href={cat.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className={styles.categoriaCard}
+                >
+                  <span className={styles.categoriaIcon}>{cat.icon}</span>
+                  <span className={styles.categoriaLabel}>{cat.label}</span>
+                </a>
+              ))}
           </div>
         </div>
       </section>
