@@ -4,6 +4,21 @@
   margin: 0 auto;
 }
 
+.locationBanner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background: var(--orange-light);
+  color: var(--orange);
+  border: 1px solid #fde68a;
+  border-radius: 100px;
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
 .header {
   text-align: center;
   margin-bottom: 3rem;
@@ -39,6 +54,18 @@
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.04);
   border: 1px solid #e9ecef;
+}
+
+.infoIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--orange-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
 }
 
 .infoTitle {
@@ -131,6 +158,7 @@
   font-size: 1rem;
   font-weight: 700;
   transition: opacity 0.2s;
+  cursor: pointer;
 }
 
 .submitButton:hover {

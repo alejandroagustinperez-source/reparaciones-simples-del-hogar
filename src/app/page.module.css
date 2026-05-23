@@ -64,7 +64,7 @@
 }
 
 .hero {
-  background: var(--navy);
+  background: linear-gradient(135deg, #1e3a5f 0%, #2d5a8e 100%);
   color: var(--white);
   padding: 5rem 1rem;
 }
@@ -120,13 +120,16 @@
   background: transparent;
   border: 1px solid rgba(255, 255, 255, 0.2);
   border-radius: var(--border-radius-md);
-  padding: 0.625rem 1rem;
+  padding: 0.5rem 0.75rem;
   margin-bottom: 2rem;
   font-size: 0.8125rem;
 }
 
 .step {
   white-space: nowrap;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 100px;
+  padding: 0.25rem 0.75rem;
 }
 
 .arrow {
@@ -172,16 +175,52 @@
   border-color: var(--orange);
 }
 
+.searchBottomRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 0.75rem;
+}
+
+.suggestionChips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  flex: 1;
+  min-width: 0;
+}
+
+.suggestionChip {
+  background: transparent;
+  border: 1px solid #dee2e6;
+  border-radius: 100px;
+  padding: 0.375rem 0.75rem;
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+  font-family: inherit;
+}
+
+.suggestionChip:hover {
+  border-color: var(--orange);
+  color: var(--orange);
+}
+
 .submitButton {
-  width: 100%;
   background: var(--orange);
   color: var(--white);
   border: none;
-  padding: 0.875rem;
+  padding: 0.625rem 1.25rem;
   border-radius: var(--border-radius-sm);
-  font-size: 1rem;
+  font-size: 0.9375rem;
   font-weight: 700;
   transition: opacity 0.2s;
+  white-space: nowrap;
+  flex-shrink: 0;
+  cursor: pointer;
 }
 
 .submitButton:hover {
@@ -196,7 +235,6 @@
 .footnote {
   font-size: 0.75rem;
   color: var(--text-secondary);
-  margin-top: 0.75rem;
   text-align: center;
 }
 
@@ -204,32 +242,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 0;
+  gap: 0.75rem;
   margin-top: 2rem;
   flex-wrap: wrap;
 }
 
-.proofMetric {
-  display: flex;
-  flex-direction: column;
+.proofPill {
+  display: inline-flex;
   align-items: center;
-  gap: 0.25rem;
-  padding: 0.5rem 2rem;
-}
-
-.proofMetricLeft {
-  position: relative;
+  gap: 0.5rem;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 100px;
+  padding: 0.5rem 1rem;
+  font-size: 0.8125rem;
+  color: var(--white);
+  font-weight: 500;
 }
 
 .liveDot {
-  position: absolute;
-  left: -18px;
-  top: 6px;
   width: 8px;
   height: 8px;
   background: var(--orange);
   border-radius: 50%;
   animation: pulse 2s ease-in-out infinite;
+  flex-shrink: 0;
 }
 
 @keyframes pulse {
@@ -237,54 +273,31 @@
   50% { opacity: 0.4; transform: scale(0.8); }
 }
 
-.proofNumber {
-  font-size: 3rem;
-  font-weight: 800;
-  color: var(--white);
-  line-height: 1;
-}
-
-.proofLabel {
-  font-size: 0.8125rem;
-  color: rgba(255, 255, 255, 0.6);
-  font-weight: 500;
-  white-space: nowrap;
-}
-
-.proofStars {
+.heroActions {
   display: flex;
-  gap: 2px;
-  font-size: 1rem;
-  color: var(--orange);
-  line-height: 1;
-  margin-bottom: 2px;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.separator {
-  width: 1px;
-  height: 48px;
-  background: rgba(255, 255, 255, 0.2);
-  flex-shrink: 0;
+.heroActionBtn {
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 100px;
+  padding: 0.5rem 1.25rem;
+  font-size: 0.8125rem;
+  color: var(--white);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: inherit;
 }
 
-@media (max-width: 639px) {
-  .socialProof {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .proofMetric {
-    padding: 0.5rem 1.5rem;
-  }
-
-  .separator {
-    width: 48px;
-    height: 1px;
-  }
-
-  .liveDot {
-    left: -16px;
-  }
+.heroActionBtn:hover {
+  border-color: var(--white);
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .answerSection {
@@ -318,10 +331,113 @@
   margin-bottom: 2rem;
 }
 
+.problemasHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 0.25rem;
+}
+
+.trendBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--orange-light);
+  color: var(--orange);
+  border-radius: 100px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.sectionTitleLeft {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--navy);
+  text-align: left;
+  margin-bottom: 0.25rem;
+}
+
+.sectionSubtitleLeft {
+  font-size: 0.9375rem;
+  color: var(--text-secondary);
+  text-align: left;
+  margin-bottom: 1.5rem;
+}
+
+.verTodos {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--orange);
+  text-decoration: none;
+  white-space: nowrap;
+  margin-top: 0.25rem;
+}
+
+.verTodos:hover {
+  text-decoration: underline;
+}
+
+.problemaSearchRow {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.searchInputWrap {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--white);
+  border: 1px solid #dee2e6;
+  border-radius: 100px;
+  padding: 0 1rem;
+}
+
+.searchInputWrap input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0.625rem 0;
+  font-size: 0.875rem;
+  color: var(--text-primary);
+  background: transparent;
+  font-family: inherit;
+}
+
+.problemaSearchBtn {
+  background: var(--orange);
+  color: var(--white);
+  border: none;
+  border-radius: 100px;
+  padding: 0.625rem 1.25rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  font-family: inherit;
+  transition: opacity 0.2s;
+}
+
+.problemaSearchBtn:hover {
+  opacity: 0.9;
+}
+
+.problemaGridScroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 0.5rem;
+  margin: -0.25rem;
+  padding: 0.25rem;
+}
+
 .problemasGrid {
   display: grid;
-  grid-template-columns: 1fr;
-  gap: 1rem;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0.75rem;
 }
 
 .problemaCard {
@@ -330,11 +446,11 @@
   position: relative;
   background: var(--white);
   border: 1px solid #e9ecef;
-  border-radius: var(--border-radius-md);
-  padding: 1.25rem 1.25rem 1.25rem 3.25rem;
+  border-radius: 16px;
+  padding: 1rem 0.875rem 0.875rem;
   cursor: pointer;
   transition: border-color 0.2s, box-shadow 0.2s;
-  text-align: left;
+  text-align: center;
   font: inherit;
   color: inherit;
   outline: none;
@@ -347,8 +463,8 @@
 
 .problemaNumber {
   position: absolute;
-  top: 1rem;
-  left: 1rem;
+  top: 0.5rem;
+  left: 0.5rem;
   width: 22px;
   height: 22px;
   border-radius: 50%;
@@ -362,28 +478,38 @@
 }
 
 .problemaIcon {
-  font-size: 1.25rem;
-  line-height: 1;
-  display: block;
-  margin-bottom: 0.375rem;
-}
-
-.problemaLabel {
-  font-size: 0.9375rem;
-  font-weight: 600;
-  color: var(--navy);
-  margin-bottom: 0.25rem;
-}
-
-.problemaDesc {
-  font-size: 0.8125rem;
-  color: var(--text-secondary);
-  line-height: 1.5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--orange-light);
+  font-size: 1.125rem;
   margin-bottom: 0.5rem;
 }
 
-.problemaLink {
+.problemaLabel {
   font-size: 0.8125rem;
+  font-weight: 700;
+  color: var(--navy);
+  margin-bottom: 0.25rem;
+  line-height: 1.3;
+}
+
+.problemaDesc {
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.problemaLink {
+  font-size: 0.75rem;
   font-weight: 600;
   color: var(--orange);
 }
@@ -410,13 +536,13 @@
 
 .categoriasSection {
   padding: 5rem 1rem;
-  background: var(--bg-light);
+  background: #f8f9fa;
 }
 
 .categoriasGrid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.75rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
 }
 
 .categoriaCard {
@@ -425,12 +551,13 @@
   align-items: center;
   gap: 0.5rem;
   background: var(--white);
-  border-radius: var(--border-radius-md);
-  padding: 1.25rem 1rem;
+  border-radius: 16px;
+  padding: 1.5rem 1rem;
   border: 1px solid #e9ecef;
   transition: border-color 0.2s, box-shadow 0.2s;
   text-decoration: none;
   cursor: pointer;
+  text-align: center;
 }
 
 .categoriaCard:hover {
@@ -438,15 +565,27 @@
   box-shadow: 0 4px 16px rgba(0,0,0,0.06);
 }
 
-.categoriaIcon {
-  font-size: 1.75rem;
-  line-height: 1;
+.categoriaIconBg {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  flex-shrink: 0;
 }
 
 .categoriaLabel {
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--navy);
+}
+
+.categoriaDesc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  line-height: 1.3;
 }
 
 .trustSection {
@@ -462,9 +601,10 @@
 
 .trustCard {
   background: var(--white);
-  border-radius: var(--border-radius-md);
+  border-radius: 16px;
   padding: 1.5rem;
   border: 1px solid #e9ecef;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.04);
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
@@ -489,12 +629,8 @@
 }
 
 @media (min-width: 640px) {
-  .problemasGrid {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .categoriasGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .trustGrid {
@@ -513,8 +649,51 @@
     padding: 5rem 2rem;
   }
 
-  .sectionTitle {
+  .sectionTitle,
+  .sectionTitleLeft {
     font-size: 1.75rem;
+  }
+}
+
+@media (max-width: 1023px) {
+  .problemasGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .categoriasGrid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 639px) {
+  .suggestionChips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 0.25rem;
+  }
+
+  .searchBottomRow {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .submitButton {
+    width: 100%;
+  }
+
+  .problemasGrid {
+    display: flex;
+    gap: 0.75rem;
+  }
+
+  .problemaCard {
+    min-width: 220px;
+    flex-shrink: 0;
+  }
+
+  .categoriasGrid {
+    grid-template-columns: 1fr 1fr;
   }
 }
 

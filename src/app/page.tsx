@@ -16,6 +16,17 @@ const problemas = [
   { id: 'Humedad+en+la+pared', label: 'Humedad en la pared', icon: '🧱', desc: 'Manchas de humedad, moho o ampollas en la pintura de paredes.' },
 ];
 
+const categorias = [
+  { id: 'electricidad', label: 'Electricidad', icon: '⚡', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electricidad', desc: 'Luces, tomas y llaves térmicas', color: '#fee2e2' },
+  { id: 'plomeria', label: 'Plomería', icon: '🔧', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=plomeria', desc: 'Canillas, tanques y desagües', color: '#dbeafe' },
+  { id: 'gas', label: 'Gas', icon: '🔥', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=gas', desc: 'Cocina, calefón y estufas', color: '#ffedd5' },
+  { id: 'humedad', label: 'Humedad', icon: '💧', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=humedad', desc: 'Filtraciones, moho y paredes', color: '#e0f2fe' },
+  { id: 'pintura', label: 'Pintura', icon: '🎨', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=pintura', desc: 'Paredes, techos y exteriores', color: '#f3e8ff' },
+  { id: 'carpinteria', label: 'Carpintería', icon: '🪚', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=carpinteria', desc: 'Muebles, puertas y ventanas', color: '#fef3c7' },
+  { id: 'jardineria', label: 'Jardinería', icon: '🌿', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=jardineria', desc: 'Plantas, riego y césped', color: '#dcfce7' },
+  { id: 'cerrajeria', label: 'Cerrajería', icon: '🔑', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=cerrajeria', desc: 'Cerraduras, llaves y candados', color: '#f3f4f6' },
+];
+
 export default function HomePage() {
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
@@ -27,6 +38,8 @@ export default function HomePage() {
   const locationRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
+  const problemasRef = useRef<HTMLDivElement>(null);
+  const categoriasRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
@@ -195,13 +208,13 @@ export default function HomePage() {
           <div className={styles.howItWorks}>
             <span className={styles.step}>💬 Describís el problema</span>
             <span className={styles.arrow}>→</span>
-            <span className={styles.step}>🤖 La IA analiza</span>
+            <span className={styles.step}>🔍 La IA analiza</span>
             <span className={styles.arrow}>→</span>
             <span className={styles.step}>✅ Recibís la solución</span>
           </div>
 
           <div className={styles.searchBox}>
-            <span className={styles.searchLabel}>ASISTENTE IA · GRATIS</span>
+            <span className={styles.searchLabel}>⚡ ASISTENTE IA · GRATIS</span>
             <textarea
               ref={textareaRef}
               className={styles.textarea}
@@ -210,14 +223,28 @@ export default function HomePage() {
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
             />
-            <button
-              className={styles.submitButton}
-              onClick={handleSubmit}
-              disabled={loading || !prompt.trim()}
-              type="button"
-            >
-              {loading ? 'Analizando...' : 'Obtener solución →'}
-            </button>
+            <div className={styles.searchBottomRow}>
+              <div className={styles.suggestionChips}>
+                {problemas.slice(0, 4).map((p) => (
+                  <button
+                    key={p.id}
+                    className={styles.suggestionChip}
+                    onClick={() => handleProblemaClick(p.label)}
+                    type="button"
+                  >
+                    {p.label}
+                  </button>
+                ))}
+              </div>
+              <button
+                className={styles.submitButton}
+                onClick={handleSubmit}
+                disabled={loading || !prompt.trim()}
+                type="button"
+              >
+                {loading ? 'Analizando...' : 'Obtener solución →'}
+              </button>
+            </div>
             <p className={styles.footnote}>
               ⚠️ Orientación general. Ante riesgo de gas o eléctrico, llamá a un
               matriculado.
@@ -225,42 +252,77 @@ export default function HomePage() {
           </div>
 
           <div className={styles.socialProof}>
-            <div className={`${styles.proofMetric} ${styles.proofMetricLeft}`}>
+            <div className={styles.proofPill}>
               <span className={styles.liveDot} />
-              <span className={styles.proofNumber}>{displayCount.toLocaleString()}</span>
-              <span className={styles.proofLabel}>problemas resueltos esta semana</span>
+              +{displayCount.toLocaleString()} problemas resueltos esta semana
             </div>
-            <div className={styles.separator} />
-            <div className={styles.proofMetric}>
-              <span className={styles.proofStars}>★★★★★</span>
-              <span className={styles.proofNumber}>4.8</span>
-              <span className={styles.proofLabel}>de 342 reseñas verificadas</span>
+            <div className={styles.proofPill}>
+              ⭐ 4.8 · 342 reseñas
             </div>
+          </div>
+
+          <div className={styles.heroActions}>
+            <button
+              className={styles.heroActionBtn}
+              onClick={() => problemasRef.current?.scrollIntoView({ behavior: 'smooth' })}
+              type="button"
+            >
+              🔍 Problemas más buscados
+            </button>
+            <button
+              className={styles.heroActionBtn}
+              onClick={() => categoriasRef.current?.scrollIntoView({ behavior: 'smooth' })}
+              type="button"
+            >
+              📂 Categorías
+            </button>
           </div>
         </div>
       </section>
 
-      <section className={styles.problemasSection}>
+      <section className={styles.problemasSection} ref={problemasRef}>
         <div className={styles.sectionInner}>
-          <h2 className={styles.sectionTitle}>Problemas más consultados</h2>
-          <p className={styles.sectionSubtitle}>
+          <div className={styles.problemasHeader}>
+            <div>
+              <span className={styles.trendBadge}>🔥 En tendencia</span>
+              <h2 className={styles.sectionTitleLeft}>Problemas más consultados</h2>
+            </div>
+            <a
+              href="https://blog.reparacionessimplesdelhogar.com.ar"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={styles.verTodos}
+            >
+              Ver todos →
+            </a>
+          </div>
+          <p className={styles.sectionSubtitleLeft}>
             Elegí el problema que tengas y te guiamos paso a paso
           </p>
-          <div className={styles.problemasGrid}>
-            {problemas.map((p, i) => (
-              <button
-                key={p.id}
-                className={styles.problemaCard}
-                onClick={() => handleProblemaClick(p.label)}
-                type="button"
-              >
-                <span className={styles.problemaNumber}>{i + 1}</span>
-                <span className={styles.problemaIcon}>{p.icon}</span>
-                <h3 className={styles.problemaLabel}>{p.label}</h3>
-                <p className={styles.problemaDesc}>{p.desc}</p>
-                <span className={styles.problemaLink}>Ver solución →</span>
-              </button>
-            ))}
+          <div className={styles.problemaSearchRow}>
+            <div className={styles.searchInputWrap}>
+              <span>🔍</span>
+              <input type="text" placeholder="Buscar problema..." />
+            </div>
+            <button className={styles.problemaSearchBtn} type="button">Buscar</button>
+          </div>
+          <div className={styles.problemaGridScroll}>
+            <div className={styles.problemasGrid}>
+              {problemas.map((p, i) => (
+                <button
+                  key={p.id}
+                  className={styles.problemaCard}
+                  onClick={() => handleProblemaClick(p.label)}
+                  type="button"
+                >
+                  <span className={styles.problemaNumber}>{i + 1}</span>
+                  <span className={styles.problemaIcon}>{p.icon}</span>
+                  <h3 className={styles.problemaLabel}>{p.label}</h3>
+                  <p className={styles.problemaDesc}>{p.desc}</p>
+                  <span className={styles.problemaLink}>Ver solución →</span>
+                </button>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -284,30 +346,26 @@ export default function HomePage() {
         </section>
       )}
 
-      <section className={styles.categoriasSection}>
+      <section className={styles.categoriasSection} ref={categoriasRef}>
         <div className={styles.sectionInner}>
-          <h2 className={styles.sectionTitle}>Categorías</h2>
-          <p className={styles.sectionSubtitle}>Explorá por tipo de reparación</p>
+          <h2 className={styles.sectionTitleLeft}>Categorías</h2>
+          <p className={styles.sectionSubtitleLeft}>Explorá por tipo de reparación</p>
           <div className={styles.categoriasGrid}>
-              {[
-                { id: 'electricidad', label: 'Electricidad', icon: '⚡', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electricidad' },
-                { id: 'plomeria', label: 'Plomería', icon: '🔧', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=plomeria' },
-                { id: 'gas', label: 'Gas', icon: '🔥', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=gas' },
-                { id: 'humedad', label: 'Humedad', icon: '💧', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=humedad' },
-                { id: 'pintura', label: 'Pintura', icon: '🎨', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=pintura' },
-                { id: 'carpinteria', label: 'Carpintería', icon: '🪚', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=carpinteria' },
-              ].map((cat) => (
-                <a
-                  key={cat.id}
-                  href={cat.href}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={styles.categoriaCard}
-                >
-                  <span className={styles.categoriaIcon}>{cat.icon}</span>
-                  <span className={styles.categoriaLabel}>{cat.label}</span>
-                </a>
-              ))}
+            {categorias.map((cat) => (
+              <a
+                key={cat.id}
+                href={cat.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={styles.categoriaCard}
+              >
+                <div className={styles.categoriaIconBg} style={{ background: cat.color }}>
+                  {cat.icon}
+                </div>
+                <span className={styles.categoriaLabel}>{cat.label}</span>
+                <span className={styles.categoriaDesc}>{cat.desc}</span>
+              </a>
+            ))}
           </div>
         </div>
       </section>
@@ -390,7 +448,7 @@ export default function HomePage() {
         aria-label="WhatsApp"
       >
         <svg width="26" height="26" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg">
-          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.815 11.815 0 00-3.48-8.413z"/>
         </svg>
       </a>
     </>

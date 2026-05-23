@@ -16,8 +16,10 @@ export default function ProfesionalesPage() {
   return (
     <section className={styles.page}>
       <div className={styles.header}>
-        <div className={styles.badge}>Sos profesional</div>
-        <h1 className={styles.title}>Sumate y recibí clientes reales</h1>
+        <div className={styles.badge}>✨ Sos profesional</div>
+        <h1 className={styles.title}>
+          Sumate y recibí <span className={styles.orangeText}>clientes reales</span>
+        </h1>
         <p className={styles.subtitle}>
           Elegí el plan que mejor se adapta a vos. Pago seguro con Mercado
           Pago, sin permanencia.
@@ -107,7 +109,7 @@ export default function ProfesionalesPage() {
             href={process.env.NEXT_PUBLIC_MP_PRO_URL || '#'}
             target="_blank"
             rel="noopener noreferrer"
-            className={`${styles.button} ${styles.buttonWhite}`}
+            className={`${styles.button} ${styles.buttonOrange}`}
           >
             Comprar Plan PRO →
           </a>
