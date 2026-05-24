@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { MapPin, X } from 'lucide-react';
+import { MapPin, X, Download } from 'lucide-react';
 import styles from './page.module.css';
 
 function AccordionItem({ question, answer }: { question: string; answer: string }) {
@@ -100,7 +100,8 @@ export default function EbookPage() {
               <span className={`${styles.badge} ${styles.badgeOutline}`}>Oferta por tiempo limitado</span>
             </div>
             <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.heroCtaButton}>
-              ⬇ QUIERO EL EBOOK AHORA
+              <Download size={20} />
+              QUIERO EL EBOOK AHORA
             </a>
             <div className={styles.heroTrust}>
               <span>🔒 Pago 100% seguro</span>
