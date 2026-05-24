@@ -865,7 +865,7 @@
 
 .whatsappInner {
   max-width: 900px;
-  margin: 0 auto 32px;
+  margin: 0 auto 24px;
 }
 
 .whatsappCard {
@@ -926,7 +926,7 @@
 
 /* CTA FINAL */
 .ctaFinalSection {
-  padding: 4rem 1rem;
+  padding: 0 1rem 4rem;
   background: var(--white);
 }
 
@@ -1132,5 +1132,160 @@
 
   .contentGrid {
     grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 767px) {
+  /* Hero section */
+  .hero {
+    padding: 40px 16px;
+  }
+
+  .heroTitle {
+    font-size: 28px;
+  }
+
+  .heroImage {
+    max-width: 280px;
+    margin: 0 auto;
+  }
+
+  .badgesRow {
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .heroCtaButton {
+    width: 100%;
+  }
+
+  .heroTrust {
+    flex-wrap: wrap;
+  }
+
+  /* Stats section */
+  .statsSection {
+    padding: 40px 16px;
+  }
+
+  .statsGrid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .statNumber {
+    font-size: 1.25rem;
+  }
+
+  /* Problem section */
+  .problemSection {
+    padding: 40px 16px;
+  }
+
+  .problemGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .problemCard {
+    padding: 16px;
+  }
+
+  /* Content section */
+  .contentSection {
+    padding: 40px 16px;
+  }
+
+  .contentGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .contentCard {
+    padding: 16px;
+  }
+
+  /* Benefits section */
+  .benefitsSection {
+    padding: 40px 16px;
+  }
+
+  .benefitsTitle {
+    font-size: 28px;
+  }
+
+  .benefitsCardsGrid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .benefitCard {
+    padding: 16px;
+  }
+
+  /* Testimonials section */
+  .testimonialsSection {
+    padding: 40px 16px;
+  }
+
+  .testimonialsGrid {
+    grid-template-columns: 1fr;
+  }
+
+  .testimonialCard {
+    padding: 20px;
+  }
+
+  /* Guarantee section */
+  .guaranteeSection {
+    padding: 40px 16px;
+  }
+
+  .guaranteeCard {
+    flex-direction: column;
+    padding: 20px;
+  }
+
+  .guaranteeIconCircle {
+    margin-right: 0;
+    margin-bottom: 16px;
+  }
+
+  /* FAQ section */
+  .faqSection {
+    padding: 40px 16px;
+  }
+
+  /* WhatsApp section */
+  .whatsappSection {
+    padding: 40px 16px;
+  }
+
+  /* CTA Final */
+  .ctaFinalSection {
+    padding: 0 1rem 40px;
+  }
+
+  .ctaFinalCard {
+    padding: 40px 24px;
+  }
+
+  .ctaFinalTitle {
+    font-size: 28px;
+    white-space: normal;
+  }
+
+  .ctaPriceCurrent {
+    font-size: 36px;
+  }
+
+  .ctaFinalBtn {
+    width: 100%;
+  }
+
+  /* Typography overrides */
+  .sectionTitle,
+  .sectionTitleLight {
+    font-size: 24px;
+  }
+
+  .sectionSub {
+    font-size: 15px;
   }
 }

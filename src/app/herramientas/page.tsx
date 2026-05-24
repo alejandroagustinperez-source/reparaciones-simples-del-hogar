@@ -148,6 +148,7 @@ export default function HerramientasPage() {
                   alt={tool.name}
                   width={300}
                   height={200}
+                  loading="lazy"
                   className={styles.toolImage}
                 />
               ) : (

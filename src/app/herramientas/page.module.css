@@ -1,5 +1,5 @@
 .page {
-  padding: 6rem 1rem 4rem;
+  padding: 40px 16px 40px;
   max-width: 1100px;
   margin: 0 auto;
 }
@@ -40,6 +40,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 1.5rem;
+  -webkit-overflow-scrolling: touch;
 }
 
 .card {
@@ -49,6 +50,7 @@
   box-shadow: 0 2px 12px rgba(0,0,0,0.06);
   overflow: hidden;
   transition: box-shadow 0.2s, transform 0.2s, border-color 0.2s;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .card:hover {
@@ -81,7 +83,7 @@
 }
 
 .cardBody {
-  padding: 20px;
+  padding: 16px;
 }
 
 .toolName {
@@ -167,10 +169,18 @@
   margin-top: 8px;
 }
 
-@media (min-width: 640px) {
+@media (min-width: 768px) {
   .grid {
     grid-template-columns: 1fr 1fr;
     gap: 1.5rem;
+  }
+
+  .page {
+    padding: 6rem 1rem 4rem;
+  }
+
+  .cardBody {
+    padding: 20px;
   }
 }
 

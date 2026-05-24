@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
+import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Info, ExternalLink } from 'lucide-react';
 import styles from './page.module.css';
 
 const UMBRAL = 1989;
@@ -31,6 +32,7 @@ export default function HomePage() {
   const [prompt, setPrompt] = useState('');
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState<string | null>(null);
+  const [aiResponse, setAiResponse] = useState<any>(null);
   const [location, setLocation] = useState<string | null>(null);
   const [visitCount, setVisitCount] = useState<number | null>(null);
   const [displayCount, setDisplayCount] = useState(0);
@@ -107,6 +109,7 @@ export default function HomePage() {
     if (!prompt.trim()) return;
     setLoading(true);
     setAnswer(null);
+    setAiResponse(null);
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
@@ -114,7 +117,13 @@ export default function HomePage() {
         body: JSON.stringify({ prompt: prompt.trim() }),
       });
       const data = await res.json();
-      setAnswer(data.response || 'Error al obtener respuesta.');
+      const raw = data.response || '';
+      try {
+        const parsed = JSON.parse(raw);
+        setAiResponse(parsed);
+      } catch {
+        setAnswer(raw);
+      }
     } catch {
       setAnswer('Error al conectar con el asistente. Intentá de nuevo.');
     } finally {
@@ -338,7 +347,166 @@ export default function HomePage() {
         </section>
       )}
 
-      {answer && (
+      {aiResponse && (
+        <section className={styles.answerSection} ref={answerRef}>
+          <div className={styles.answerContainer}>
+            <p className={styles.queryHeader}>Tu consulta: {prompt}</p>
+
+            {aiResponse.needsMoreInfo && aiResponse.followUpQuestion && (
+              <div className={styles.followUpCard}>
+                <div className={styles.followUpHeader}>
+                  <span className={styles.followUpIcon}>?</span>
+                  <div>
+                    <span className={styles.followUpLabel}>UNA PREGUNTA MÁS</span>
+                    <p className={styles.followUpQuestion}>{aiResponse.followUpQuestion.question}</p>
+                    <p className={styles.followUpSub}>Tu respuesta nos ayuda a darte una solución más precisa.</p>
+                  </div>
+                </div>
+                <div className={styles.followUpChips}>
+                  {aiResponse.followUpQuestion.quickOptions?.map((opt: string, i: number) => (
+                    <button key={i} className={styles.followUpChip} type="button">{opt}</button>
+                  ))}
+                </div>
+                <p className={styles.followUpFooter}>O escribí tu respuesta abajo con tus palabras.</p>
+              </div>
+            )}
+
+            {aiResponse.warnings?.map((w: any, i: number) => (
+              <div key={i} className={`${styles.warningCard} ${w.type === 'danger' ? styles.warningDanger : styles.warningUrgent}`}>
+                {w.type === 'danger' ? <AlertTriangle size={18} /> : <Clock size={18} />}
+                <div>
+                  <p className={styles.warningTitle}>{w.title}</p>
+                  <p className={styles.warningDesc}>{w.description}</p>
+                </div>
+              </div>
+            ))}
+
+            <div className={styles.badgesRow}>
+              {aiResponse.difficulty && (
+                <span className={`${styles.diffBadge} ${styles[`diff${aiResponse.difficulty}`]}`}>
+                  Dificultad: {aiResponse.difficulty}
+                </span>
+              )}
+              {aiResponse.requiresProfessional && (
+                <span className={styles.proBadge}>
+                  Técnico Sugerido
+                </span>
+              )}
+            </div>
+
+            {aiResponse.mainExplanation && (
+              <p className={styles.mainExplanation}>{aiResponse.mainExplanation}</p>
+            )}
+
+            {aiResponse.diagnosis?.length > 0 && (
+              <div className={styles.diagnosisSection}>
+                <h3 className={styles.diagnosisTitle}>Diagnóstico paso a paso</h3>
+                <p className={styles.diagnosisSub}>Como lo haría un técnico: revisamos las causas más probables primero.</p>
+                {aiResponse.diagnosis.map((d: any, i: number) => (
+                  <div key={i} className={styles.diagnosisCard}>
+                    <div className={styles.diagnosisHeader}>
+                      <div className={styles.diagnosisNum}>{d.number}</div>
+                      <div className={styles.diagnosisInfo}>
+                        <p className={styles.diagnosisCause}>{d.cause}</p>
+                        <span className={`${styles.probBadge} ${styles[`prob${d.probability}`]}`}>
+                          Probabilidad {d.probability}
+                        </span>
+                        {d.requiresMatriculado && (
+                          <span className={styles.matriculadoBadge}>Requiere matriculado</span>
+                        )}
+                      </div>
+                    </div>
+                    <div className={styles.diagnosisCols}>
+                      <div className={styles.diagnosisCol}>
+                        <span className={styles.colLabel}>CÓMO VERIFICARLO</span>
+                        <p className={styles.colText}>{d.howToCheck}</p>
+                      </div>
+                      <div className={styles.diagnosisCol}>
+                        <span className={styles.colLabel}>SOLUCIÓN</span>
+                        <p className={styles.colText}>{d.solution}</p>
+                      </div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {aiResponse.stepsToFollow?.length > 0 && (
+              <div className={styles.stepsCard}>
+                <h3 className={styles.stepsTitle}>Pasos a seguir</h3>
+                <ol className={styles.stepsList}>
+                  {aiResponse.stepsToFollow.map((step: string, i: number) => (
+                    <li key={i} className={styles.stepItem}>
+                      <span className={styles.stepNum}>{i + 1}</span>
+                      <p>{step}</p>
+                    </li>
+                  ))}
+                </ol>
+              </div>
+            )}
+
+            {aiResponse.productManualUrl && (
+              <div className={styles.manualCard}>
+                <span className={styles.manualIcon}><BookOpen size={20} /></span>
+                <div className={styles.manualContent}>
+                  <p className={styles.manualTitle}>Manual del producto</p>
+                  <p className={styles.manualDesc}>Consultá el soporte oficial del fabricante para más detalles del modelo.</p>
+                  <a href={aiResponse.productManualUrl} target="_blank" rel="noopener noreferrer" className={styles.manualBtn}>
+                    Ver manual oficial <ExternalLink size={14} />
+                  </a>
+                </div>
+              </div>
+            )}
+
+            {aiResponse.relatedGuides?.length > 0 && (
+              <div className={styles.guidesCard}>
+                <p className={styles.guidesTitle}>Guías relacionadas en el sitio</p>
+                {aiResponse.relatedGuides.map((g: any, i: number) => (
+                  <div key={i} className={styles.guideItem}>
+                    <div>
+                      <p className={styles.guideName}>{g.title}</p>
+                      <p className={styles.guideDesc}>{g.description}</p>
+                    </div>
+                    <span className={styles.guideArrow}>→</span>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            <div className={styles.comingCard}>
+              <span className={styles.comingIcon}><MapPin size={18} /></span>
+              <div className={styles.comingContent}>
+                <span className={styles.comingBadge}>MUY PRONTO</span>
+                <p className={styles.comingTitle}>Encontrá profesionales de confianza cerca tuyo</p>
+                <p className={styles.comingDesc}>Estamos armando un directorio de profesionales matriculados por zona.</p>
+                <p className={styles.comingNote}>¿Sos profesional y querés aparecer? Dejanos tus datos.</p>
+                <button className={styles.comingBtn} type="button">Quiero ofrecer mis servicios</button>
+              </div>
+            </div>
+
+            <div className={styles.notifCard}>
+              <span className={styles.notifIcon}><Bell size={18} /></span>
+              <div className={styles.notifContent}>
+                <p className={styles.notifTitle}>Recibí alertas cuando tengamos profesionales en tu zona</p>
+                <p className={styles.notifDesc}>Vas a recibir un solo aviso cuando el directorio esté activo.</p>
+                <div className={styles.notifLocation}><MapPin size={14} /> {location || 'Argentina'}</div>
+                <div className={styles.notifRow}>
+                  <input type="email" placeholder="tu@email.com" className={styles.notifInput} />
+                  <button className={styles.notifBtn} type="button">Quiero que me avisen</button>
+                </div>
+                <p className={styles.notifNote}>Solo te escribiremos cuando haya novedades para tu ciudad. Sin spam.</p>
+              </div>
+            </div>
+
+            <div className={styles.disclaimer}>
+              <Info size={16} />
+              <span>Esta información es orientativa. Ante dudas o situaciones peligrosas, consultá con un profesional matriculado.</span>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {answer && !aiResponse && (
         <section className={styles.answerSection} ref={answerRef}>
           <div className={styles.answerCard}>
             {formatAnswer(answer)}
@@ -433,6 +601,7 @@ export default function HomePage() {
               alt="Ebook Reparaciones Simples del Hogar"
               width={480}
               height={580}
+              loading="lazy"
               className={styles.ebookImage}
               style={{ objectFit: 'contain', mixBlendMode: 'normal', filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.6))', transform: 'rotate(2deg)', maxWidth: '100%' }}
             />

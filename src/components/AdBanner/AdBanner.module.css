@@ -1,5 +1,6 @@
 .banner {
   width: 100%;
+  max-width: 100%;
   min-height: 90px;
   background: #e9ecef;
   display: flex;
@@ -8,6 +9,13 @@
   border-radius: var(--border-radius-sm);
   margin: 2rem 0;
   overflow: hidden;
+}
+
+@media (max-width: 480px) {
+  .banner {
+    min-height: 50px;
+    margin: 1.5rem 0;
+  }
 }
 
 .text {

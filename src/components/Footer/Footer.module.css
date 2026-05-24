@@ -1,7 +1,8 @@
 .footer {
   background: var(--navy);
   color: var(--white);
-  padding: 3rem 1rem 1.5rem;
+  padding: 3rem 16px 1.5rem;
+  padding-bottom: calc(1.5rem + var(--safe-area-inset-bottom));
   margin-top: 4rem;
 }
 
@@ -47,6 +48,11 @@
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.7);
   transition: color 0.2s;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .link:hover {
@@ -67,6 +73,9 @@
   font-size: 0.875rem;
   color: rgba(255, 255, 255, 0.6);
   transition: color 0.2s;
+  min-height: 44px;
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
 }
 
 .socialLink:hover {
@@ -86,5 +95,11 @@
 @media (min-width: 768px) {
   .inner {
     grid-template-columns: 2fr 1fr 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .links {
+    gap: 0.25rem;
   }
 }
