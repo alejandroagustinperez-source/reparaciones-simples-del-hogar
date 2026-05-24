@@ -10,13 +10,19 @@ function getSupabase() {
 
 async function notifyByEmail(entry: { email: string; city: string; province: string }) {
   const resendKey = process.env.RESEND_API_KEY;
-  if (!resendKey || resendKey === 're_xxxxxxxx') return null;
+  console.log('Resend API key exists:', !!resendKey, 'starts with:', resendKey?.substring(0, 5));
+  console.log('Email to send to:', entry.email);
+
+  if (!resendKey || resendKey === 're_xxxxxxxx') {
+    console.log('Resend not configured, skipping email');
+    return null;
+  }
 
   const { Resend } = await import('resend');
   const resend = new Resend(resendKey);
 
-  await resend.emails.send({
-    from: 'Reparaciones Simples del Hogar <noreply@reparacionessimplesdelhogar.com.ar>',
+  const result = await resend.emails.send({
+    from: 'Reparaciones Simples <onboarding@resend.dev>',
     to: entry.email,
     subject: 'Te avisamos cuando haya profesionales en tu zona',
     html: `
@@ -49,8 +55,10 @@ async function notifyByEmail(entry: { email: string; city: string; province: str
     `,
   });
 
-  await resend.emails.send({
-    from: 'Sistema <noreply@reparacionessimplesdelhogar.com.ar>',
+  console.log('Resend send result:', JSON.stringify(result));
+
+  const adminResult = await resend.emails.send({
+    from: 'Sistema <onboarding@resend.dev>',
     to: 'alejandro.agustin.perez@gmail.com',
     subject: `Nuevo registro: ${entry.email} quiere profesionales en ${entry.city}`,
     html: `
@@ -62,6 +70,8 @@ async function notifyByEmail(entry: { email: string; city: string; province: str
       </ul>
     `,
   });
+
+  console.log('Resend admin result:', JSON.stringify(adminResult));
 
   return { success: true };
 }
