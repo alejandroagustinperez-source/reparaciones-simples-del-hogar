@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Check, CheckCircle, Info, ExternalLink } from 'lucide-react';
+import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Check, CheckCircle, Info, ExternalLink, Zap, Droplets, Flame, Sparkles, Tv2, Shield, CloudRain, Paintbrush, Hammer } from 'lucide-react';
 import styles from './page.module.css';
 
 const UMBRAL = 1989;
@@ -58,14 +58,16 @@ const problemas = [
 ];
 
 const categorias = [
-  { id: 'electricidad', label: 'Electricidad', icon: '⚡', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electricidad', desc: 'Luces, tomas y llaves térmicas', color: '#fee2e2' },
-  { id: 'plomeria', label: 'Plomería', icon: '🔧', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=plomeria', desc: 'Canillas, tanques y desagües', color: '#dbeafe' },
-  { id: 'gas', label: 'Gas', icon: '🔥', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=gas', desc: 'Cocina, calefón y estufas', color: '#ffedd5' },
-  { id: 'humedad', label: 'Humedad', icon: '💧', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=humedad', desc: 'Filtraciones, moho y paredes', color: '#e0f2fe' },
-  { id: 'pintura', label: 'Pintura', icon: '🎨', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=pintura', desc: 'Paredes, techos y exteriores', color: '#f3e8ff' },
-  { id: 'carpinteria', label: 'Carpintería', icon: '🪚', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=carpinteria', desc: 'Muebles, puertas y ventanas', color: '#fef3c7' },
-  { id: 'jardineria', label: 'Jardinería', icon: '🌿', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=jardineria', desc: 'Plantas, riego y césped', color: '#dcfce7' },
-  { id: 'cerrajeria', label: 'Cerrajería', icon: '🔑', href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=cerrajeria', desc: 'Cerraduras, llaves y candados', color: '#f3f4f6' },
+  { id: 'electricidad', label: 'Electricidad', icon: Zap, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electricidad', desc: 'Térmicas, enchufes, luces', bg: '#fef2f2', iconColor: '#ef4444' },
+  { id: 'plomeria', label: 'Plomería', icon: Droplets, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=plomeria', desc: 'Canillas, pérdidas, destapaciones', bg: '#eff6ff', iconColor: '#3b82f6' },
+  { id: 'gas', label: 'Gas', icon: Flame, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=gas', desc: 'Pérdidas, calefones, hornallas', bg: '#fff7ed', iconColor: '#f97316' },
+  { id: 'mantenimiento', label: 'Mantenimiento', icon: Wrench, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=mantenimiento', desc: 'Puertas, ventanas, herrajes', bg: '#f8fafc', iconColor: '#64748b' },
+  { id: 'limpieza', label: 'Limpieza', icon: Sparkles, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=limpieza', desc: 'Trucos y productos efectivos', bg: '#f0fdf4', iconColor: '#22c55e' },
+  { id: 'electrodomesticos', label: 'Electrodomésticos', icon: Tv2, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electrodomesticos', desc: 'Heladera, lavarropas, microondas', bg: '#fdf4ff', iconColor: '#a855f7' },
+  { id: 'seguridad', label: 'Seguridad', icon: Shield, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=seguridad', desc: 'Cerraduras, alarmas, cámaras', bg: '#eff6ff', iconColor: '#3b82f6' },
+  { id: 'humedad', label: 'Humedad', icon: CloudRain, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=humedad', desc: 'Filtraciones, moho, paredes', bg: '#ecfeff', iconColor: '#06b6d4' },
+  { id: 'pintura', label: 'Pintura', icon: Paintbrush, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=pintura', desc: 'Paredes, techos, exteriores', bg: '#fdf4ff', iconColor: '#d946ef' },
+  { id: 'carpinteria', label: 'Carpintería', icon: Hammer, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=carpinteria', desc: 'Muebles, puertas, ventanas', bg: '#fff7ed', iconColor: '#f59e0b' },
 ];
 
 export default function HomePage() {
@@ -762,8 +764,8 @@ export default function HomePage() {
                 rel="noopener noreferrer"
                 className={styles.categoriaCard}
               >
-                <div className={styles.categoriaIconBg} style={{ background: cat.color }}>
-                  {cat.icon}
+                <div className={styles.categoriaIconBg} style={{ background: cat.bg, color: cat.iconColor }}>
+                  <cat.icon size={28} />
                 </div>
                 <span className={styles.categoriaLabel}>{cat.label}</span>
                 <span className={styles.categoriaDesc}>{cat.desc}</span>

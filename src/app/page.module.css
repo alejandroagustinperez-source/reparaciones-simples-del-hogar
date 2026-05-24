@@ -544,50 +544,49 @@
 .categoriasGrid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 1rem;
+  gap: 16px;
 }
 
 .categoriaCard {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
-  background: var(--white);
+  background: white;
+  border: 1px solid #f3f4f6;
   border-radius: 16px;
-  padding: 1.5rem 1rem;
-  border: 1px solid #e9ecef;
-  transition: border-color 0.2s, box-shadow 0.2s;
+  padding: 24px 16px;
+  text-align: center;
   text-decoration: none;
   cursor: pointer;
-  text-align: center;
+  transition: all 0.2s ease;
 }
 
 .categoriaCard:hover {
-  border-color: var(--orange);
-  box-shadow: 0 4px 16px rgba(0,0,0,0.06);
+  border-color: #f97316;
+  box-shadow: 0 4px 12px rgba(249,115,22,0.1);
 }
 
 .categoriaIconBg {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.5rem;
+  margin: 0 auto 16px;
   flex-shrink: 0;
 }
 
 .categoriaLabel {
-  font-size: 0.875rem;
+  font-size: 15px;
   font-weight: 600;
-  color: var(--navy);
+  color: #1e3a5f;
+  margin-bottom: 4px;
 }
 
 .categoriaDesc {
-  font-size: 0.75rem;
-  color: var(--text-secondary);
-  line-height: 1.3;
+  font-size: 13px;
+  color: #9ca3af;
 }
 
 .trustSection {
@@ -631,10 +630,6 @@
 }
 
 @media (min-width: 640px) {
-  .categoriasGrid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
   .trustGrid {
     flex-direction: row;
   }
@@ -663,7 +658,7 @@
   }
 
   .categoriasGrid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
