@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { MapPin, X, Download, Shield, RefreshCw } from 'lucide-react';
+import { MapPin, X, Download, Shield, RefreshCw, Smartphone, Award } from 'lucide-react';
 import styles from './page.module.css';
 
 function AccordionItem({ question, answer }: { question: string; answer: string }) {
@@ -255,15 +255,14 @@ export default function EbookPage() {
 
       {/* SECCIÓN 5 — BENEFICIOS */}
       <section className={styles.benefitsSection}>
-        <div className={styles.sectionInner}>
+        <div className={styles.benefitsInner}>
           <div className={styles.benefitsLeft}>
-            <span className={styles.sectionTag}>BENEFICIOS REALES</span>
-            <h2 className={styles.sectionTitle}>
+            <span className={styles.benefitsTag}>BENEFICIOS REALES</span>
+            <h2 className={styles.benefitsTitle}>
               Lo que cambia en tu vida desde el día 1
             </h2>
-            <p className={styles.sectionSub}>
-              Dejá de depender de terceros y empezá a resolver por vos mismo los
-              problemas del hogar.
+            <p className={styles.benefitsSub}>
+              No es teoría. Son soluciones prácticas que aplicás hoy mismo y empezás a ver resultados (y ahorros) ya.
             </p>
             <ul className={styles.benefitsList}>
               <li className={styles.benefitsListItem}>
@@ -293,26 +292,34 @@ export default function EbookPage() {
             </ul>
           </div>
           <div className={styles.benefitsRight}>
-            <div className={styles.benefitsGrid}>
+            <div className={styles.benefitsCardsGrid}>
               <div className={styles.benefitCard}>
-                <span className={styles.benefitIcon}>📱</span>
+                <span className={styles.benefitIconCircle}>
+                  <Smartphone size={22} />
+                </span>
                 <h3 className={styles.benefitCardTitle}>Listo para celular</h3>
-                <p className={styles.benefitCardText}>Lo abrís donde estés, en el momento exacto.</p>
+                <p className={styles.benefitCardText}>Lo abrís donde estés</p>
               </div>
               <div className={styles.benefitCard}>
-                <span className={styles.benefitIcon}>🔄</span>
+                <span className={styles.benefitIconCircle}>
+                  <RefreshCw size={22} />
+                </span>
                 <h3 className={styles.benefitCardTitle}>Actualizaciones gratis</h3>
-                <p className={styles.benefitCardText}>Recibís todas las actualizaciones de por vida.</p>
+                <p className={styles.benefitCardText}>De por vida</p>
               </div>
               <div className={styles.benefitCard}>
-                <span className={styles.benefitIcon}>🛡</span>
+                <span className={styles.benefitIconCircle}>
+                  <Shield size={22} />
+                </span>
                 <h3 className={styles.benefitCardTitle}>Tips de seguridad</h3>
-                <p className={styles.benefitCardText}>En cada capítulo, priorizamos tu seguridad.</p>
+                <p className={styles.benefitCardText}>En cada capítulo</p>
               </div>
               <div className={styles.benefitCard}>
-                <span className={styles.benefitIcon}>🏆</span>
+                <span className={styles.benefitIconCircle}>
+                  <Award size={22} />
+                </span>
                 <h3 className={styles.benefitCardTitle}>Calidad profesional</h3>
-                <p className={styles.benefitCardText}>Hecho por expertos con años de experiencia.</p>
+                <p className={styles.benefitCardText}>Hecho por expertos</p>
               </div>
             </div>
           </div>
