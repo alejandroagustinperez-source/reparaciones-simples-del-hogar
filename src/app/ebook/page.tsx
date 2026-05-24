@@ -175,9 +175,11 @@ export default function EbookPage() {
               <p className={styles.problemCardText}>Pedís turno, cancelan, te toman el día, y al final te cobran una fortuna por algo que podrías haber hecho en 10 minutos.</p>
             </div>
           </div>
-          <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.ctaButton}>
+          <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.problemCta}>
+            <Download size={20} />
             DESCARGAR CON 50% DE DESCUENTO
           </a>
+          <p className={styles.problemTrust}>Acceso inmediato · Garantía 7 días</p>
         </div>
       </section>
 
