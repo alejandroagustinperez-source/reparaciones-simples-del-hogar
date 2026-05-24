@@ -2,7 +2,6 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Info, ExternalLink } from 'lucide-react';
 import styles from './page.module.css';
@@ -519,13 +518,13 @@ export default function HomePage() {
                 {aiResponse.relatedGuides.map((g: any, i: number) => {
                   if (!g.slug) return null;
                   return (
-                    <Link key={i} href={`/blog/${g.slug}`} className={styles.guideItem}>
+                    <a key={i} href={`https://blog.reparacionessimplesdelhogar.com.ar/${g.slug}`} target="_blank" rel="noopener noreferrer" className={styles.guideItem}>
                       <div>
                         <p className={styles.guideName}>{g.title}</p>
                         <p className={styles.guideDesc}>{g.description}</p>
                       </div>
                       <span className={styles.guideArrow}>→</span>
-                    </Link>
+                    </a>
                   );
                 })}
               </div>

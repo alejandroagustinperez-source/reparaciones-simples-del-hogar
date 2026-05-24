@@ -1,0 +1,74 @@
+.page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 60vh;
+  padding: 4rem 1rem;
+  text-align: center;
+}
+
+.code {
+  font-size: 80px;
+  font-weight: 800;
+  color: #1e3a5f;
+  margin-bottom: 0.5rem;
+  line-height: 1;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin-bottom: 0.75rem;
+}
+
+.text {
+  font-size: 15px;
+  color: #6b7280;
+  line-height: 1.6;
+  max-width: 420px;
+  margin-bottom: 2rem;
+}
+
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.btnOutline {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  border: 2px solid #1e3a5f;
+  border-radius: 8px;
+  color: #1e3a5f;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: background 0.2s;
+}
+
+.btnOutline:hover {
+  background: #f8f9fa;
+}
+
+.btnOrange {
+  display: inline-flex;
+  align-items: center;
+  padding: 12px 24px;
+  background: #f97316;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  transition: opacity 0.2s;
+}
+
+.btnOrange:hover {
+  opacity: 0.9;
+}
