@@ -731,7 +731,7 @@
 
 .ebookSection {
   background: var(--navy);
-  padding: 5rem 1rem;
+  padding: 2rem 1rem;
 }
 
 .ebookBanner {
@@ -971,7 +971,7 @@
   }
 
   .ebookSection {
-    padding: 40px 16px;
+    padding: 20px 16px;
   }
 
   .ebookBanner {
