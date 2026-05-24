@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { MapPin, X, Download } from 'lucide-react';
+import { MapPin, X, Download, Shield, RefreshCw } from 'lucide-react';
 import styles from './page.module.css';
 
 function AccordionItem({ question, answer }: { question: string; answer: string }) {
@@ -94,19 +94,21 @@ export default function EbookPage() {
               <span className={styles.heroPriceCurrent}>$2.999</span>
               <span className={styles.discountBadge}>-50% HOY</span>
             </div>
-            <div className={styles.badges}>
-              <span className={`${styles.badge} ${styles.badgeOrange}`}>50% OFF SOLO POR HOY</span>
-              <span className={`${styles.badge} ${styles.badgeOutline}`}>Acceso inmediato</span>
-              <span className={`${styles.badge} ${styles.badgeOutline}`}>Oferta por tiempo limitado</span>
+            <div className={styles.badgesRow}>
+              <span className={styles.badgeSolid}>🔥 50% OFF SOLO POR HOY</span>
+              <span className={styles.badgeOutline}>⏱ Acceso inmediato</span>
+              <span className={styles.badgeOutline}>⚠️ Oferta por tiempo limitado</span>
             </div>
             <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.heroCtaButton}>
               <Download size={20} />
               QUIERO EL EBOOK AHORA
             </a>
             <div className={styles.heroTrust}>
-              <span>🔒 Pago 100% seguro</span>
-              <span>⬇ Acceso inmediato</span>
-              <span>🔄 Garantía 7 días</span>
+              <span><Shield size={14} /> Pago 100% seguro</span>
+              <span className={styles.trustSep}>·</span>
+              <span><Download size={14} /> Acceso inmediato</span>
+              <span className={styles.trustSep}>·</span>
+              <span><RefreshCw size={14} /> Garantía 7 días</span>
             </div>
           </div>
           <div className={styles.heroImage}>
