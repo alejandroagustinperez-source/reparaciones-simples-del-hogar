@@ -9,6 +9,23 @@ import styles from './page.module.css';
 
 const UMBRAL = 1989;
 
+const categoryMap: Record<string, string> = {
+  electricidad: 'electricidad',
+  plomeria: 'plomeria',
+  gas: 'gas',
+  humedad: 'humedad',
+  electrodomesticos: 'electrodomesticos',
+  carpinteria: 'carpinteria',
+  limpieza: 'limpieza',
+  seguridad: 'seguridad',
+};
+
+const getGuideUrl = (slug: string): string => {
+  const clean = slug.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
+  if (categoryMap[clean]) return `/blog?categoria=${clean}`;
+  return `/blog?categoria=${clean}`;
+};
+
 const extractJSON = (text: string): any => {
   const start = text.indexOf('{');
   const end = text.lastIndexOf('}');
@@ -607,13 +624,13 @@ export default function HomePage() {
                 {aiResponse.relatedGuides.map((g: any, i: number) => {
                   if (!g.slug) return null;
                   return (
-                    <a key={i} href={`https://blog.reparacionessimplesdelhogar.com.ar/${g.slug}`} target="_blank" rel="noopener noreferrer" className={styles.guideItem}>
+                    <Link key={i} href={getGuideUrl(g.slug)} className={styles.guideItem}>
                       <div>
                         <p className={styles.guideName}>{g.title}</p>
                         <p className={styles.guideDesc}>{g.description}</p>
                       </div>
                       <span className={styles.guideArrow}>→</span>
-                    </a>
+                    </Link>
                   );
                 })}
               </div>

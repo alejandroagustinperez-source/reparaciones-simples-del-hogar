@@ -81,6 +81,12 @@ EJEMPLO DE BUEN PASO:
   "warning": "Si el enchufe está caliente o ves marcas negras, no lo toques y llamá a un electricista"
 }
 
+GUÍAS RELACIONADAS:
+Para relatedGuides, solo usá slugs de estas categorías existentes en el blog:
+electricidad, plomeria, gas, humedad, electrodomesticos, carpinteria, limpieza, seguridad.
+Formateá el slug como el nombre de categoría en minúsculas, sin acentos ni espacios.
+Ejemplo: { title: "Guías de electricidad", description: "Aprendé a resolver problemas eléctricos comunes en casa.", slug: "electricidad" }
+
 REGLAS DE EMPATÍA:
 1. Empezá mainExplanation con empatía: "Entiendo que esto puede ser frustrante..." o "No te preocupes, este problema tiene solución..."
 2. Usá lenguaje alentador durante toda la respuesta

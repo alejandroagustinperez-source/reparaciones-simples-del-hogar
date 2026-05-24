@@ -1571,15 +1571,20 @@
   border-radius: 8px;
   transition: background 0.2s, border-color 0.2s;
   margin: 0 -4px;
+  border: 1px solid transparent;
 }
 
 .guideItem:hover {
   background: #f9fafb;
-  border-color: #f97316;
+  border-color: #fed7aa;
 }
 
 .guideItem:last-child {
   border-bottom: none;
+}
+
+.guideItem:hover .guideArrow {
+  transform: translateX(4px);
 }
 
 .guideName {
@@ -1597,6 +1602,7 @@
   font-size: 18px;
   color: #f97316;
   flex-shrink: 0;
+  transition: transform 0.2s;
 }
 
 .comingCard {
