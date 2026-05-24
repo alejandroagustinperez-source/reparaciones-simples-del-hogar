@@ -60,11 +60,11 @@ IMPORTANT RULES:
 
 export async function POST(request: Request) {
   try {
-    const { prompt } = await request.json();
+    const { messages } = await request.json();
 
-    if (!prompt || typeof prompt !== 'string') {
+    if (!messages || !Array.isArray(messages) || messages.length === 0) {
       return NextResponse.json(
-        { error: 'El prompt es requerido' },
+        { error: 'Messages array is required' },
         { status: 400 }
       );
     }
@@ -90,10 +90,7 @@ export async function POST(request: Request) {
           model: 'llama-3.3-70b-versatile',
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },
-            {
-              role: 'user',
-              content: prompt,
-            },
+            ...messages,
           ],
           max_tokens: 1200,
         }),

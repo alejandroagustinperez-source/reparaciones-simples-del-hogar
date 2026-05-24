@@ -33,6 +33,8 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [answer, setAnswer] = useState<string | null>(null);
   const [aiResponse, setAiResponse] = useState<any>(null);
+  const [conversationHistory, setConversationHistory] = useState<{ role: string; content: string }[]>([]);
+  const [disabledChips, setDisabledChips] = useState<Set<number>>(new Set());
   const [location, setLocation] = useState<string | null>(null);
   const [visitCount, setVisitCount] = useState<number | null>(null);
   const [displayCount, setDisplayCount] = useState(0);
@@ -40,6 +42,7 @@ export default function HomePage() {
   const locationRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
+  const chatBottomRef = useRef<HTMLDivElement>(null);
   const problemasRef = useRef<HTMLDivElement>(null);
   const categoriasRef = useRef<HTMLDivElement>(null);
 
@@ -107,29 +110,73 @@ export default function HomePage() {
 
   const handleSubmit = async () => {
     if (!prompt.trim()) return;
+    const userMessage = prompt.trim();
+    setPrompt('');
     setLoading(true);
-    setAnswer(null);
     setAiResponse(null);
+    setAnswer(null);
+    
+    const updatedHistory = [...conversationHistory, { role: 'user', content: userMessage }];
+    setConversationHistory(updatedHistory);
+    
     try {
       const res = await fetch('/api/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ prompt: prompt.trim() }),
+        body: JSON.stringify({ messages: updatedHistory }),
       });
       const data = await res.json();
       const raw = data.response || '';
       try {
         const parsed = JSON.parse(raw);
         setAiResponse(parsed);
+        setConversationHistory(prev => [...prev, { role: 'assistant', content: raw }]);
       } catch {
         setAnswer(raw);
+        setConversationHistory(prev => [...prev, { role: 'assistant', content: raw }]);
       }
     } catch {
       setAnswer('Error al conectar con el asistente. Intentá de nuevo.');
     } finally {
       setLoading(false);
       setTimeout(() => {
-        answerRef.current?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+      }, 100);
+    }
+  };
+
+  const followUpSubmit = async (text: string, chipIndex: number) => {
+    setPrompt(text);
+    setDisabledChips(prev => new Set(prev).add(chipIndex));
+    const userMessage = text;
+    setPrompt('');
+    setLoading(true);
+    
+    const updatedHistory = [...conversationHistory, { role: 'user', content: userMessage }];
+    setConversationHistory(updatedHistory);
+    
+    try {
+      const res = await fetch('/api/chat', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ messages: updatedHistory }),
+      });
+      const data = await res.json();
+      const raw = data.response || '';
+      try {
+        const parsed = JSON.parse(raw);
+        setAiResponse(parsed);
+        setConversationHistory(prev => [...prev, { role: 'assistant', content: raw }]);
+      } catch {
+        setAnswer(raw);
+        setConversationHistory(prev => [...prev, { role: 'assistant', content: raw }]);
+      }
+    } catch {
+      setAnswer('Error al conectar con el asistente. Intentá de nuevo.');
+    } finally {
+      setLoading(false);
+      setTimeout(() => {
+        chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
       }, 100);
     }
   };
@@ -336,22 +383,12 @@ export default function HomePage() {
         </div>
       </section>
 
-      {loading && (
-        <section className={styles.answerSection} ref={answerRef}>
-          <div className={styles.answerCard}>
-            <div className={styles.spinner}>
-              <div className={styles.spinnerIcon} />
-              Analizando tu problema...
-            </div>
-          </div>
-        </section>
-      )}
-
-      {aiResponse && (
+      {(aiResponse || loading) && (
         <section className={styles.answerSection} ref={answerRef}>
           <div className={styles.answerContainer}>
             <p className={styles.queryHeader}>Tu consulta: {prompt}</p>
 
+            {aiResponse && (<>
             {aiResponse.needsMoreInfo && aiResponse.followUpQuestion && (
               <div className={styles.followUpCard}>
                 <div className={styles.followUpHeader}>
@@ -364,7 +401,15 @@ export default function HomePage() {
                 </div>
                 <div className={styles.followUpChips}>
                   {aiResponse.followUpQuestion.quickOptions?.map((opt: string, i: number) => (
-                    <button key={i} className={styles.followUpChip} type="button">{opt}</button>
+                    <button
+                      key={i}
+                      className={styles.followUpChip}
+                      onClick={() => followUpSubmit(opt, i)}
+                      disabled={disabledChips.has(i)}
+                      type="button"
+                    >
+                      {opt}
+                    </button>
                   ))}
                 </div>
                 <p className={styles.followUpFooter}>O escribí tu respuesta abajo con tus palabras.</p>
@@ -472,6 +517,7 @@ export default function HomePage() {
                 ))}
               </div>
             )}
+            </>)}
 
             <div className={styles.comingCard}>
               <span className={styles.comingIcon}><MapPin size={18} /></span>
@@ -502,6 +548,38 @@ export default function HomePage() {
               <Info size={16} />
               <span>Esta información es orientativa. Ante dudas o situaciones peligrosas, consultá con un profesional matriculado.</span>
             </div>
+
+            {loading && (
+              <div className={styles.chatLoading}>
+                <div className={styles.spinnerIcon} />
+                Analizando...
+              </div>
+            )}
+
+            <div className={styles.chatInputRow}>
+              <input
+                type="text"
+                className={styles.chatInput}
+                placeholder="Respondé acá..."
+                value={prompt}
+                onChange={(e) => setPrompt(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleSubmit();
+                  }
+                }}
+              />
+              <button
+                className={styles.chatSendBtn}
+                onClick={handleSubmit}
+                disabled={loading || !prompt.trim()}
+                type="button"
+              >
+                {loading ? '...' : 'Enviar'}
+              </button>
+            </div>
+            <div ref={chatBottomRef} />
           </div>
         </section>
       )}

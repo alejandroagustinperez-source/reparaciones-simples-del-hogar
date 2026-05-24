@@ -1704,3 +1704,55 @@
     font-size: 16px;
   }
 }
+
+.chatInputRow {
+  display: flex;
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.chatInput {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  font-size: 15px;
+  outline: none;
+  font-family: inherit;
+}
+
+.chatInput:focus {
+  border-color: #f97316;
+}
+
+.chatSendBtn {
+  background: #f97316;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  min-height: 44px;
+}
+
+.chatSendBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.chatLoading {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 0;
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.followUpChip:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
