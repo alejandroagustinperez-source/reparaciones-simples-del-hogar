@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
+import { MapPin, X } from 'lucide-react';
 import styles from './page.module.css';
 
 function AccordionItem({ question, answer }: { question: string; answer: string }) {
@@ -19,6 +20,18 @@ function AccordionItem({ question, answer }: { question: string; answer: string 
 
 export default function EbookPage() {
   const hotmartUrl = process.env.NEXT_PUBLIC_HOTMART_URL || '#';
+  const [location, setLocation] = useState<string | null>(null);
+  const [bannerVisible, setBannerVisible] = useState(true);
+
+  useEffect(() => {
+    fetch('https://ipapi.co/json/')
+      .then((res) => res.json())
+      .then((data) => {
+        const loc = [data.city, data.region].filter(Boolean).join(' · ');
+        setLocation(loc || 'Argentina');
+      })
+      .catch(() => setLocation('Argentina'));
+  }, []);
 
   const testimonials = [
     { name: 'Mariana G.', location: 'Mendoza', text: 'Lo compré por curiosidad y terminé arreglando una pérdida en la cocina el mismo día. Increíble lo claro que está todo.', initial: 'M' },
@@ -38,18 +51,34 @@ export default function EbookPage() {
 
   return (
     <>
+      {bannerVisible && (
+        <div className={styles.locationBanner}>
+          <MapPin size={14} />
+          <span>
+            Detectamos que estás en <strong>{location || 'cargando...'}</strong>
+            {' · '}
+            <a href="#cambiar" className={styles.changeLink} onClick={(e) => { e.preventDefault(); }}>Cambiar ubicación</a>
+          </span>
+          <button className={styles.closeBtn} onClick={() => setBannerVisible(false)} aria-label="Cerrar">
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
       <div className={styles.topBar}>
-        OFERTA POR HOY: 50% OFF + Acceso inmediato · Precio promocional por tiempo limitado
+        🔥 OFERTA POR HOY: 50% OFF + Acceso inmediato · Precio promocional por tiempo limitado
       </div>
 
       {/* SECCIÓN 1 — HERO */}
       <section className={styles.hero}>
         <div className={styles.heroInner}>
           <div className={styles.heroContent}>
-            <span className={styles.heroBadge}>Ebook digital · Edición 2025</span>
+            <span className={styles.heroBadge}>📘 Ebook digital · Edición 2025</span>
             <h1 className={styles.heroTitle}>
-              Dejá de gastar miles en técnicos:{' '}
-              <span className={styles.orangeText}>arreglalo vos</span> en minutos
+              Dejá de gastar miles en técnicos
+              <span className={styles.heroTitleBreak}>
+                <span className={styles.orangeText}>arreglalo vos</span> en minutos
+              </span>
             </h1>
             <p className={styles.heroSubtitle}>
               La guía simple y directa para resolver problemas de plomería,
@@ -60,9 +89,9 @@ export default function EbookPage() {
               <span className={styles.stars}>★★★★★</span>
               <span>4.9/5 · +1.200 personas ya lo descargaron</span>
             </div>
-            <div className={styles.price}>
-              <span className={styles.priceOriginal}>$5.999</span>
-              <span className={styles.priceCurrent}>$2.999</span>
+            <div className={styles.heroPrice}>
+              <span className={styles.heroPriceOriginal}>$5.999</span>
+              <span className={styles.heroPriceCurrent}>$2.999</span>
               <span className={styles.discountBadge}>-50% HOY</span>
             </div>
             <div className={styles.badges}>
@@ -70,13 +99,13 @@ export default function EbookPage() {
               <span className={`${styles.badge} ${styles.badgeOutline}`}>Acceso inmediato</span>
               <span className={`${styles.badge} ${styles.badgeOutline}`}>Oferta por tiempo limitado</span>
             </div>
-            <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.ctaButton}>
-              QUIERO EL EBOOK AHORA
+            <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.heroCtaButton}>
+              ⬇ QUIERO EL EBOOK AHORA
             </a>
             <div className={styles.heroTrust}>
-              <span>Pago 100% seguro</span>
-              <span>Acceso inmediato</span>
-              <span>Garantía 7 días</span>
+              <span>🔒 Pago 100% seguro</span>
+              <span>⬇ Acceso inmediato</span>
+              <span>🔄 Garantía 7 días</span>
             </div>
           </div>
           <div className={styles.heroImage}>
@@ -84,9 +113,10 @@ export default function EbookPage() {
             <Image
               src="/ebook.png"
               alt="Ebook Reparaciones Simples del Hogar"
-              width={480}
-              height={580}
+              width={600}
+              height={700}
               className={styles.ebookImg}
+              priority
             />
           </div>
         </div>
