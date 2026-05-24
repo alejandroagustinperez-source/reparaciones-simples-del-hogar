@@ -637,7 +637,7 @@ export default function HomePage() {
             )}
             </>)}
 
-            <Link href="/planes-para-profesionales#planes" className={styles.comingLink}>
+            <Link href="/profesionales#planes" className={styles.comingLink}>
               <div className={styles.comingCard}>
                 <span className={styles.comingIcon}><MapPin size={18} /></span>
                 <div className={styles.comingContent}>
