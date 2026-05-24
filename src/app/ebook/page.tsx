@@ -34,10 +34,10 @@ export default function EbookPage() {
   }, []);
 
   const testimonials = [
-    { name: 'Mariana G.', location: 'Mendoza', text: 'Lo compré por curiosidad y terminé arreglando una pérdida en la cocina el mismo día. Increíble lo claro que está todo.', initial: 'M' },
-    { name: 'Juan P.', location: 'San Luis', text: 'Súper claro y bien explicado. Lo bueno es que también te dice cuándo NO meterte. Eso me dio mucha confianza.', initial: 'J' },
-    { name: 'Carla R.', location: 'Buenos Aires', text: 'Lo tengo en el celu y lo consulto seguido. La parte de electricidad me sacó muchas dudas que tenía desde hace años.', initial: 'C' },
-    { name: 'Diego M.', location: 'Córdoba', text: 'Vale 10 veces lo que cuesta. Con un solo arreglo ya lo recuperé. Se lo recomiendo a cualquiera que viva solo.', initial: 'D' },
+    { name: 'Mariana G.', location: 'Mendoza', text: 'Lo compré por curiosidad y terminé arreglando una pérdida en la cocina el mismo día. Me ahorré la visita del plomero, que acá sale carísimo.', initial: 'M' },
+    { name: 'Juan P.', location: 'San Luis', text: 'Súper claro y bien explicado. Lo bueno es que también te dice cuándo NO meterte y llamar a un profesional. Ideal para los que no sabemos nada.', initial: 'J' },
+    { name: 'Carla R.', location: 'Buenos Aires', text: 'Lo tengo en el celu y lo consulto seguido. La parte de electricidad me sacó muchas dudas, ya cambié dos enchufes sola.', initial: 'C' },
+    { name: 'Diego M.', location: 'Córdoba', text: 'Vale 10 veces lo que cuesta. Con un solo arreglo ya lo recuperé. Lo recomiendo a cualquiera que tenga casa propia o alquile.', initial: 'D' },
   ];
 
   const faqs = [
@@ -328,11 +328,11 @@ export default function EbookPage() {
 
       {/* SECCIÓN 6 — TESTIMONIOS */}
       <section className={styles.testimonialsSection}>
-        <div className={styles.sectionInner}>
-          <span className={styles.sectionTagLight}>+1.200 PERSONAS YA LO DESCARGARON</span>
-          <h2 className={styles.sectionTitleLight}>Lo que dicen quienes ya están ahorrando</h2>
-          <p className={styles.sectionSubLight}>
-            Personas como vos que dejaron de pagar técnicos innecesarios.
+        <div className={styles.testimonialsInner}>
+          <span className={styles.testimonialsTag}>+1.200 PERSONAS YA LO DESCARGARON</span>
+          <h2 className={styles.testimonialsTitle}>Lo que dicen quienes ya están ahorrando</h2>
+          <p className={styles.testimonialsSub}>
+            Personas comunes, sin experiencia previa, que dejaron de pagar de más.
           </p>
           <div className={styles.testimonialsGrid}>
             {testimonials.map((t, i) => (
