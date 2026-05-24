@@ -1899,3 +1899,40 @@
   opacity: 0.4;
   cursor: not-allowed;
 }
+
+.parseError {
+  padding: 20px;
+  background: #fef2f2;
+  border-radius: 12px;
+  border: 1px solid #fecaca;
+  margin-bottom: 16px;
+}
+
+.parseErrorTitle {
+  color: #991b1b;
+  font-weight: 700;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.parseErrorDesc {
+  color: #7f1d1d;
+  font-size: 14px;
+  margin-bottom: 12px;
+}
+
+.parseErrorBtn {
+  background: #f97316;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  border: none;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.parseErrorBtn:hover {
+  opacity: 0.9;
+}

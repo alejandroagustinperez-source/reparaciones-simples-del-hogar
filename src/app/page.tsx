@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
@@ -8,6 +8,26 @@ import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Check, Info, Exte
 import styles from './page.module.css';
 
 const UMBRAL = 1989;
+
+const extractJSON = (text: string): any => {
+  const start = text.indexOf('{');
+  const end = text.lastIndexOf('}');
+  if (start === -1 || end === -1) return null;
+  const jsonStr = text.slice(start, end + 1);
+  const cleaned = jsonStr
+    .replace(/⚠️\s*/g, '')
+    .replace(/[\u{1F300}-\u{1FFFF}]/gu, '')
+    .replace(/,\s*}/g, '}')
+    .replace(/,\s*]/g, ']')
+    .replace(/\n/g, ' ')
+    .replace(/\t/g, ' ');
+  try {
+    return JSON.parse(cleaned);
+  } catch (e) {
+    console.error('JSON parse error:', e);
+    return null;
+  }
+};
 
 const problemas = [
   { id: 'El+lavarropas+no+desagota', label: 'El lavarropas no desagota', icon: '🧺', desc: 'El lavarropas se llena de agua pero no la expulsa al desagotar.' },
@@ -45,7 +65,17 @@ export default function HomePage() {
   const [notifLoading, setNotifLoading] = useState(false);
   const [notifError, setNotifError] = useState('');
   const [notifSuccess, setNotifSuccess] = useState(false);
+  const [parseFailed, setParseFailed] = useState(false);
   const locationRef = useRef<HTMLDivElement>(null);
+
+  const resetChat = useCallback(() => {
+    setAiResponse(null);
+    setAnswer(null);
+    setParseFailed(false);
+    setConversationHistory([]);
+    setDisabledChips(new Set());
+    setLastQuery('');
+  }, []);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
   const responseTopRef = useRef<HTMLParagraphElement>(null);
@@ -122,6 +152,7 @@ export default function HomePage() {
     setLoading(true);
     setAiResponse(null);
     setAnswer(null);
+    setParseFailed(false);
     
     const updatedHistory = [...conversationHistory, { role: 'user', content: userMessage }];
     setConversationHistory(updatedHistory);
@@ -134,13 +165,12 @@ export default function HomePage() {
       });
       const data = await res.json();
       const raw = data.response || '';
-      try {
-        const parsed = JSON.parse(raw);
+      const parsed = extractJSON(raw);
+      if (parsed) {
         setAiResponse(parsed);
         setConversationHistory(prev => [...prev, { role: 'assistant', content: raw }]);
-      } catch {
-        setAnswer(raw);
-        setConversationHistory(prev => [...prev, { role: 'assistant', content: raw }]);
+      } else {
+        setParseFailed(true);
       }
     } catch {
       setAnswer('Error al conectar con el asistente. Intentá de nuevo.');
@@ -174,13 +204,12 @@ export default function HomePage() {
       });
       const data = await res.json();
       const raw = data.response || '';
-      try {
-        const parsed = JSON.parse(raw);
+      const parsed = extractJSON(raw);
+      if (parsed) {
         setAiResponse(parsed);
         setConversationHistory(prev => [...prev, { role: 'assistant', content: raw }]);
-      } catch {
-        setAnswer(raw);
-        setConversationHistory(prev => [...prev, { role: 'assistant', content: raw }]);
+      } else {
+        setParseFailed(true);
       }
     } catch {
       setAnswer('Error al conectar con el asistente. Intentá de nuevo.');
@@ -427,10 +456,18 @@ export default function HomePage() {
         </div>
       </section>
 
-      {(aiResponse || loading) && (
+      {(aiResponse || loading || parseFailed) && (
         <section className={styles.answerSection} ref={answerRef}>
           <div className={styles.answerContainer}>
             <p className={styles.queryHeader} ref={responseTopRef}>Tu consulta: {lastQuery}</p>
+
+            {parseFailed && (
+              <div className={styles.parseError}>
+                <p className={styles.parseErrorTitle}>Hubo un problema al procesar la respuesta</p>
+                <p className={styles.parseErrorDesc}>Por favor intentá de nuevo describiendo tu problema.</p>
+                <button className={styles.parseErrorBtn} onClick={resetChat}>Intentar de nuevo</button>
+              </div>
+            )}
 
             {aiResponse && (<>
             {aiResponse.needsMoreInfo && aiResponse.followUpQuestion && (
@@ -668,7 +705,7 @@ export default function HomePage() {
         </section>
       )}
 
-      {answer && !aiResponse && (
+      {answer && !aiResponse && !parseFailed && (
         <section className={styles.answerSection} ref={answerRef}>
           <div className={styles.answerCard}>
             {formatAnswer(answer)}
