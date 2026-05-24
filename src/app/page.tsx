@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Info, ExternalLink } from 'lucide-react';
+import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Check, Info, ExternalLink } from 'lucide-react';
 import styles from './page.module.css';
 
 const UMBRAL = 1989;
@@ -41,6 +41,10 @@ export default function HomePage() {
   const [displayCount, setDisplayCount] = useState(0);
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
   const [lastQuery, setLastQuery] = useState('');
+  const [notifEmail, setNotifEmail] = useState('');
+  const [notifLoading, setNotifLoading] = useState(false);
+  const [notifError, setNotifError] = useState('');
+  const [notifSuccess, setNotifSuccess] = useState(false);
   const locationRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
@@ -190,6 +194,36 @@ export default function HomePage() {
       }, 100);
     }
   };
+
+  const handleNotifSubmit = async () => {
+    const email = notifEmail.trim();
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      setNotifError('Ingresá un email válido');
+      return;
+    }
+    setNotifLoading(true);
+    setNotifError('');
+    try {
+      const res = await fetch('/api/notify-professionals', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, city: location || 'San Luis', province: 'San Luis' }),
+      });
+      if (!res.ok) throw new Error();
+      localStorage.setItem('notif_sent', 'true');
+      setNotifSuccess(true);
+    } catch {
+      setNotifError('Hubo un error, intentá de nuevo');
+    } finally {
+      setNotifLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (localStorage.getItem('notif_sent') === 'true') {
+      setNotifSuccess(true);
+    }
+  }, []);
 
   const handleProblemaClick = (label: string) => {
     setPrompt(label);
@@ -563,16 +597,35 @@ export default function HomePage() {
             </Link>
 
             <div className={styles.notifCard}>
-              <span className={styles.notifIcon}><Bell size={18} /></span>
+              <span className={styles.notifIcon}>{notifSuccess ? <Check size={18} /> : <Bell size={18} />}</span>
               <div className={styles.notifContent}>
-                <p className={styles.notifTitle}>Recibí alertas cuando tengamos profesionales en tu zona</p>
-                <p className={styles.notifDesc}>Vas a recibir un solo aviso cuando el directorio esté activo.</p>
-                <div className={styles.notifLocation}><MapPin size={14} /> {location || 'Argentina'}</div>
-                <div className={styles.notifRow}>
-                  <input type="email" placeholder="tu@email.com" className={styles.notifInput} />
-                  <button className={styles.notifBtn} type="button">Quiero que me avisen</button>
-                </div>
-                <p className={styles.notifNote}>Solo te escribiremos cuando haya novedades para tu ciudad. Sin spam.</p>
+                {notifSuccess ? (
+                  <>
+                    <p className={styles.notifSuccessTitle}>¡Listo! Te avisamos cuando haya profesionales en {location || 'tu zona'}</p>
+                    <p className={styles.notifNote}>No te vamos a llenar de mails. Un solo aviso cuando esté activo.</p>
+                  </>
+                ) : (
+                  <>
+                    <p className={styles.notifTitle}>Recibí alertas cuando tengamos profesionales en tu zona</p>
+                    <p className={styles.notifDesc}>Vas a recibir un solo aviso cuando el directorio esté activo.</p>
+                    <div className={styles.notifLocation}><MapPin size={14} /> {location || 'Argentina'}</div>
+                    <div className={styles.notifRow}>
+                      <input
+                        type="email"
+                        placeholder="tu@email.com"
+                        className={styles.notifInput}
+                        value={notifEmail}
+                        onChange={(e) => { setNotifEmail(e.target.value); setNotifError(''); }}
+                        onKeyDown={(e) => e.key === 'Enter' && handleNotifSubmit()}
+                      />
+                      <button className={styles.notifBtn} type="button" onClick={handleNotifSubmit} disabled={notifLoading}>
+                        {notifLoading ? 'Enviando...' : <><Bell size={16} /> Quiero que me avisen</>}
+                      </button>
+                    </div>
+                    {notifError && <p className={styles.notifError}>{notifError}</p>}
+                    <p className={styles.notifNote}>Solo te escribiremos cuando haya novedades para tu ciudad. Sin spam.</p>
+                  </>
+                )}
               </div>
             </div>
 
