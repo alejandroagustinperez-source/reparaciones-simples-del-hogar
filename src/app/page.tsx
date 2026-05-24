@@ -258,11 +258,18 @@ export default function HomePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, city, province: 'San Luis' }),
       });
-      if (!res.ok) throw new Error();
+      const data = await res.json();
+      console.log('API response:', data);
+      if (!res.ok) {
+        console.error('Error:', data.error);
+        setNotifError('Error: ' + data.error);
+        return;
+      }
       localStorage.setItem(`professional-notified-${city}-v2`, email);
       setNotifStatus('success');
-    } catch {
-      setNotifError('Hubo un error, intentá de nuevo');
+    } catch (err: any) {
+      console.error('Fetch error:', err);
+      setNotifError('Error: ' + (err.message || 'Error de conexión'));
     } finally {
       setNotifLoading(false);
     }
