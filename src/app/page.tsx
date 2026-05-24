@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Check, Info, ExternalLink } from 'lucide-react';
+import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Check, CheckCircle, Info, ExternalLink } from 'lucide-react';
 import styles from './page.module.css';
 
 const UMBRAL = 1989;
@@ -249,16 +249,17 @@ export default function HomePage() {
       setNotifError('Ingresá un email válido');
       return;
     }
+    const city = location || 'San Luis';
     setNotifLoading(true);
     setNotifError('');
     try {
       const res = await fetch('/api/notify-professionals', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email, city: location || 'San Luis', province: 'San Luis' }),
+        body: JSON.stringify({ email, city, province: 'San Luis' }),
       });
       if (!res.ok) throw new Error();
-      localStorage.setItem('notif_sent', 'true');
+      localStorage.setItem(`notified-${city}`, email);
       setNotifSuccess(true);
     } catch {
       setNotifError('Hubo un error, intentá de nuevo');
@@ -268,10 +269,10 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    if (localStorage.getItem('notif_sent') === 'true') {
+    if (location && localStorage.getItem(`notified-${location}`)) {
       setNotifSuccess(true);
     }
-  }, []);
+  }, [location]);
 
   const handleProblemaClick = (label: string) => {
     setPrompt(label);
@@ -653,12 +654,12 @@ export default function HomePage() {
             </Link>
 
             <div className={styles.notifCard}>
-              <span className={styles.notifIcon}>{notifSuccess ? <Check size={18} /> : <Bell size={18} />}</span>
+              <span className={styles.notifIcon}>{notifSuccess ? <CheckCircle size={18} /> : <Bell size={18} />}</span>
               <div className={styles.notifContent}>
                 {notifSuccess ? (
                   <>
                     <p className={styles.notifSuccessTitle}>¡Listo! Te avisamos cuando haya profesionales en {location || 'tu zona'}</p>
-                    <p className={styles.notifNote}>No te vamos a llenar de mails. Un solo aviso cuando esté activo.</p>
+                    <p className={styles.notifSuccessDesc}>Revisá tu casilla de correo, te mandamos un email de confirmación.</p>
                   </>
                 ) : (
                   <>
