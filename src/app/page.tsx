@@ -28,7 +28,10 @@ const getGuideUrl = (slug: string): string => {
 const extractJSON = (text: string): any => {
   const start = text.indexOf('{');
   const end = text.lastIndexOf('}');
-  if (start === -1 || end === -1) return null;
+  if (start === -1 || end === -1) {
+    console.error('PARSE FAILED: no JSON object found in response');
+    return null;
+  }
   const jsonStr = text.slice(start, end + 1);
   const cleaned = jsonStr
     .replace(/⚠️\s*/g, '')
@@ -40,7 +43,7 @@ const extractJSON = (text: string): any => {
   try {
     return JSON.parse(cleaned);
   } catch (e) {
-    console.error('JSON parse error:', e);
+    console.error('PARSE FAILED. Raw:', text.substring(0, 1000));
     return null;
   }
 };
@@ -688,9 +691,10 @@ export default function HomePage() {
             </div>
 
             {loading && (
-              <div className={styles.chatLoading}>
-                <div className={styles.spinnerIcon} />
-                Analizando...
+              <div className={styles.loadingCard}>
+                <div className={styles.loadingSpinner} />
+                <p className={styles.loadingTitle}>Remi está analizando tu problema...</p>
+                <p className={styles.loadingSub}>Esto puede tardar unos segundos</p>
               </div>
             )}
 
