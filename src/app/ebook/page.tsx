@@ -245,9 +245,11 @@ export default function EbookPage() {
               </ul>
             </div>
           </div>
-          <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.ctaButton}>
+          <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.contentCta}>
+            <Download size={20} />
             QUIERO EL EBOOK AHORA — $2.999
           </a>
+          <p className={styles.contentTrust}>🔥 50% OFF solo por hoy</p>
         </div>
       </section>
 
