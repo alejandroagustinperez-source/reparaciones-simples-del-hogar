@@ -2,6 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { supabase } from '@/lib/supabase';
 import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Info, ExternalLink } from 'lucide-react';
 import styles from './page.module.css';
@@ -43,7 +44,7 @@ export default function HomePage() {
   const locationRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
-  const chatBottomRef = useRef<HTMLDivElement>(null);
+  const responseTopRef = useRef<HTMLParagraphElement>(null);
   const problemasRef = useRef<HTMLDivElement>(null);
   const categoriasRef = useRef<HTMLDivElement>(null);
 
@@ -142,7 +143,10 @@ export default function HomePage() {
     } finally {
       setLoading(false);
       setTimeout(() => {
-        chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (responseTopRef.current) {
+          const top = responseTopRef.current.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
       }, 100);
     }
   };
@@ -179,7 +183,10 @@ export default function HomePage() {
     } finally {
       setLoading(false);
       setTimeout(() => {
-        chatBottomRef.current?.scrollIntoView({ behavior: 'smooth' });
+        if (responseTopRef.current) {
+          const top = responseTopRef.current.getBoundingClientRect().top + window.scrollY - 80;
+          window.scrollTo({ top, behavior: 'smooth' });
+        }
       }, 100);
     }
   };
@@ -389,7 +396,7 @@ export default function HomePage() {
       {(aiResponse || loading) && (
         <section className={styles.answerSection} ref={answerRef}>
           <div className={styles.answerContainer}>
-            <p className={styles.queryHeader}>Tu consulta: {lastQuery}</p>
+            <p className={styles.queryHeader} ref={responseTopRef}>Tu consulta: {lastQuery}</p>
 
             {aiResponse && (<>
             {aiResponse.needsMoreInfo && aiResponse.followUpQuestion && (
@@ -509,15 +516,18 @@ export default function HomePage() {
             {aiResponse.relatedGuides?.length > 0 && (
               <div className={styles.guidesCard}>
                 <p className={styles.guidesTitle}>Guías relacionadas en el sitio</p>
-                {aiResponse.relatedGuides.map((g: any, i: number) => (
-                  <div key={i} className={styles.guideItem}>
-                    <div>
-                      <p className={styles.guideName}>{g.title}</p>
-                      <p className={styles.guideDesc}>{g.description}</p>
-                    </div>
-                    <span className={styles.guideArrow}>→</span>
-                  </div>
-                ))}
+                {aiResponse.relatedGuides.map((g: any, i: number) => {
+                  if (!g.slug) return null;
+                  return (
+                    <Link key={i} href={`/blog/${g.slug}`} className={styles.guideItem}>
+                      <div>
+                        <p className={styles.guideName}>{g.title}</p>
+                        <p className={styles.guideDesc}>{g.description}</p>
+                      </div>
+                      <span className={styles.guideArrow}>→</span>
+                    </Link>
+                  );
+                })}
               </div>
             )}
             </>)}
@@ -582,7 +592,6 @@ export default function HomePage() {
                 {loading ? '...' : 'Enviar'}
               </button>
             </div>
-            <div ref={chatBottomRef} />
           </div>
         </section>
       )}
