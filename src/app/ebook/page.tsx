@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { MapPin, X, Download, Shield, RefreshCw, Smartphone, Award, ShieldCheck } from 'lucide-react';
+import { MapPin, X, Download, Shield, RefreshCw, Smartphone, Award, ShieldCheck, MessageCircle } from 'lucide-react';
 import styles from './page.module.css';
 
 function AccordionItem({ question, answer }: { question: string; answer: string }) {
@@ -384,15 +384,17 @@ export default function EbookPage() {
 
       {/* SECCIÓN 9 — WHATSAPP */}
       <section className={styles.whatsappSection}>
-        <div className={styles.sectionInner}>
+        <div className={styles.whatsappInner}>
           <div className={styles.whatsappCard}>
-            <span className={styles.whatsappIcon}>💬</span>
-            <div>
+            <span className={styles.whatsappIconCircle}>
+              <MessageCircle size={28} />
+            </span>
+            <div className={styles.whatsappTextBlock}>
               <h2 className={styles.whatsappTitle}>¿Tenés dudas antes de comprar?</h2>
-              <p className={styles.whatsappText}>Respondemos todas tus consultas en WhatsApp</p>
+              <p className={styles.whatsappSub}>Escribinos por WhatsApp y te respondemos en minutos. Sin compromiso.</p>
             </div>
             <a href="https://wa.me/5492601234567" target="_blank" rel="noopener noreferrer" className={styles.whatsappBtn}>
-              Escribime por WhatsApp
+              💬 Escribime por WhatsApp
             </a>
           </div>
         </div>
@@ -400,28 +402,30 @@ export default function EbookPage() {
 
       {/* SECCIÓN 10 — CTA FINAL */}
       <section className={styles.ctaFinalSection}>
-        <div className={styles.sectionInner}>
+        <div className={styles.ctaFinalInner}>
           <div className={styles.ctaFinalCard}>
-            <span className={styles.ctaFinalBadge}>ÚLTIMA OPORTUNIDAD AL 50% OFF</span>
+            <span className={styles.ctaFinalBadge}>⏰ ÚLTIMA OPORTUNIDAD AL 50% OFF</span>
             <h2 className={styles.ctaFinalTitle}>
               Llevátelo hoy y empezá a ahorrar mañana
             </h2>
             <p className={styles.ctaFinalSub}>
-              No dejes pasar esta oferta. Más de 1.200 personas ya están ahorrando
-              con esta guía.
+              Acceso inmediato. Lectura para toda la vida. Con un solo arreglo ya lo recuperaste.
             </p>
             <div className={styles.ctaFinalPrice}>
-              <span className={styles.priceCurrent}>$2.999</span>
-              <span className={styles.priceOriginal}>$5.999</span>
-              <span className={styles.discountBadge}>-50%</span>
+              <span className={styles.ctaPriceCurrent}>$2.999</span>
+              <span className={styles.ctaPriceOriginal}>$5.999</span>
+              <span className={styles.ctaDiscountBadge}>-50%</span>
             </div>
-            <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.ctaButton}>
+            <a href={hotmartUrl} target="_blank" rel="noopener noreferrer" className={styles.ctaFinalBtn}>
+              <Download size={20} />
               QUIERO EL EBOOK AHORA — $2.999
             </a>
-            <div className={styles.heroTrust}>
-              <span>Pago seguro</span>
-              <span>Acceso inmediato</span>
-              <span>Garantía 7 días</span>
+            <div className={styles.ctaFinalTrust}>
+              <span><Shield size={14} /> Pago seguro</span>
+              <span className={styles.trustSep}>·</span>
+              <span><Download size={14} /> Acceso inmediato</span>
+              <span className={styles.trustSep}>·</span>
+              <span><RefreshCw size={14} /> Garantía 7 días</span>
             </div>
           </div>
         </div>
