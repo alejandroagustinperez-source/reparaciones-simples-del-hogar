@@ -1785,6 +1785,36 @@
   margin: 0;
 }
 
+.notifAlreadyTitle {
+  font-size: 14px;
+  font-weight: 600;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.notifAlreadyDesc {
+  font-size: 13px;
+  color: #9ca3af;
+  margin-bottom: 8px;
+}
+
+.notifResetBtn {
+  background: none;
+  border: 1px solid #d1d5db;
+  color: #6b7280;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.notifResetBtn:hover {
+  border-color: #f97316;
+  color: #f97316;
+}
+
 .notifNote {
   font-size: 11px;
   color: #9ca3af;

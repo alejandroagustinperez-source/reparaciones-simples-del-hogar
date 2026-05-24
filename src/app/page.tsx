@@ -83,7 +83,7 @@ export default function HomePage() {
   const [notifEmail, setNotifEmail] = useState('');
   const [notifLoading, setNotifLoading] = useState(false);
   const [notifError, setNotifError] = useState('');
-  const [notifSuccess, setNotifSuccess] = useState(false);
+  const [notifStatus, setNotifStatus] = useState<'idle' | 'loading' | 'success' | 'already'>('idle');
   const [parseFailed, setParseFailed] = useState(false);
   const locationRef = useRef<HTMLDivElement>(null);
 
@@ -259,8 +259,8 @@ export default function HomePage() {
         body: JSON.stringify({ email, city, province: 'San Luis' }),
       });
       if (!res.ok) throw new Error();
-      localStorage.setItem(`notified-${city}`, email);
-      setNotifSuccess(true);
+      localStorage.setItem(`professional-notified-${city}-v2`, email);
+      setNotifStatus('success');
     } catch {
       setNotifError('Hubo un error, intentá de nuevo');
     } finally {
@@ -269,8 +269,8 @@ export default function HomePage() {
   };
 
   useEffect(() => {
-    if (location && localStorage.getItem(`notified-${location}`)) {
-      setNotifSuccess(true);
+    if (location && localStorage.getItem(`professional-notified-${location}-v2`)) {
+      setNotifStatus('already');
     }
   }, [location]);
 
@@ -654,12 +654,20 @@ export default function HomePage() {
             </Link>
 
             <div className={styles.notifCard}>
-              <span className={styles.notifIcon}>{notifSuccess ? <CheckCircle size={18} /> : <Bell size={18} />}</span>
+              <span className={styles.notifIcon}>
+                {notifStatus === 'success' ? <CheckCircle size={18} /> : notifStatus === 'already' ? <Check size={18} /> : <Bell size={18} />}
+              </span>
               <div className={styles.notifContent}>
-                {notifSuccess ? (
+                {notifStatus === 'success' ? (
                   <>
                     <p className={styles.notifSuccessTitle}>¡Listo! Te avisamos cuando haya profesionales en {location || 'tu zona'}</p>
                     <p className={styles.notifSuccessDesc}>Revisá tu casilla de correo, te mandamos un email de confirmación.</p>
+                  </>
+                ) : notifStatus === 'already' ? (
+                  <>
+                    <p className={styles.notifAlreadyTitle}>Ya te registraste anteriormente para {location || 'tu zona'}</p>
+                    <p className={styles.notifAlreadyDesc}>Te avisaremos cuando haya novedades.</p>
+                    <button className={styles.notifResetBtn} type="button" onClick={() => { localStorage.removeItem(`professional-notified-${location}-v2`); setNotifStatus('idle'); }}>Registrar otro email</button>
                   </>
                 ) : (
                   <>
