@@ -488,14 +488,31 @@ export default function HomePage() {
             {aiResponse.stepsToFollow?.length > 0 && (
               <div className={styles.stepsCard}>
                 <h3 className={styles.stepsTitle}>Pasos a seguir</h3>
-                <ol className={styles.stepsList}>
-                  {aiResponse.stepsToFollow.map((step: string, i: number) => (
-                    <li key={i} className={styles.stepItem}>
-                      <span className={styles.stepNum}>{i + 1}</span>
-                      <p>{step}</p>
-                    </li>
+                <div className={styles.stepsList}>
+                  {aiResponse.stepsToFollow.map((step: any, i: number) => (
+                    <div key={i} className={styles.stepBlock}>
+                      <div className={styles.stepHeader}>
+                        <span className={styles.stepNum}>{i + 1}</span>
+                        <p className={styles.stepTitle}>{step.title}</p>
+                      </div>
+                      <p className={styles.stepDesc}>{step.description}</p>
+                      {step.subSteps?.map((sub: any, j: number) => (
+                        <div key={j} className={styles.subStep}>
+                          <span className={styles.subStepBullet}>→</span>
+                          <div>
+                            <p className={styles.subStepText}>{sub.text}</p>
+                            {sub.tip && <p className={styles.subStepTip}>💡 {sub.tip}</p>}
+                          </div>
+                        </div>
+                      ))}
+                      {step.warning && (
+                        <p className={styles.stepWarning}>
+                          ⚠️ {step.warning}
+                        </p>
+                      )}
+                    </div>
                   ))}
-                </ol>
+                </div>
               </div>
             )}
 

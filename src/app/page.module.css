@@ -1398,23 +1398,28 @@
 }
 
 .stepsList {
-  list-style: none;
-  padding: 0;
-  margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 0;
 }
 
-.stepItem {
+.stepBlock {
+  border-bottom: 1px solid #f3f4f6;
+  padding-bottom: 16px;
+  margin-bottom: 16px;
+}
+
+.stepBlock:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.stepHeader {
   display: flex;
   gap: 12px;
   align-items: flex-start;
-  margin-bottom: 12px;
-}
-
-.stepItem:last-child {
-  margin-bottom: 0;
+  margin-bottom: 8px;
 }
 
 .stepNum {
@@ -1432,10 +1437,58 @@
   margin-top: 1px;
 }
 
-.stepItem p {
+.stepTitle {
+  font-size: 15px;
+  font-weight: 700;
+  color: #1e3a5f;
+  margin: 0;
+  padding-top: 3px;
+}
+
+.stepDesc {
+  font-size: 14px;
+  color: #6b7280;
+  line-height: 1.6;
+  margin: 0 0 8px 40px;
+}
+
+.subStep {
+  display: flex;
+  gap: 8px;
+  align-items: flex-start;
+  padding-left: 40px;
+  margin-top: 6px;
+}
+
+.subStepBullet {
+  color: #9ca3af;
+  font-size: 14px;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.subStepText {
   font-size: 14px;
   color: #374151;
-  line-height: 1.6;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.subStepTip {
+  font-size: 13px;
+  color: #9ca3af;
+  font-style: italic;
+  margin: 2px 0 0;
+}
+
+.stepWarning {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  color: #f97316;
+  font-size: 13px;
+  margin: 8px 0 0 40px;
+  padding: 0;
 }
 
 .manualCard {
