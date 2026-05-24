@@ -4,7 +4,7 @@ import { useState, useRef, useEffect, useCallback } from 'react';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
 import Link from 'next/link';
-import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Check, CheckCircle, Info, ExternalLink, Zap, Droplets, Flame, Sparkles, Tv2, Shield, CloudRain, Paintbrush, Hammer } from 'lucide-react';
+import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Check, CheckCircle, Info, ExternalLink, Zap, Droplets, Flame, Sparkles, Plug, Shield, CloudRain, Paintbrush, Hammer } from 'lucide-react';
 import styles from './page.module.css';
 
 const UMBRAL = 1989;
@@ -61,9 +61,9 @@ const categorias = [
   { id: 'electricidad', label: 'Electricidad', icon: Zap, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electricidad', desc: 'Térmicas, enchufes, luces', bg: '#fef2f2', iconColor: '#ef4444' },
   { id: 'plomeria', label: 'Plomería', icon: Droplets, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=plomeria', desc: 'Canillas, pérdidas, destapaciones', bg: '#eff6ff', iconColor: '#3b82f6' },
   { id: 'gas', label: 'Gas', icon: Flame, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=gas', desc: 'Pérdidas, calefones, hornallas', bg: '#fff7ed', iconColor: '#f97316' },
-  { id: 'mantenimiento', label: 'Mantenimiento', icon: Wrench, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=mantenimiento', desc: 'Puertas, ventanas, herrajes', bg: '#f8fafc', iconColor: '#64748b' },
-  { id: 'limpieza', label: 'Limpieza', icon: Sparkles, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=limpieza', desc: 'Trucos y productos efectivos', bg: '#f0fdf4', iconColor: '#22c55e' },
-  { id: 'electrodomesticos', label: 'Electrodomésticos', icon: Tv2, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electrodomesticos', desc: 'Heladera, lavarropas, microondas', bg: '#fdf4ff', iconColor: '#a855f7' },
+  { id: 'mantenimiento', label: 'Mantenimiento', icon: Wrench, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=mantenimiento', desc: 'Puertas, ventanas, herrajes', bg: '#f0fdf4', iconColor: '#22c55e' },
+  { id: 'limpieza', label: 'Limpieza', icon: Sparkles, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=limpieza', desc: 'Trucos y productos efectivos', bg: '#fdf4ff', iconColor: '#a855f7' },
+  { id: 'electrodomesticos', label: 'Electrodomésticos', icon: Plug, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=electrodomesticos', desc: 'Heladera, lavarropas, microondas', bg: '#fff7ed', iconColor: '#f59e0b' },
   { id: 'seguridad', label: 'Seguridad', icon: Shield, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=seguridad', desc: 'Cerraduras, alarmas, cámaras', bg: '#eff6ff', iconColor: '#3b82f6' },
   { id: 'humedad', label: 'Humedad', icon: CloudRain, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=humedad', desc: 'Filtraciones, moho, paredes', bg: '#ecfeff', iconColor: '#06b6d4' },
   { id: 'pintura', label: 'Pintura', icon: Paintbrush, href: 'https://blog.reparacionessimplesdelhogar.com.ar?categoria=pintura', desc: 'Paredes, techos, exteriores', bg: '#fdf4ff', iconColor: '#d946ef' },
@@ -765,7 +765,7 @@ export default function HomePage() {
                 className={styles.categoriaCard}
               >
                 <div className={styles.categoriaIconBg} style={{ background: cat.bg, color: cat.iconColor }}>
-                  <cat.icon size={28} />
+                  <cat.icon size={32} />
                 </div>
                 <span className={styles.categoriaLabel}>{cat.label}</span>
                 <span className={styles.categoriaDesc}>{cat.desc}</span>
