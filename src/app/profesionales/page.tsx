@@ -26,7 +26,7 @@ export default function ProfesionalesPage() {
         </p>
       </div>
 
-      <div className={styles.grid}>
+      <div id="planes" className={styles.grid}>
         <div className={`${styles.card} ${styles.cardFeatured}`}>
           <div>
             <span className={`${styles.planBadge} ${styles.planBadgeOrange}`}>
