@@ -22,8 +22,7 @@ const categoryMap: Record<string, string> = {
 
 const getGuideUrl = (slug: string): string => {
   const clean = slug.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').trim();
-  if (categoryMap[clean]) return `/blog?categoria=${clean}`;
-  return `/blog?categoria=${clean}`;
+  return `https://blog.reparacionessimplesdelhogar.com.ar?categoria=${clean}`;
 };
 
 const extractJSON = (text: string): any => {
@@ -624,13 +623,13 @@ export default function HomePage() {
                 {aiResponse.relatedGuides.map((g: any, i: number) => {
                   if (!g.slug) return null;
                   return (
-                    <Link key={i} href={getGuideUrl(g.slug)} className={styles.guideItem}>
+                    <a key={i} href={getGuideUrl(g.slug)} target="_blank" rel="noopener noreferrer" className={styles.guideItem}>
                       <div>
                         <p className={styles.guideName}>{g.title}</p>
                         <p className={styles.guideDesc}>{g.description}</p>
                       </div>
                       <span className={styles.guideArrow}>→</span>
-                    </Link>
+                    </a>
                   );
                 })}
               </div>

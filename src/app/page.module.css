@@ -1565,22 +1565,22 @@
   justify-content: space-between;
   align-items: center;
   padding: 12px;
-  border-bottom: 1px solid #f3f4f6;
   cursor: pointer;
   text-decoration: none;
   border-radius: 8px;
-  transition: background 0.2s, border-color 0.2s;
+  border: 1px solid #e5e7eb;
+  background: white;
+  transition: all 0.2s ease;
   margin: 0 -4px;
-  border: 1px solid transparent;
+}
+
+.guideItem + .guideItem {
+  margin-top: 8px;
 }
 
 .guideItem:hover {
-  background: #f9fafb;
+  background: #fff7ed;
   border-color: #fed7aa;
-}
-
-.guideItem:last-child {
-  border-bottom: none;
 }
 
 .guideItem:hover .guideArrow {
