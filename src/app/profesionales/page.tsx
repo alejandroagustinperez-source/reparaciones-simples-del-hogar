@@ -14,7 +14,7 @@ export const metadata: Metadata = {
 
 export default function ProfesionalesPage() {
   return (
-    <section className={styles.page}>
+    <section id="planes" className={styles.page}>
       <div className={styles.header}>
         <div className={styles.badge}>✨ Sos profesional</div>
         <h1 className={styles.title}>
@@ -26,7 +26,7 @@ export default function ProfesionalesPage() {
         </p>
       </div>
 
-      <div id="planes" className={styles.grid}>
+      <div className={styles.grid}>
         <div className={`${styles.card} ${styles.cardFeatured}`}>
           <div>
             <span className={`${styles.planBadge} ${styles.planBadgeOrange}`}>
