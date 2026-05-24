@@ -39,6 +39,7 @@ export default function HomePage() {
   const [visitCount, setVisitCount] = useState<number | null>(null);
   const [displayCount, setDisplayCount] = useState(0);
   const [showLocationDropdown, setShowLocationDropdown] = useState(false);
+  const [lastQuery, setLastQuery] = useState('');
   const locationRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const answerRef = useRef<HTMLDivElement>(null);
@@ -112,6 +113,7 @@ export default function HomePage() {
     if (!prompt.trim()) return;
     const userMessage = prompt.trim();
     setPrompt('');
+    setLastQuery(userMessage);
     setLoading(true);
     setAiResponse(null);
     setAnswer(null);
@@ -150,6 +152,7 @@ export default function HomePage() {
     setDisabledChips(prev => new Set(prev).add(chipIndex));
     const userMessage = text;
     setPrompt('');
+    setLastQuery(userMessage);
     setLoading(true);
     
     const updatedHistory = [...conversationHistory, { role: 'user', content: userMessage }];
@@ -386,7 +389,7 @@ export default function HomePage() {
       {(aiResponse || loading) && (
         <section className={styles.answerSection} ref={answerRef}>
           <div className={styles.answerContainer}>
-            <p className={styles.queryHeader}>Tu consulta: {prompt}</p>
+            <p className={styles.queryHeader}>Tu consulta: {lastQuery}</p>
 
             {aiResponse && (<>
             {aiResponse.needsMoreInfo && aiResponse.followUpQuestion && (
@@ -434,7 +437,7 @@ export default function HomePage() {
               )}
               {aiResponse.requiresProfessional && (
                 <span className={styles.proBadge}>
-                  Técnico Sugerido
+                  <Wrench size={14} /> Técnico Sugerido
                 </span>
               )}
             </div>
@@ -445,7 +448,7 @@ export default function HomePage() {
 
             {aiResponse.diagnosis?.length > 0 && (
               <div className={styles.diagnosisSection}>
-                <h3 className={styles.diagnosisTitle}>Diagnóstico paso a paso</h3>
+                <h3 className={styles.diagnosisTitle}><Wrench size={20} /> Diagnóstico paso a paso</h3>
                 <p className={styles.diagnosisSub}>Como lo haría un técnico: revisamos las causas más probables primero.</p>
                 {aiResponse.diagnosis.map((d: any, i: number) => (
                   <div key={i} className={styles.diagnosisCard}>

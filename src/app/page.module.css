@@ -1163,63 +1163,75 @@
 
 .warningUrgent {
   background: #fff7ed;
-  border-left: 3px solid #f97316;
-  color: #f97316;
+  border-left: 4px solid #f97316;
+  border-radius: 8px;
+  padding: 14px 16px;
 }
 
 .warningDanger {
   background: #fef2f2;
-  border-left: 3px solid #ef4444;
-  color: #ef4444;
+  border-left: 4px solid #ef4444;
+  border-radius: 8px;
+  padding: 14px 16px;
 }
 
 .warningTitle {
   font-weight: 700;
   font-size: 14px;
-  color: #1e3a5f;
+  color: #991b1b;
   margin-bottom: 2px;
 }
 
 .warningDesc {
-  font-size: 13px;
-  color: #6b7280;
+  font-size: 14px;
+  color: #7f1d1d;
   line-height: 1.5;
+}
+
+.warningUrgent .warningTitle {
+  color: #1e3a5f;
+}
+
+.warningUrgent .warningDesc {
+  color: #6b7280;
 }
 
 .badgesRow {
   display: flex;
   gap: 8px;
   flex-wrap: wrap;
+  margin: 12px 0;
 }
 
 .diffBadge {
   font-size: 12px;
   font-weight: 600;
   padding: 4px 12px;
-  border-radius: 100px;
+  border-radius: 20px;
 }
 
 .diffFácil {
-  background: #d1fae5;
-  color: #065f46;
+  background: #f0fdf4;
+  color: #16a34a;
 }
 
 .diffMedia {
   background: #fff7ed;
-  color: #c2410c;
+  color: #f97316;
 }
 
 .diffAlta {
   background: #fef2f2;
-  color: #991b1b;
+  color: #dc2626;
 }
 
 .proBadge {
   font-size: 12px;
   font-weight: 600;
   padding: 4px 12px;
-  border-radius: 100px;
+  border-radius: 20px;
   border: 1px solid #d1d5db;
+  background: white;
   color: #6b7280;
   display: inline-flex;
   align-items: center;
@@ -1230,6 +1242,7 @@
   font-size: 15px;
   color: #374151;
   line-height: 1.7;
+  margin-bottom: 24px;
 }
 
 .diagnosisSection {
@@ -1248,6 +1261,11 @@
   gap: 8px;
 }
 
+.diagnosisTitle svg {
+  color: #f97316;
+  flex-shrink: 0;
+}
+
 .diagnosisSub {
   font-size: 13px;
   color: #6b7280;
@@ -1256,26 +1274,26 @@
 
 .diagnosisCard {
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 16px;
+  border-radius: 12px;
+  padding: 20px;
 }
 
 .diagnosisHeader {
   display: flex;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .diagnosisNum {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
   background: #1e3a5f;
   color: white;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -1288,7 +1306,7 @@
 }
 
 .diagnosisCause {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: #1e3a5f;
   width: 100%;
@@ -1331,13 +1349,26 @@
 .diagnosisCols {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
+  gap: 0;
+  position: relative;
+}
+
+.diagnosisColDivider {
+  width: 1px;
+  background: #f3f4f6;
 }
 
 .diagnosisCol {
   display: flex;
   flex-direction: column;
   gap: 4px;
+  padding-right: 16px;
+}
+
+.diagnosisCol:last-child {
+  padding-right: 0;
+  padding-left: 16px;
+  border-left: 1px solid #f3f4f6;
 }
 
 .colLabel {
@@ -1348,22 +1379,22 @@
 }
 
 .colText {
-  font-size: 13px;
+  font-size: 14px;
   color: #374151;
   line-height: 1.5;
 }
 
 .stepsCard {
   border: 1px solid #e5e7eb;
-  border-radius: 10px;
-  padding: 20px;
+  border-radius: 12px;
+  padding: 20px 24px;
 }
 
 .stepsTitle {
-  font-size: 18px;
+  font-size: 16px;
   font-weight: 700;
   color: #1e3a5f;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .stepsList {
@@ -1372,13 +1403,18 @@
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 
 .stepItem {
   display: flex;
-  gap: 10px;
+  gap: 12px;
   align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.stepItem:last-child {
+  margin-bottom: 0;
 }
 
 .stepNum {
@@ -1690,6 +1726,11 @@
   .diagnosisCols {
     grid-template-columns: 1fr;
     gap: 12px;
+  }
+
+  .diagnosisCol:last-child {
+    padding-left: 0;
+    border-left: none;
   }
 
   .notifRow {
