@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { MapPin, X, Download, Shield, RefreshCw, Smartphone, Award } from 'lucide-react';
+import { MapPin, X, Download, Shield, RefreshCw, Smartphone, Award, ShieldCheck } from 'lucide-react';
 import styles from './page.module.css';
 
 function AccordionItem({ question, answer }: { question: string; answer: string }) {
@@ -354,14 +354,17 @@ export default function EbookPage() {
 
       {/* SECCIÓN 7 — GARANTÍA */}
       <section className={styles.guaranteeSection}>
-        <div className={styles.sectionInner}>
+        <div className={styles.guaranteeInner}>
           <div className={styles.guaranteeCard}>
-            <span className={styles.guaranteeIcon}>🛡</span>
-            <h2 className={styles.guaranteeTitle}>Garantía de 7 días o te devolvemos el 100%</h2>
-            <p className={styles.guaranteeText}>
-              Comprás con total confianza. Si dentro de los primeros 7 días considerás
-              que el ebook no es para vos, te devolvemos cada peso sin hacer preguntas.
-            </p>
+            <span className={styles.guaranteeIconCircle}>
+              <ShieldCheck size={28} />
+            </span>
+            <div className={styles.guaranteeTextBlock}>
+              <h2 className={styles.guaranteeTitle}>Garantía de 7 días o te devolvemos el 100%</h2>
+              <p className={styles.guaranteeText}>
+                Probá el ebook sin riesgo. Si en 7 días no te resulta útil, te devolvemos cada peso. Sin preguntas, sin trámites raros. La única forma de que ganes es ganando.
+              </p>
+            </div>
           </div>
         </div>
       </section>
