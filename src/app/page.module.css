@@ -1656,7 +1656,17 @@
   margin-bottom: 12px;
 }
 
+.comingLink {
+  text-decoration: none;
+  display: block;
+}
+
+.comingLink:hover .comingCard {
+  border-color: #f97316;
+}
+
 .comingBtn {
+  display: inline-block;
   border: 1px solid #d1d5db;
   background: white;
   color: #374151;
@@ -1668,7 +1678,7 @@
   transition: border-color 0.2s, color 0.2s;
 }
 
-.comingBtn:hover {
+.comingLink:hover .comingBtn {
   border-color: #f97316;
   color: #f97316;
 }

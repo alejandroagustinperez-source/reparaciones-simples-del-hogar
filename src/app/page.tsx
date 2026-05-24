@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Image from 'next/image';
 import { supabase } from '@/lib/supabase';
+import Link from 'next/link';
 import { Clock, AlertTriangle, Wrench, BookOpen, MapPin, Bell, Info, ExternalLink } from 'lucide-react';
 import styles from './page.module.css';
 
@@ -548,16 +549,18 @@ export default function HomePage() {
             )}
             </>)}
 
-            <div className={styles.comingCard}>
-              <span className={styles.comingIcon}><MapPin size={18} /></span>
-              <div className={styles.comingContent}>
-                <span className={styles.comingBadge}>MUY PRONTO</span>
-                <p className={styles.comingTitle}>Encontrá profesionales de confianza cerca tuyo</p>
-                <p className={styles.comingDesc}>Estamos armando un directorio de profesionales matriculados por zona.</p>
-                <p className={styles.comingNote}>¿Sos profesional y querés aparecer? Dejanos tus datos.</p>
-                <button className={styles.comingBtn} type="button">Quiero ofrecer mis servicios</button>
+            <Link href="/planes-para-profesionales" className={styles.comingLink}>
+              <div className={styles.comingCard}>
+                <span className={styles.comingIcon}><MapPin size={18} /></span>
+                <div className={styles.comingContent}>
+                  <span className={styles.comingBadge}>MUY PRONTO</span>
+                  <p className={styles.comingTitle}>Encontrá profesionales de confianza cerca tuyo</p>
+                  <p className={styles.comingDesc}>Estamos armando un directorio de profesionales matriculados por zona.</p>
+                  <p className={styles.comingNote}>¿Sos profesional y querés aparecer? Dejanos tus datos.</p>
+                  <span className={styles.comingBtn}>Quiero ofrecer mis servicios</span>
+                </div>
               </div>
-            </div>
+            </Link>
 
             <div className={styles.notifCard}>
               <span className={styles.notifIcon}><Bell size={18} /></span>
