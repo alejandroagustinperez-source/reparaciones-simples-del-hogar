@@ -730,19 +730,19 @@
 }
 
 .ebookSection {
-  max-width: 720px;
-  margin: 5rem auto 0;
-  padding: 0 1rem 5rem;
+  background: var(--navy);
+  padding: 5rem 1rem;
 }
 
 .ebookBanner {
-  background: var(--navy);
-  border-radius: 20px;
+  max-width: 900px;
+  margin: 0 auto;
   padding: 2.5rem;
   position: relative;
   overflow: hidden;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
   gap: 2rem;
 }
 
@@ -896,7 +896,6 @@
 
 @media (min-width: 640px) {
   .ebookBanner {
-    grid-template-columns: 60% 1fr;
     gap: 2.5rem;
   }
 
@@ -972,11 +971,11 @@
   }
 
   .ebookSection {
-    padding: 0 16px 40px;
-    margin-top: 40px;
+    padding: 40px 16px;
   }
 
   .ebookBanner {
+    grid-template-columns: 1fr;
     padding: 24px 16px;
   }
 
