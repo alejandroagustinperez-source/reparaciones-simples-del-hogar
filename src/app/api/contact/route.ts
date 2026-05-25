@@ -13,8 +13,7 @@ export async function POST(req: Request) {
     const result = await resend.emails.send({
       from: 'contacto@reparacionessimplesdelhogar.com.ar',
       to: 'alejandro.agustin.perez@gmail.com',
-      reply_to: email,
-      subject: `[Contacto] ${subject}`,
+      subject: `[Contacto] ${subject} - ${email}`,
       html: `
         <h2>Nuevo mensaje de contacto</h2>
         <p><strong>Nombre:</strong> ${name}</p>
