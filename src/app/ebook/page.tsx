@@ -27,8 +27,10 @@ export default function EbookPage() {
     fetch('https://ipapi.co/json/')
       .then((res) => res.json())
       .then((data) => {
-        const loc = [data.city, data.region, data.country_name].filter(Boolean).join(' · ');
-        setLocation(loc || 'Argentina');
+        console.log('ipapi response:', data);
+        const parts = [data.city, data.region, data.country_name].filter(Boolean);
+        const loc = parts.length > 0 ? parts.join(' · ') : 'Argentina';
+        setLocation(loc);
       })
       .catch(() => setLocation('Argentina'));
   }, []);
