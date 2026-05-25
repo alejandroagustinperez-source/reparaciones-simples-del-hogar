@@ -2061,4 +2061,11 @@
     padding: 0.2rem 0.5rem;
     font-size: 0.72rem;
   }
+
+  .locationBar {
+    font-size: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
 }

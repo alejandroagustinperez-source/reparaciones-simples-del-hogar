@@ -1289,3 +1289,12 @@
     font-size: 15px;
   }
 }
+
+@media (max-width: 520px) {
+  .locationBanner {
+    font-size: 0.75rem;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+}
