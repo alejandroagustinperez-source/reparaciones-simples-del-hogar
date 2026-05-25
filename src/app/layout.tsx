@@ -52,7 +52,7 @@ export default function RootLayout({
       </head>
       <body>
         <Navbar />
-        <main style={{ paddingTop: 'max(64px, var(--navbar-height, 64px))' }}>{children}</main>
+        <main style={{ paddingTop: 'var(--navbar-height, 64px)' }}>{children}</main>
         <Footer />
       </body>
     </html>
