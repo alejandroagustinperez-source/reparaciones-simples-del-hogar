@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Clock, MapPin, X } from 'lucide-react';
 import styles from './page.module.css';
 
@@ -21,10 +21,11 @@ function InstagramIcon() {
 }
 
 export default function ContactoPage() {
-  const [submitted, setSubmitted] = useState(false);
   const [location, setLocation] = useState<string | null>(null);
   const [bannerVisible, setBannerVisible] = useState(true);
-  const [message, setMessage] = useState('');
+  const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
+  const [errorMsg, setErrorMsg] = useState('');
+  const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
     fetch('https://ipapi.co/json/')
@@ -36,10 +37,40 @@ export default function ContactoPage() {
       .catch(() => setLocation('Argentina'));
   }, []);
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setSubmitted(true);
-    setTimeout(() => setSubmitted(false), 5000);
+    setStatus('loading');
+    setErrorMsg('');
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: formData.get('name'),
+          email: formData.get('email'),
+          subject: formData.get('subject'),
+          message: formData.get('message'),
+        }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        setErrorMsg(data.error || 'Error al enviar el mensaje');
+        setStatus('error');
+        return;
+      }
+
+      setStatus('success');
+      form.reset();
+    } catch {
+      setErrorMsg('Error de conexión. Intentá de nuevo.');
+      setStatus('error');
+    }
   };
 
   return (
@@ -103,44 +134,47 @@ export default function ContactoPage() {
           </div>
         </div>
 
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleSubmit} ref={formRef}>
           <div className={styles.formRow}>
             <div className={styles.field}>
               <label className={styles.label} htmlFor="name">Nombre</label>
-              <input className={styles.input} id="name" type="text" required placeholder="Tu nombre" />
+              <input className={styles.input} id="name" name="name" type="text" required placeholder="Tu nombre" />
             </div>
             <div className={styles.field}>
               <label className={styles.label} htmlFor="email">Email</label>
-              <input className={styles.input} id="email" type="email" required placeholder="tu@email.com" />
+              <input className={styles.input} id="email" name="email" type="email" required placeholder="tu@email.com" />
             </div>
           </div>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="subject">Asunto</label>
-            <input className={styles.input} id="subject" type="text" required placeholder="¿Sobre qué querés hablarnos?" />
+            <input className={styles.input} id="subject" name="subject" type="text" required placeholder="¿Sobre qué querés hablarnos?" />
           </div>
           <div className={styles.field}>
             <label className={styles.label} htmlFor="message">Mensaje</label>
             <textarea
               className={styles.textarea}
               id="message"
+              name="message"
               required
               placeholder="Escribí tu mensaje..."
               maxLength={5000}
-              value={message}
-              onChange={(e) => setMessage(e.target.value)}
             />
-            <span className={styles.counter}>{message.length}/5000</span>
           </div>
           <p className={styles.legal}>
             Al enviar aceptás nuestra{' '}
             <a href="/politica-de-privacidad" target="_blank">política de privacidad</a>.
           </p>
-          <button className={styles.submitButton} type="submit">
-            Enviar mensaje
+          <button className={styles.submitButton} type="submit" disabled={status === 'loading'}>
+            {status === 'loading' ? 'Enviando...' : 'Enviar mensaje'}
           </button>
-          {submitted && (
+          {status === 'success' && (
             <div className={styles.alert}>
               Mensaje enviado con éxito. Te responderemos a la brevedad.
+            </div>
+          )}
+          {status === 'error' && (
+            <div className={styles.alertError}>
+              {errorMsg}
             </div>
           )}
         </form>
