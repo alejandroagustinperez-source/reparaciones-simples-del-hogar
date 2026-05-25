@@ -50,9 +50,38 @@
   color: #f97316;
 }
 
-@media (max-width: 420px) {
-  .logoTextNavy {
+.logoTextShort {
+  display: none;
+  font-weight: 700;
+  font-size: 1rem;
+  color: #f97316;
+}
+
+.ctaTextShort {
+  display: none;
+}
+
+@media (max-width: 520px) {
+  .logoTextNavy,
+  .logoTextOrange {
     display: none;
+  }
+
+  .logoTextShort {
+    display: inline;
+  }
+
+  .ctaButton {
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .ctaTextFull {
+    display: none;
+  }
+
+  .ctaTextShort {
+    display: inline;
   }
 }
 

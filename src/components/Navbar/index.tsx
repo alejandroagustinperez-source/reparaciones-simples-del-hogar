@@ -59,6 +59,7 @@ export default function Navbar() {
           </span>
           <span className={styles.logoTextNavy}>Reparaciones Simples del</span>
           <span className={styles.logoTextOrange}> Hogar</span>
+          <span className={styles.logoTextShort}>RSH</span>
         </Link>
 
         <ul className={styles.desktopLinks}>
@@ -103,7 +104,8 @@ export default function Navbar() {
         </div>
 
         <Link href="/" className={styles.ctaButton}>
-          ✨ Probar asistente IA
+          <span className={styles.ctaTextFull}>✨ Probar asistente IA</span>
+          <span className={styles.ctaTextShort}>✨ Asistente IA</span>
         </Link>
 
         <button
