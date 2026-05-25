@@ -116,7 +116,7 @@ export default function HomePage() {
     fetch('https://ipapi.co/json/')
       .then((res) => res.json())
       .then((data) => {
-        const loc = [data.city, data.region].filter(Boolean).join(' · ');
+        const loc = [data.city, data.region, data.country_name].filter(Boolean).join(' · ');
         setLocation(loc || 'Argentina');
       })
       .catch(() => setLocation('Argentina'));
