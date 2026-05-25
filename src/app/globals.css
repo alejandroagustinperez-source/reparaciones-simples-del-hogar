@@ -70,8 +70,12 @@ input, textarea, select {
   padding: 0 16px;
 }
 
+:root {
+  --navbar-height: 64px;
+}
+
 @media (max-width: 520px) {
-  main {
+  :root {
     --navbar-height: 72px;
   }
 }
