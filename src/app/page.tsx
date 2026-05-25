@@ -113,11 +113,11 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    fetch('https://ipwho.is/')
+    fetch('https://get.geojs.io/v1/ip/geo.json')
       .then((res) => res.json())
       .then((data) => {
         const parts = [data.city, data.region, data.country].filter(
-          (p) => p && p.trim() !== ''
+          (p) => p && p.trim() !== '' && p !== 'Unknown'
         );
         const loc = parts.length > 0 ? parts.join(' · ') : 'Argentina';
         setLocation(loc);
