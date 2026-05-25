@@ -24,11 +24,12 @@ export default function EbookPage() {
   const [bannerVisible, setBannerVisible] = useState(true);
 
   useEffect(() => {
-    fetch('https://ipapi.co/json/')
+    fetch('https://freeipapi.com/api/json')
       .then((res) => res.json())
       .then((data) => {
-        console.log('ipapi response:', data);
-        const parts = [data.city, data.region, data.country_name].filter(Boolean);
+        const parts = [data.cityName, data.regionName, data.countryName].filter(
+          (p) => p && p !== '-'
+        );
         const loc = parts.length > 0 ? parts.join(' · ') : 'Argentina';
         setLocation(loc);
       })
