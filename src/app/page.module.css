@@ -1981,3 +1981,33 @@
 .parseErrorBtn:hover {
   opacity: 0.9;
 }
+
+@media (max-width: 520px) {
+  .searchBox {
+    padding: 1rem;
+  }
+
+  .searchBottomRow {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.75rem;
+  }
+
+  .suggestionChips {
+    width: 100%;
+  }
+
+  .suggestionChip {
+    font-size: 0.7rem;
+    padding: 0.3rem 0.6rem;
+    white-space: normal;
+    text-align: center;
+  }
+
+  .submitButton {
+    width: 100%;
+    text-align: center;
+    padding: 0.75rem;
+    font-size: 1rem;
+  }
+}
