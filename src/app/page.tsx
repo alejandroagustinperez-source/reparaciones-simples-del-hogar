@@ -116,6 +116,7 @@ export default function HomePage() {
     fetch('https://get.geojs.io/v1/ip/geo.json')
       .then((res) => res.json())
       .then((data) => {
+        console.log('GEO DATA COMPLETO:', JSON.stringify(data));
         const parts = [data.city, data.region, data.country].filter(
           (p) => p && p.trim() !== '' && p !== 'Unknown'
         );
