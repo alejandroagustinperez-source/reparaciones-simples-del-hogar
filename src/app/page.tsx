@@ -113,11 +113,11 @@ export default function HomePage() {
   }, []);
 
   useEffect(() => {
-    fetch('https://freeipapi.com/api/json')
+    fetch('https://ipwho.is/')
       .then((res) => res.json())
       .then((data) => {
-        const parts = [data.cityName, data.regionName, data.countryName].filter(
-          (p) => p && p !== '-'
+        const parts = [data.city, data.region, data.country].filter(
+          (p) => p && p.trim() !== ''
         );
         const loc = parts.length > 0 ? parts.join(' · ') : 'Argentina';
         setLocation(loc);
