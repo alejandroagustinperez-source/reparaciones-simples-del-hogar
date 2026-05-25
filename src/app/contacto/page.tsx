@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useEffect, useRef } from 'react';
-import { Clock, MapPin, X } from 'lucide-react';
+import { useState, useRef } from 'react';
+import { Clock, MapPin } from 'lucide-react';
 import styles from './page.module.css';
 
 function FacebookIcon() {
@@ -21,24 +21,9 @@ function InstagramIcon() {
 }
 
 export default function ContactoPage() {
-  const [location, setLocation] = useState<string | null>(null);
-  const [bannerVisible, setBannerVisible] = useState(true);
   const [status, setStatus] = useState<'idle' | 'loading' | 'success' | 'error'>('idle');
   const [errorMsg, setErrorMsg] = useState('');
   const formRef = useRef<HTMLFormElement>(null);
-
-  useEffect(() => {
-    fetch('https://freeipapi.com/api/json')
-      .then((res) => res.json())
-      .then((data) => {
-        const parts = [data.cityName, data.regionName, data.countryName].filter(
-          (p) => p && p !== '-'
-        );
-        const loc = parts.length > 0 ? parts.join(' · ') : 'Argentina';
-        setLocation(loc);
-      })
-      .catch(() => setLocation('Argentina'));
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -78,20 +63,6 @@ export default function ContactoPage() {
 
   return (
     <section className={styles.page}>
-      {bannerVisible && (
-        <div className={styles.locationBanner}>
-          <MapPin size={16} />
-          <span>
-            Detectamos que estás en <strong>{location || 'cargando...'}</strong>
-            {' · '}
-            <a href="#cambiar" className={styles.changeLink} onClick={(e) => { e.preventDefault(); }}>Cambiar ubicación</a>
-          </span>
-          <button className={styles.closeBtn} onClick={() => setBannerVisible(false)} aria-label="Cerrar">
-            <X size={16} />
-          </button>
-        </div>
-      )}
-
       <div className={styles.grid}>
         <div className={styles.infoCol}>
           <h1 className={styles.title}>Contáctenos</h1>

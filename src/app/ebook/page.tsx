@@ -1,8 +1,8 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
-import { MapPin, X, Download, Shield, RefreshCw, Smartphone, Award, ShieldCheck, MessageCircle } from 'lucide-react';
+import { Download, Shield, RefreshCw, Smartphone, Award, ShieldCheck, MessageCircle } from 'lucide-react';
 import styles from './page.module.css';
 
 function AccordionItem({ question, answer }: { question: string; answer: string }) {
@@ -20,21 +20,6 @@ function AccordionItem({ question, answer }: { question: string; answer: string 
 
 export default function EbookPage() {
   const hotmartUrl = process.env.NEXT_PUBLIC_HOTMART_URL || '#';
-  const [location, setLocation] = useState<string | null>(null);
-  const [bannerVisible, setBannerVisible] = useState(true);
-
-  useEffect(() => {
-    fetch('https://freeipapi.com/api/json')
-      .then((res) => res.json())
-      .then((data) => {
-        const parts = [data.cityName, data.regionName, data.countryName].filter(
-          (p) => p && p !== '-'
-        );
-        const loc = parts.length > 0 ? parts.join(' · ') : 'Argentina';
-        setLocation(loc);
-      })
-      .catch(() => setLocation('Argentina'));
-  }, []);
 
   const testimonials = [
     { name: 'Mariana G.', location: 'Mendoza', text: 'Lo compré por curiosidad y terminé arreglando una pérdida en la cocina el mismo día. Me ahorré la visita del plomero, que acá sale carísimo.', initial: 'M' },
@@ -54,20 +39,6 @@ export default function EbookPage() {
 
   return (
     <>
-      {bannerVisible && (
-        <div className={styles.locationBanner}>
-          <MapPin size={14} />
-          <span>
-            Detectamos que estás en <strong>{location || 'cargando...'}</strong>
-            {' · '}
-            <a href="#cambiar" className={styles.changeLink} onClick={(e) => { e.preventDefault(); }}>Cambiar ubicación</a>
-          </span>
-          <button className={styles.closeBtn} onClick={() => setBannerVisible(false)} aria-label="Cerrar">
-            <X size={14} />
-          </button>
-        </div>
-      )}
-
       <div className={styles.topBar}>
         🔥 OFERTA POR HOY: 50% OFF + Acceso inmediato · Precio promocional por tiempo limitado
       </div>
