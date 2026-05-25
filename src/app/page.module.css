@@ -2013,6 +2013,8 @@
 
   .suggestionChips {
     width: 100%;
+    display: flex;
+    flex-wrap: wrap;
     gap: 0.4rem;
   }
 
@@ -2023,6 +2025,7 @@
     white-space: nowrap;
     background: #f8f9fa;
     border-color: #e9ecef;
+    flex-shrink: 0;
   }
 
   .submitButton {
