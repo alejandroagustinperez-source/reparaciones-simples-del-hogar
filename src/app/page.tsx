@@ -49,12 +49,12 @@ const extractJSON = (text: string): any => {
 };
 
 const problemas = [
-  { id: 'El+lavarropas+no+desagota', label: 'El lavarropas no desagota', icon: '🧺', desc: 'El lavarropas se llena de agua pero no la expulsa al desagotar.' },
-  { id: 'Goteo+en+la+canilla+del+baño', label: 'Goteo en la canilla del baño', icon: '🚿', desc: 'La canilla pierde agua constantemente por la salida o la manija.' },
-  { id: 'Saltó+la+térmica', label: 'Saltó la térmica', icon: '⚡', desc: 'El disyuntor o térmica salta al encender algún electrodoméstico.' },
-  { id: 'El+inodoro+se+tapa+seguido', label: 'El inodoro se tapa seguido', icon: '🚽', desc: 'El inodoro se obstruye con frecuencia incluso con poco uso.' },
-  { id: 'Olor+a+gas+en+la+cocina', label: 'Olor a gas en la cocina', icon: '🔥', desc: 'Se siente olor a gas cerca de la cocina o del calefón.' },
-  { id: 'Humedad+en+la+pared', label: 'Humedad en la pared', icon: '🧱', desc: 'Manchas de humedad, moho o ampollas en la pintura de paredes.' },
+  { id: 'lavarropas', label: 'Lavarropas no desagota', icon: '🌀', desc: 'El lavarropas no desagota' },
+  { id: 'canilla', label: 'Goteo en canilla', icon: '💧', desc: 'Goteo en la canilla del baño' },
+  { id: 'termica', label: 'Saltó la térmica', icon: '⚡', desc: 'Saltó la térmica' },
+  { id: 'inodoro', label: 'Inodoro tapado', icon: '🚽', desc: 'El inodoro se tapa seguido' },
+  { id: 'humedad', label: 'Humedad en paredes', icon: '💦', desc: 'Humedad en paredes' },
+  { id: 'puerta', label: 'Puerta no cierra', icon: '🚪', desc: 'La puerta no cierra bien' },
 ];
 
 const categorias = [
