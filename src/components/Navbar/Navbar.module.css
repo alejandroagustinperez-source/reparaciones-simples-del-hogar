@@ -62,10 +62,16 @@
 }
 
 @media (max-width: 520px) {
-  .logoTextNavy,
+  .logoTextNavy {
+    display: inline;
+    font-size: 0.65rem;
+    white-space: nowrap;
+  }
+
   .logoTextOrange {
     display: inline;
-    font-size: 0.75rem;
+    font-size: 0.65rem;
+    white-space: nowrap;
   }
 
   .logoTextShort {
@@ -73,9 +79,14 @@
   }
 
   .logo {
-    flex-wrap: wrap;
-    max-width: 160px;
-    line-height: 1.2;
+    flex-wrap: nowrap;
+    max-width: 140px;
+  }
+
+  .logoWrench {
+    width: 26px;
+    height: 26px;
+    flex-shrink: 0;
   }
 
   .ctaButton {
