@@ -53,7 +53,7 @@ export default function RootLayout({
       </head>
       <body>
         <Navbar />
-        <main>{children}</main>
+        <main style={{ paddingTop: 'var(--navbar-height)' }}>{children}</main>
         <Footer />
         <Script id="clarity" strategy="afterInteractive">
           {`(function(c,l,a,r,i,t,y){
