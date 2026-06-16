@@ -53,6 +53,14 @@ const descripcionProducto: Record<string, string> = {
   "Hidrorepelente fachada": "Protege la fachada exterior de la lluvia y la humedad",
   "Deshumidificador": "Reduce la humedad del ambiente y previene el moho",
   "Extractor de ventilacion": "Mejora la ventilacion en banos y cocinas para evitar humedad",
+  "Fusible para microondas": "Reemplaza el fusible quemado y devolvele la vida a tu microondas",
+  "Correa para lavarropas": "Repara tu lavarropas que no centrifuga cambiando la correa",
+  "Filtro para campana": "Mantene tu campana extractora funcionando al maximo",
+  "Resistencia termotanque": "Repara tu termotanque sin llamar a un tecnico",
+  "Bomba para lavarropas": "Solucioná el problema de desague de tu lavarropas",
+  "Termostato para heladera": "Repara tu heladera que no enfria cambiando el termostato",
+  "Cautin soldador": "Repara circuitos y conexiones electricas con precision",
+  "Cinta teflon termoselladora": "Repara y mantene tu termoselladora como nueva",
 };
 
 export default function CategoriaPage({ params }: { params: { categoria: string } }) {

@@ -19,7 +19,7 @@ const categorias = [
   { slug: "carpinteria", nombre: "Carpintería", descripcion: "Bisagras, lijas y selladores", productos: 9, bg: "#ECFDF5", color: "#065F46" },
   { slug: "pintura", nombre: "Pintura", descripcion: "Rodillos, pinceles y masilla", productos: 8, bg: "#F5F3FF", color: "#7C3AED" },
   { slug: "humedad", nombre: "Humedad", descripcion: "Impermeabilizantes y membranas", productos: 8, bg: "#F0F9FF", color: "#0369A1" },
-  { slug: "electrodomesticos", nombre: "Electrodomésticos", descripcion: "Repuestos y accesorios", productos: 0, bg: "#FFF1F2", color: "#9F1239" },
+  { slug: "electrodomesticos", nombre: "Electrodomésticos", descripcion: "Repuestos y accesorios", productos: 8, bg: "#FFF1F2", color: "#9F1239" },
 ];
 
 const stats = [

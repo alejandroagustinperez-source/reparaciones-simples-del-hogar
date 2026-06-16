@@ -50,5 +50,14 @@ export const productosPorCategoria: Record<string, { nombre: string; link: strin
     { nombre: "Deshumidificador", link: "https://meli.la/2rdNLGy", imagen: "/herramientas/deshumidificador.webp", precio: "$68.399" },
     { nombre: "Extractor de ventilacion", link: "https://meli.la/2jBuj56", imagen: "/herramientas/extractor-ventilacion.webp", precio: "$26.699" },
   ],
-  electrodomesticos: [],
+  electrodomesticos: [
+    { nombre: "Fusible para microondas", link: "https://meli.la/1a6yNAm", imagen: "/herramientas/fusible-microondas.webp", precio: "$14.495" },
+    { nombre: "Correa para lavarropas", link: "https://meli.la/2jJAC2a", imagen: "/herramientas/correa-lavarropas.webp", precio: "$37.915" },
+    { nombre: "Filtro para campana", link: "https://meli.la/1udkzXA", imagen: "/herramientas/filtro-campana.webp", precio: "$2.300" },
+    { nombre: "Resistencia termotanque", link: "https://meli.la/2wqYCdH", imagen: "/herramientas/resistencia-termotanque.webp", precio: "$22.499" },
+    { nombre: "Bomba para lavarropas", link: "https://meli.la/1o3BSvC", imagen: "/herramientas/bomba-lavarropas.webp", precio: "$9.499" },
+    { nombre: "Termostato para heladera", link: "https://meli.la/1woezBw", imagen: "/herramientas/termostato-heladera.webp", precio: "$12.600" },
+    { nombre: "Cautin soldador", link: "https://meli.la/1zxYG4L", imagen: "/herramientas/cautin.webp", precio: "$8.777" },
+    { nombre: "Cinta teflon termoselladora", link: "https://meli.la/2dhY2xR", imagen: "/herramientas/cinta-teflon-termoselladora.webp", precio: "$15.200" },
+  ],
 };
