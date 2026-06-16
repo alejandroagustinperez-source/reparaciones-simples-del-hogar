@@ -40,6 +40,15 @@ export const productosPorCategoria: Record<string, { nombre: string; link: strin
     { nombre: "Fijador sellador pared", link: "https://meli.la/2Yz2UP4", imagen: "/herramientas/fijador-pared.webp", precio: "$29.000" },
     { nombre: "Espatula", link: "https://meli.la/1eZsoxM", imagen: "/herramientas/espatula.webp", precio: "$4.775" },
   ],
-  humedad: [],
+  humedad: [
+    { nombre: "Impermeabilizante techo", link: "https://meli.la/1LVeYtG", imagen: "/herramientas/impermeabilizante-techo.webp", precio: "$68.999" },
+    { nombre: "Membrana liquida", link: "https://meli.la/1bw4REM", imagen: "/herramientas/membrana-liquida.webp", precio: "$75.194" },
+    { nombre: "Pintura antihumedad", link: "https://meli.la/1qvVFae", imagen: "/herramientas/pintura-antihumedad.webp", precio: "$59.961" },
+    { nombre: "Sellador de grietas", link: "https://meli.la/1Q5Z6s4", imagen: "/herramientas/sellador-grietas.webp", precio: "$8.175" },
+    { nombre: "Cinta butilica", link: "https://meli.la/1GtEXiY", imagen: "/herramientas/cinta-butilica.webp", precio: "$44.169" },
+    { nombre: "Hidrorepelente fachada", link: "https://meli.la/2XLL3vs", imagen: "/herramientas/hidrorepelente.webp", precio: "$82.662" },
+    { nombre: "Deshumidificador", link: "https://meli.la/2rdNLGy", imagen: "/herramientas/deshumidificador.webp", precio: "$68.399" },
+    { nombre: "Extractor de ventilacion", link: "https://meli.la/2jBuj56", imagen: "/herramientas/extractor-ventilacion.webp", precio: "$26.699" },
+  ],
   electrodomesticos: [],
 };

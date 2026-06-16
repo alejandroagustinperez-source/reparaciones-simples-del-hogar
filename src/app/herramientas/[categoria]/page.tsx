@@ -45,6 +45,14 @@ const descripcionProducto: Record<string, string> = {
   "Lija para pared": "Prepara la superficie para una pintura perfecta",
   "Fijador sellador pared": "Sellá la pared antes de pintar para mejor adherencia",
   "Espatula": "Aplica masilla y raspa superficies con precision",
+  "Impermeabilizante techo": "Protege tu techo de filtraciones y goteras de forma duradera",
+  "Membrana liquida": "Impermeabiliza terrazas y balcones con una sola mano de producto",
+  "Pintura antihumedad": "Elimina manchas de humedad y previene su reaparicion en paredes",
+  "Sellador de grietas": "Tapa fisuras y grietas en paredes antes de que avancen",
+  "Cinta butilica": "Sella filtraciones en techos y canaletas de forma rapida",
+  "Hidrorepelente fachada": "Protege la fachada exterior de la lluvia y la humedad",
+  "Deshumidificador": "Reduce la humedad del ambiente y previene el moho",
+  "Extractor de ventilacion": "Mejora la ventilacion en banos y cocinas para evitar humedad",
 };
 
 export default function CategoriaPage({ params }: { params: { categoria: string } }) {
