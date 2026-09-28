@@ -108,12 +108,14 @@ export async function POST(request: Request) {
           Authorization: `Bearer ${apiKey}`,
         },
         body: JSON.stringify({
-          model: 'llama-3.3-70b-versatile',
+          model: 'openai/gpt-oss-120b',
           messages: [
             { role: 'system', content: SYSTEM_PROMPT },
             ...messages,
           ],
-          max_tokens: 2000,
+          max_tokens: 2048,
+          reasoning_effort: "low",
+          reasoning_format: "hidden",
         }),
       }
     );
