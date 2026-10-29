@@ -55,6 +55,16 @@ export default function Footer() {
 
       <div className={styles.bottom}>
         © 2025 Reparaciones Simples del Hogar. Todos los derechos reservados.
+        {' · '}Sitio hecho por{' '}
+        <a
+          href="https://ap-cm.vercel.app/"
+          target="_blank"
+          rel="noopener"
+          title="Diseño de páginas web en San Luis"
+          className={styles.link}
+        >
+          AP Community Manager
+        </a>
       </div>
     </footer>
   );
