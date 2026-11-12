@@ -38,7 +38,6 @@ export default function Footer() {
             <li className={styles.linkTitle}>Páginas</li>
             <li><Link href="/" className={styles.link}>Inicio</Link></li>
             <li><a href="https://blog.reparacionessimplesdelhogar.com.ar" className={styles.link} target="_self">Blog</a></li>
-            <li><Link href="/herramientas" className={styles.link}>Herramientas</Link></li>
             <li><Link href="/ebook" className={styles.link}>Ebook</Link></li>
             <li><Link href="/contacto" className={styles.link}>Contacto</Link></li>
             <li><Link href="/profesionales" className={styles.link}>Planes para Profesionales</Link></li>

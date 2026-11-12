@@ -7,7 +7,6 @@ import styles from './Navbar.module.css';
 const navLinks = [
   { label: 'Inicio', href: '/' },
   { label: 'Blog', href: 'https://blog.reparacionessimplesdelhogar.com.ar', external: true },
-  { label: 'Herramientas', href: '/herramientas' },
   { label: 'Ebook', href: '/ebook' },
   { label: 'Contacto', href: '/contacto' },
   { label: 'Planes para Profesionales', href: '/profesionales' },
