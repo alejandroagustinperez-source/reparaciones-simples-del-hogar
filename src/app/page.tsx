@@ -9,6 +9,16 @@ import styles from './page.module.css';
 
 const UMBRAL = 1989;
 
+const cssVar = (name: string, value: number | string) => ({ [name]: value } as React.CSSProperties);
+
+const ejemplos = [
+  'el lavarropas no desagota',
+  'sale poca agua de la ducha',
+  'la heladera no enfría',
+  'salta la térmica al prender el horno',
+  'hay humedad en la pared del dormitorio',
+];
+
 const categoryMap: Record<string, string> = {
   electricidad: 'electricidad',
   plomeria: 'plomeria',
@@ -88,6 +98,56 @@ export default function HomePage() {
   const [notifStatus, setNotifStatus] = useState<'idle' | 'loading' | 'success' | 'already'>('idle');
   const [parseFailed, setParseFailed] = useState(false);
   const locationRef = useRef<HTMLDivElement>(null);
+  const heroRef = useRef<HTMLElement>(null);
+  const ebookTiltRef = useRef<HTMLDivElement>(null);
+  const [stepIdx, setStepIdx] = useState(0);
+  const [phText, setPhText] = useState('');
+  const [phActive, setPhActive] = useState(true);
+
+  // Pasos del hero que se encienden en secuencia
+  useEffect(() => {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const id = window.setInterval(() => setStepIdx((i) => (i + 1) % 3), 1700);
+    return () => window.clearInterval(id);
+  }, []);
+
+  // Placeholder que escribe ejemplos mientras el buscador está vacío y sin foco
+  useEffect(() => {
+    if (!phActive || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let ei = 0;
+    let ci = 0;
+    let del = false;
+    let timer: ReturnType<typeof setTimeout>;
+    const tick = () => {
+      const w = ejemplos[ei];
+      ci += del ? -1 : 1;
+      setPhText(w.slice(0, ci));
+      let d = del ? 28 : 55;
+      if (!del && ci === w.length) { del = true; d = 1500; }
+      else if (del && ci === 0) { del = false; ei = (ei + 1) % ejemplos.length; d = 350; }
+      timer = setTimeout(tick, d);
+    };
+    timer = setTimeout(tick, 1800);
+    return () => clearTimeout(timer);
+  }, [phActive]);
+
+  const handleHeroMove = (e: React.PointerEvent<HTMLElement>) => {
+    if (e.pointerType !== 'mouse' || !heroRef.current) return;
+    const r = heroRef.current.getBoundingClientRect();
+    heroRef.current.style.setProperty('--mx', ((e.clientX - r.left) / r.width - 0.5).toFixed(3));
+    heroRef.current.style.setProperty('--my', ((e.clientY - r.top) / r.height - 0.5).toFixed(3));
+  };
+
+  const handleEbookMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (e.pointerType !== 'mouse' || !ebookTiltRef.current) return;
+    const r = e.currentTarget.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width - 0.5;
+    const y = (e.clientY - r.top) / r.height - 0.5;
+    ebookTiltRef.current.style.transform = `rotateY(${x * 22}deg) rotateX(${-y * 16}deg)`;
+  };
+  const handleEbookLeave = () => {
+    if (ebookTiltRef.current) ebookTiltRef.current.style.transform = '';
+  };
 
   const resetChat = useCallback(() => {
     setAiResponse(null);
@@ -356,22 +416,36 @@ export default function HomePage() {
         )}
       </div>
 
-      <section className={styles.hero}>
+      <section className={styles.hero} ref={heroRef} onPointerMove={handleHeroMove}>
+        <div className={`${styles.blob} ${styles.blob1}`} aria-hidden="true" />
+        <div className={`${styles.blob} ${styles.blob2}`} aria-hidden="true" />
+        <div className={styles.gridBg} aria-hidden="true" />
+        <div className={styles.floaters} aria-hidden="true">
+          <span className={`${styles.fl} ${styles.fl1}`} style={cssVar('--d', 22)}><Droplets size={24} /></span>
+          <span className={`${styles.fl} ${styles.fl2}`} style={cssVar('--d', -30)}><Zap size={24} /></span>
+          <span className={`${styles.fl} ${styles.fl3}`} style={cssVar('--d', -18)}><Flame size={24} /></span>
+          <span className={`${styles.fl} ${styles.fl4}`} style={cssVar('--d', 28)}><Hammer size={24} /></span>
+          <span className={`${styles.fl} ${styles.fl5}`} style={cssVar('--d', -12)}><Plug size={20} /></span>
+        </div>
         <div className={styles.heroInner}>
           <div className={styles.badge}>✨ Asistente con IA · gratis</div>
-          <h1 className={styles.title}>
-            ¿Qué problema tenés en{' '}
-            <span className={styles.highlight}>tu casa</span>?
+          <h1 className={styles.title} aria-label="¿Qué problema tenés en tu casa?">
+            <span className={styles.word} style={cssVar('--i', 0)}>¿Qué</span>{' '}
+            <span className={styles.word} style={cssVar('--i', 1)}>problema</span>{' '}
+            <span className={styles.word} style={cssVar('--i', 2)}>tenés</span>{' '}
+            <span className={styles.word} style={cssVar('--i', 3)}>en</span>{' '}
+            <span className={`${styles.word} ${styles.highlight}`} style={cssVar('--i', 4)}>tu casa</span>
+            <span className={styles.word} style={cssVar('--i', 5)}>?</span>
           </h1>
           <p className={styles.subtitle}>
             Contanos qué pasa y la IA te dice cómo arreglarlo paso a paso.
           </p>
           <div className={styles.howItWorks}>
-            <span className={styles.step}>💬 Describís el problema</span>
+            <span className={`${styles.step} ${stepIdx === 0 ? styles.stepOn : ''}`}>💬 Describís el problema</span>
             <span className={styles.arrow}>→</span>
-            <span className={styles.step}>🔍 La IA analiza</span>
+            <span className={`${styles.step} ${stepIdx === 1 ? styles.stepOn : ''}`}>🔍 La IA analiza</span>
             <span className={styles.arrow}>→</span>
-            <span className={styles.step}>✅ Recibís la solución</span>
+            <span className={`${styles.step} ${stepIdx === 2 ? styles.stepOn : ''}`}>✅ Recibís la solución</span>
           </div>
 
           <div className={styles.searchBox}>
@@ -379,7 +453,9 @@ export default function HomePage() {
             <textarea
               ref={textareaRef}
               className={styles.textarea}
-              placeholder="Describí tu problema (ej: el lavarropas no desagota)"
+              placeholder={phActive && phText ? `Describí tu problema (ej: ${phText})` : 'Describí tu problema (ej: el lavarropas no desagota)'}
+              onFocus={() => setPhActive(false)}
+              onBlur={() => { if (!prompt.trim()) setPhActive(true); }}
               value={prompt}
               onChange={(e) => setPrompt(e.target.value)}
               onKeyDown={handleKeyDown}
@@ -443,7 +519,7 @@ export default function HomePage() {
 
       <section className={styles.problemasSection} ref={problemasRef}>
         <div className={styles.sectionInner}>
-          <div className={styles.problemasHeader}>
+          <div className={styles.problemasHeader} data-reveal>
             <div>
               <span className={styles.trendBadge}>🔥 En tendencia</span>
               <h2 className={styles.sectionTitleLeft}>Problemas más consultados</h2>
@@ -473,6 +549,7 @@ export default function HomePage() {
                 <button
                   key={p.id}
                   className={styles.problemaCard}
+                  data-reveal
                   onClick={() => handleProblemaClick(p.label)}
                   type="button"
                 >
@@ -756,7 +833,7 @@ export default function HomePage() {
 
       <section className={styles.categoriasSection} ref={categoriasRef}>
         <div className={styles.sectionInner}>
-          <h2 className={styles.sectionTitleLeft}>Categorías</h2>
+          <h2 className={styles.sectionTitleLeft} data-reveal>Categorías</h2>
           <p className={styles.sectionSubtitleLeft}>Explorá por tipo de reparación</p>
           <div className={styles.categoriasGrid}>
             {categorias.map((cat) => (
@@ -766,6 +843,7 @@ export default function HomePage() {
                 target="_blank"
                 rel="noopener noreferrer"
                 className={styles.categoriaCard}
+                data-reveal
               >
                 <div className={styles.categoriaIconBg} style={{ background: cat.bg, color: cat.iconColor }}>
                   <cat.icon size={32} />
@@ -780,30 +858,35 @@ export default function HomePage() {
 
       <section className={styles.trustSection}>
         <div className={styles.sectionInner}>
-          <h2 className={styles.sectionTitle}>¿Por qué confiar en nosotros?</h2>
+          <h2 className={styles.sectionTitle} data-reveal>¿Por qué confiar en nosotros?</h2>
           <p className={styles.sectionSubtitle}>Todo lo que necesitás para resolverlo vos mismo</p>
           <div className={styles.trustGrid}>
-            <div className={styles.trustCard}>
+            <div className={styles.trustCard} data-reveal>
               <span className={styles.trustIcon}>🛡️</span>
               <h3 className={styles.trustTitle}>Información verificada</h3>
               <p className={styles.trustDesc}>Todas las guías son revisadas por profesionales matriculados</p>
             </div>
-            <div className={styles.trustCard}>
+            <div className={styles.trustCard} data-reveal>
               <span className={styles.trustIcon}>⚡</span>
               <h3 className={styles.trustTitle}>Solución en minutos</h3>
               <p className={styles.trustDesc}>Sin esperar turnos ni pagar visitas innecesarias</p>
             </div>
-            <div className={styles.trustCard}>
+            <div className={styles.trustCard} data-reveal>
               <span className={styles.trustIcon}>📍</span>
               <h3 className={styles.trustTitle}>Profesionales cerca tuyo</h3>
               <p className={styles.trustDesc}>Conectamos con matriculados de tu zona cuando lo necesitás</p>
             </div>
           </div>
+          <div className={styles.statsRow} data-reveal>
+            <div className={styles.stat}><b data-count="1989" suppressHydrationWarning>1.989</b><span>problemas resueltos esta semana</span></div>
+            <div className={styles.stat}><b data-count="342" suppressHydrationWarning>342</b><span>reseñas, promedio 4.8</span></div>
+            <div className={styles.stat}><b data-count="1200" data-prefix="+" suppressHydrationWarning>+1.200</b><span>personas con el ebook</span></div>
+          </div>
         </div>
       </section>
 
       <section className={styles.ebookSection}>
-        <div className={styles.ebookBanner}>
+        <div className={styles.ebookBanner} data-reveal>
           <div className={styles.ebookContent}>
             <span className={styles.ebookBadge}>🔥 OFERTA POR TIEMPO LIMITADO</span>
             <h2 className={styles.ebookTitle}>
@@ -835,8 +918,8 @@ export default function HomePage() {
               🔒 Pago seguro · ⚡ Acceso inmediato · 🔄 Garantía 7 días
             </p>
           </div>
-          <div className={styles.ebookImageWrap}>
-            <Image
+          <div className={styles.ebookImageWrap} onPointerMove={handleEbookMove} onPointerLeave={handleEbookLeave}>
+            <div className={styles.ebookFloat}><div className={styles.ebookTilt} ref={ebookTiltRef}><Image
               src="/ebook.png"
               alt="Ebook Reparaciones Simples del Hogar"
               width={480}
@@ -844,7 +927,7 @@ export default function HomePage() {
               loading="lazy"
               className={styles.ebookImage}
               style={{ objectFit: 'contain', mixBlendMode: 'normal', filter: 'drop-shadow(0 20px 50px rgba(0,0,0,0.6))', transform: 'rotate(2deg)', maxWidth: '100%' }}
-            />
+            /></div></div>
           </div>
         </div>
       </section>

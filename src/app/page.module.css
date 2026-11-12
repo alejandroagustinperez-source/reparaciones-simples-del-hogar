@@ -2069,3 +2069,379 @@
     gap: 0.25rem;
   }
 }
+
+/* =========================================================
+   Movimiento (hero vivo, tarjetas que responden, ebook)
+   ========================================================= */
+.hero {
+  position: relative;
+  overflow: hidden;
+}
+
+.heroInner {
+  position: relative;
+  z-index: 1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+}
+
+.blob1 {
+  width: 360px;
+  height: 360px;
+  background: #f97316;
+  left: -110px;
+  top: -80px;
+  opacity: 0.28;
+  animation: drift1 16s ease-in-out infinite alternate;
+}
+
+.blob2 {
+  width: 420px;
+  height: 420px;
+  background: #4b86c6;
+  right: -140px;
+  bottom: -140px;
+  opacity: 0.55;
+  animation: drift2 19s ease-in-out infinite alternate;
+}
+
+@keyframes drift1 { to { transform: translate(160px, 90px) scale(1.15); } }
+@keyframes drift2 { to { transform: translate(-140px, -70px) scale(1.1); } }
+
+.gridBg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 44px 44px;
+  -webkit-mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  pointer-events: none;
+}
+
+.floaters {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.fl {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #fff;
+  transform: translate(calc(var(--mx, 0) * var(--d, 0) * 2px), calc(var(--my, 0) * var(--d, 0) * 2px));
+  transition: transform 0.25s ease-out;
+}
+
+.fl svg { animation: bob 5s ease-in-out infinite; }
+.fl2 svg { animation-delay: -1.3s; }
+.fl3 svg { animation-delay: -2.6s; }
+.fl4 svg { animation-delay: -3.4s; }
+.fl5 svg { animation-delay: -0.7s; }
+
+@keyframes bob { 50% { transform: translateY(-12px) rotate(6deg); } }
+
+.fl1 { left: 7%; top: 20%; }
+.fl2 { right: 8%; top: 14%; }
+.fl3 { left: 11%; bottom: 14%; }
+.fl4 { right: 12%; bottom: 22%; }
+.fl5 { right: 24%; top: 9%; width: 42px; height: 42px; opacity: 0.7; }
+
+@media (max-width: 900px) {
+  .fl1, .fl3 { left: 2%; }
+  .fl2, .fl4 { right: 2%; }
+  .fl5 { display: none; }
+  .fl { width: 42px; height: 42px; opacity: 0.5; }
+}
+
+.badge {
+  position: relative;
+  overflow: hidden;
+  animation: fadeDown 0.7s cubic-bezier(0.22, 0.8, 0.24, 1) both;
+}
+
+.badge::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, 0.35) 50%, transparent 70%);
+  transform: translateX(-120%);
+  animation: shine 4.5s 1.2s infinite;
+}
+
+@keyframes shine { to { transform: translateX(120%); } }
+@keyframes fadeDown { from { opacity: 0; transform: translateY(-10px); } }
+@keyframes fadeUp { from { opacity: 0; transform: translateY(14px); } }
+
+.word {
+  display: inline-block;
+  animation: wordIn 0.75s cubic-bezier(0.22, 0.8, 0.24, 1) both;
+  animation-delay: calc(var(--i, 0) * 90ms + 150ms);
+}
+
+@keyframes wordIn { from { opacity: 0; transform: translateY(22px) rotate(2deg); } }
+
+.highlight { position: relative; }
+
+.highlight::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 5px;
+  border-radius: 5px;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  animation: drawLine 0.8s 1s cubic-bezier(0.22, 0.8, 0.24, 1) forwards;
+}
+
+@keyframes drawLine { to { transform: scaleX(1); } }
+
+.subtitle { animation: fadeUp 0.8s 0.55s cubic-bezier(0.22, 0.8, 0.24, 1) both; }
+.howItWorks { animation: fadeUp 0.8s 0.7s cubic-bezier(0.22, 0.8, 0.24, 1) both; }
+.searchBox { animation: fadeUp 0.9s 0.85s cubic-bezier(0.22, 0.8, 0.24, 1) both; }
+.socialProof { animation: fadeUp 0.8s 1s cubic-bezier(0.22, 0.8, 0.24, 1) both; }
+
+.step {
+  transition: all 0.5s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.stepOn {
+  background: #fff;
+  color: var(--navy);
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+}
+
+.arrow { animation: nudge 1.6s ease-in-out infinite; }
+@keyframes nudge { 50% { transform: translateX(4px); } }
+
+.searchBox {
+  transition: box-shadow 0.3s ease, transform 0.3s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.searchBox:focus-within {
+  box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.45), 0 28px 70px rgba(0, 0, 0, 0.34);
+  transform: translateY(-3px);
+}
+
+.suggestionChip {
+  transition: all 0.25s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.suggestionChip:hover { transform: translateY(-2px); }
+
+.submitButton {
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.25s cubic-bezier(0.22, 0.8, 0.24, 1), box-shadow 0.25s, background 0.2s;
+}
+
+.submitButton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(100deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
+  transform: translateX(-130%);
+  animation: shine 3.6s 2s infinite;
+  pointer-events: none;
+}
+
+.submitButton:not(:disabled):hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(249, 115, 22, 0.5);
+}
+
+.submitButton:not(:disabled):active { transform: scale(0.97); }
+
+.liveDot { position: relative; }
+
+.liveDot::after {
+  content: '';
+  position: absolute;
+  inset: -5px;
+  border-radius: 50%;
+  border: 2px solid var(--orange);
+  animation: ping 1.8s ease-out infinite;
+}
+
+@keyframes ping { from { transform: scale(0.4); opacity: 0.9; } to { transform: scale(1.5); opacity: 0; } }
+
+/* Tarjetas de problemas */
+.problemaCard {
+  overflow: hidden;
+  transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.24, 1), box-shadow 0.35s, border-color 0.35s;
+}
+
+.problemaCard::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 3px;
+  width: 100%;
+  background: var(--orange);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.45s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.problemaCard:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 30px rgba(30, 58, 95, 0.14);
+}
+
+.problemaCard:hover::before { transform: scaleX(1); }
+.problemaCard:hover .problemaIcon { animation: wiggle 0.6s cubic-bezier(0.22, 0.8, 0.24, 1); }
+.problemaLink { display: inline-block; transition: transform 0.25s cubic-bezier(0.22, 0.8, 0.24, 1); }
+.problemaCard:hover .problemaLink { transform: translateX(6px); }
+
+@keyframes wiggle {
+  25% { transform: rotate(-14deg) scale(1.12); }
+  60% { transform: rotate(10deg) scale(1.12); }
+}
+
+/* Categorías */
+.categoriaCard {
+  transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.24, 1), box-shadow 0.35s, border-color 0.35s;
+}
+
+.categoriaCard:hover {
+  transform: translateY(-6px) scale(1.02);
+  box-shadow: 0 18px 38px rgba(30, 58, 95, 0.14);
+}
+
+.categoriaIconBg {
+  transition: transform 0.5s cubic-bezier(0.22, 0.8, 0.24, 1), border-radius 0.5s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.categoriaCard:hover .categoriaIconBg {
+  transform: scale(1.14) rotate(-6deg);
+  border-radius: 50%;
+}
+
+/* Confianza */
+.trustCard {
+  transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.24, 1), background 0.35s;
+}
+
+.trustCard:hover {
+  transform: translateY(-6px);
+  background: var(--orange-light);
+}
+
+.trustIcon {
+  display: inline-block;
+  transition: transform 0.5s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.trustCard:hover .trustIcon { transform: scale(1.25) rotate(-8deg); }
+
+.statsRow {
+  display: flex;
+  justify-content: center;
+  gap: 2.5rem;
+  flex-wrap: wrap;
+  margin-top: 2.25rem;
+}
+
+.stat { text-align: center; }
+
+.stat b {
+  display: block;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+}
+
+.stat span { font-size: 0.85rem; color: var(--text-secondary); }
+
+/* Ebook */
+.ebookBadge { animation: pulseBadge 2s ease-in-out infinite; }
+@keyframes pulseBadge { 50% { transform: scale(1.06); box-shadow: 0 0 0 8px rgba(249, 115, 22, 0.22); } }
+
+.discountBadge { display: inline-block; animation: popBadge 2.4s ease-in-out infinite; }
+@keyframes popBadge { 50% { transform: rotate(-6deg) scale(1.12); } }
+
+.ebookButton {
+  animation: glow 2.4s ease-in-out infinite;
+  transition: background 0.2s, transform 0.25s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.ebookButton:hover { transform: translateY(-3px) scale(1.02); }
+@keyframes glow { 50% { box-shadow: 0 0 0 10px rgba(249, 115, 22, 0.2); } }
+
+.ebookImageWrap { perspective: 900px; }
+.ebookFloat { animation: levitate 5s ease-in-out infinite; }
+@keyframes levitate { 50% { transform: translateY(-14px); } }
+
+.ebookTilt {
+  transform-style: preserve-3d;
+  transition: transform 0.2s ease-out;
+}
+
+/* WhatsApp */
+.whatsappButton { transition: transform 0.3s cubic-bezier(0.22, 0.8, 0.24, 1); }
+.whatsappButton:hover { transform: scale(1.1) rotate(-8deg); }
+
+.whatsappButton::before,
+.whatsappButton::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 2px solid #25D366;
+  animation: ring 2.4s ease-out infinite;
+  pointer-events: none;
+}
+
+.whatsappButton::after { animation-delay: 1.2s; }
+@keyframes ring { from { transform: scale(1); opacity: 0.8; } to { transform: scale(1.9); opacity: 0; } }
+
+/* Respuesta del asistente: las tarjetas entran una por una */
+.warningCard,
+.followUpCard,
+.diagnosisCard,
+.stepsCard,
+.manualCard,
+.guidesCard,
+.comingCard,
+.notifCard {
+  animation: slideIn 0.6s cubic-bezier(0.22, 0.8, 0.24, 1) both;
+}
+
+.diagnosisCard:nth-child(3) { animation-delay: 0.12s; }
+.diagnosisCard:nth-child(4) { animation-delay: 0.24s; }
+.diagnosisCard:nth-child(5) { animation-delay: 0.36s; }
+.diagnosisCard:nth-child(n + 6) { animation-delay: 0.48s; }
+
+@keyframes slideIn { from { opacity: 0; transform: translateY(20px); } }
+
+.loadingCard { animation: slideIn 0.4s cubic-bezier(0.22, 0.8, 0.24, 1) both; }
+
+@media (prefers-reduced-motion: reduce) {
+  .blob, .fl svg, .badge, .badge::after, .word, .highlight::after, .subtitle, .howItWorks,
+  .searchBox, .socialProof, .arrow, .submitButton::after, .liveDot::after, .ebookBadge,
+  .discountBadge, .ebookButton, .ebookFloat, .whatsappButton::before, .whatsappButton::after,
+  .warningCard, .followUpCard, .diagnosisCard, .stepsCard, .manualCard, .guidesCard,
+  .comingCard, .notifCard, .loadingCard {
+    animation: none !important;
+  }
+  .highlight::after { transform: scaleX(1); }
+  .fl, .step, .problemaCard, .categoriaCard, .trustCard, .ebookTilt { transition: none; }
+}

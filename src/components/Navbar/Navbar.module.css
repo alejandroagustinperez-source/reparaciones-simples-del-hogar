@@ -305,3 +305,44 @@
     display: none;
   }
 }
+
+.navbar {
+  transition: box-shadow 0.3s ease;
+}
+
+:global(html[data-scrolled]) .navbar {
+  box-shadow: 0 6px 24px rgba(30, 58, 95, 0.12);
+}
+
+.logoWrench {
+  transition: transform 0.5s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.logo:hover .logoWrench {
+  transform: rotate(-24deg) scale(1.1);
+}
+
+.link {
+  position: relative;
+}
+
+.link::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -4px;
+  height: 2px;
+  background: #f97316;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.35s cubic-bezier(0.22, 0.8, 0.24, 1);
+}
+
+.link:hover::after {
+  transform: scaleX(1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .navbar, .logoWrench, .link::after { transition: none; }
+}
